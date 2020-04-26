@@ -3,11 +3,11 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import socketIOClient from "socket.io-client";
 import './HomePage.css';
-import { setUsers, startGame } from './../../actions';
+import { setPlayers, startGame } from './../../actions';
 const ENDPOINT = "http://127.0.0.1:3001";
 
 function HomePage(props) {
-  const [users, setUsers] = useState([]);
+  const [players, setPlayers] = useState(props.players);
   const [username, setUsername] = useState("");
   const [response, setResponse] = useState("");
 
@@ -22,11 +22,11 @@ function HomePage(props) {
 
 
 
-  function addUser() {
-    const updatedUsers = [...users, username]
-    setUsers(updatedUsers)
+  function addPlayer() {
+    const updatedPlayers = [...players, username]
+    setPlayers(updatedPlayers)
     setUsername("")
-    props.setUsers(updatedUsers)
+    props.setUsers(updatedPlayers)
   }
 
   function startGame() {
@@ -35,11 +35,11 @@ function HomePage(props) {
 
   return (
     <div style={{display: props.game.playing ? 'none' : 'block'}}>
-      Add Player: <input value={username} id="addUserText" onChange={(e) => setUsername(e.target.value)} /> <button onClick={addUser}>Add</button>
+      Add Player: <input value={username} id="addUserText" onChange={(e) => setUsername(e.target.value)} /> <button onClick={addPlayer}>Add</button>
 
       <h2>Players</h2>
-      {users.map(user => {
-        return <p>{user}</p>
+      {players.map(player => {
+        return <p>{player.name}</p>
       })}
 
       <button onClick={startGame}>Start Game</button>
@@ -48,12 +48,12 @@ function HomePage(props) {
 }
 
 const mapStateToProps = state => ({
-  users: state.users,
+  players: state.players,
   game: state.game
 })
 
 const mapDispatchToProps = dispatch => ({
-    setUsers: bindActionCreators(setUsers, dispatch),
+    setPlayers: bindActionCreators(setPlayers, dispatch),
     startGame: bindActionCreators(startGame, dispatch),
 })
 

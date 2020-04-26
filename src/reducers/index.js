@@ -26,9 +26,21 @@ function options (state = defaultOptions, action) {
     }
 }
 
-function users (state = [], action) {
+function players (state = [{
+  id: 1,
+  name: "tyler",
+  hand: [],
+},{
+  id: 2,
+  name: "Malik",
+  hand: [],
+},{
+  id: 3,
+  name: "Liz",
+  hand: [],
+}], action) {
     switch (action.type) {
-        case 'SET_USERS': return action.users
+        case 'SET_PLAYERS': return action.players
 
         default:
             return state
@@ -36,7 +48,7 @@ function users (state = [], action) {
 }
 
 function decks (state = {
-  drawPile: [],
+  drawPile: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20],
   nursery: [],
   discardPile: []
 }, action) {
@@ -61,7 +73,7 @@ function decks (state = {
 const rootReducer = combineReducers({
     game,
     options,
-    users,
+    players,
     decks
 })
 

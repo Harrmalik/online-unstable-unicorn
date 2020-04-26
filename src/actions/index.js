@@ -1,6 +1,6 @@
-export const setUsers = (users) => ({
-    type: 'SET_USERS',
-    users
+export const setPlayers = (players) => ({
+    type: 'SET_PLAYERS',
+    players
 })
 
 export const startGame = (options) => ({
