@@ -1,25 +1,12 @@
 import React from 'react';
 import logo from './logo.svg';
+import deck from './db/cards.js';
+import players from './db/players.js';
 import './App.css';
 
 
 
 function App() {
-  // consts
-  const deck = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
-  const players = [{
-    id: 1, 
-    name: "tyler",
-    hand: [],
-  },{
-    id: 2, 
-    name: "Malik",
-    hand: [],
-  },{
-    id: 3, 
-    name: "Liz",
-    hand: [],
-  }];
   // shuffle deck
 function shuffle (deck) {
   var i = 0
@@ -70,12 +57,5 @@ function deal(deck) {
     </div>
   );
 }
-
-// const deck = [{
-//   id: 1,
-//   title: "This is the name of the card",
-//   Description: "Rando shit about drugs and unicorn sex",
-//   type: "magical Unicorn"
-// }]
 
 export default App;
