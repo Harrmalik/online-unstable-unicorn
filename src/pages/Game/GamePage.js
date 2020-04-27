@@ -9,6 +9,23 @@ import StableComponent from './components/Stable/StableComponent'
 
 const ENDPOINT = "http://127.0.0.1:3001";
 
+const hand = [{
+  id: 1,
+  name: 'SHOTGUN BABY UNICORN',
+  type: 'Baby Unicorn',
+  description: 'If this card would be sacrificed, destroyed, or returned to your hand, return it to the Nursery instead.'
+},{
+  id: 2,
+  name: 'BYE BYE BABY UNICORN',
+  type: 'Baby Unicorn',
+  description: 'If this card would be sacrificed, destroyed, or returned to your hand, return it to the Nursery instead.'
+},{
+  id: 3,
+  name: 'DUMPSTER BABY UNICORN',
+  type: 'Baby Unicorn',
+  description: 'If this card would be sacrificed, destroyed, or returned to your hand, return it to the Nursery instead.'
+},]
+
 function GamePage(props) {
   // DECK would be props.decks.drawPile
   const deck = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
@@ -71,7 +88,7 @@ function deal(deck) {
       // props.usersUI -> user avatar + num cards in hands
       // Decks UI [draw, nursery, discard]
 
-      <StableComponent/>
+      <StableComponent hand={hand}/>
       // stables -> cards in play for each user
       // My hand -> cards view -> quick view and click for more details
       // Options -> for later
