@@ -14,8 +14,6 @@ store.subscribe(() =>
 )
 
 
-
-
 function App() {
   let state = store.getState()
   return (
@@ -27,13 +25,6 @@ function App() {
     </Provider>
   );
 }
-
-// const deck = [{
-//   id: 1,
-//   title: "This is the name of the card",
-//   Description: "Rando shit about drugs and unicorn sex",
-//   type: "magical Unicorn"
-// }]
 
 export default App;
 
