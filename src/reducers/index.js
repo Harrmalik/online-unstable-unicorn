@@ -30,16 +30,19 @@ function options (state = defaultOptions, action) {
 function players (state = [{
   id: 1,
   name: "tyler",
+  isTurn: true,
   hand: [],
   stable: []
 },{
   id: 2,
   name: "Malik",
+  isTurn: false,
   hand: [],
   stable: []
 },{
   id: 3,
   name: "Liz",
+  isTurn: false,
   hand: [],
   stable: []
 }], action) {
