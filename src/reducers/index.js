@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux'
 let defaultOptions = {
+  playing: true,
   gameId: 0,
   gameDuration: '',
   expansion: '',
@@ -30,14 +31,17 @@ function players (state = [{
   id: 1,
   name: "tyler",
   hand: [],
+  stable: []
 },{
   id: 2,
   name: "Malik",
   hand: [],
+  stable: []
 },{
   id: 3,
   name: "Liz",
   hand: [],
+  stable: []
 }], action) {
     switch (action.type) {
         case 'SET_PLAYERS': return action.players
