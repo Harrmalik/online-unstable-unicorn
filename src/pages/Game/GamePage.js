@@ -2,8 +2,10 @@ import React, { useState, useEffect } from "react";
 import socketIOClient from "socket.io-client";
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { startGame } from './../../actions';
 import GameInitialization from './GameInitialization.js';
+import { startGame } from 'actions';
+import StableComponent from './components/Stable/StableComponent'
+
 const ENDPOINT = "http://127.0.0.1:3001";
 
 function GamePage(props) {
@@ -11,14 +13,17 @@ function GamePage(props) {
   
   return (
     <div style={{display: !props.game.playing ? 'none' : 'block'}}>
-      <GameInitialization/>
+
       {/* // Each should be a separate component
 
-      - props.usersUI -> user avatar + num cards in hands
-      - Decks UI [draw, nursery, discard]
-      - stables -> cards in play for each user
-      - My hand -> cards view -> quick view and click for more details
-      Options -> for later */}
+        - props.usersUI -> user avatar + num cards in hands
+        - Decks UI [draw, nursery, discard]
+        - stables -> cards in play for each user
+        - My hand -> cards view -> quick view and click for more details
+        - Options -> for later */}
+
+      <GameInitialization/>
+      <StableComponent/>
     </div>
   );
 }
