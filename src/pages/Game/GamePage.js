@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import './GamePage.css';
 import socketIOClient from "socket.io-client";
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -26,7 +27,9 @@ const hand = [{
 },]
 
 function GamePage(props) {
-
+  useEffect(() => {
+    // document.background = url('https://img.freepik.com/free-vector/unicorn-cool-dance_77271-71.jpg?size=338&ext=jpg');
+  })
 
   return (
     <div style={{display: !props.game.playing ? 'none' : 'block'}}>
