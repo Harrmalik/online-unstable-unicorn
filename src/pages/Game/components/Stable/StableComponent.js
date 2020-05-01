@@ -1,5 +1,6 @@
 import React from "react";
-import { Card } from 'semantic-ui-react'
+import { Card } from 'semantic-ui-react';
+import './StableComponent.css';
 
 import CardComponent from 'components/Card/CardComponent';
 

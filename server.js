@@ -16,7 +16,7 @@ io.on('connection', (socket) => {
     console.log('drawing card');
   });
 
-  socket.on('playCard', (msg) => {
+  socket.on('playCard', (card) => {
     console.log('play card');
   });
 

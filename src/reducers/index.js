@@ -1,14 +1,15 @@
 import { combineReducers } from 'redux'
+import cards from './cards.js'
+
 let defaultOptions = {
-  playing: true,
-  gameId: 0,
+  gameid: 0,
   gameDuration: '',
   expansion: '',
   winCondition: ''
 }
 
 
-function game (state = {}, action) {
+function game (state = {playing: false, cards}, action) {
     switch (action.type) {
         case 'START_GAME': return {
           ...action.options,
@@ -30,24 +31,87 @@ function options (state = defaultOptions, action) {
 function players (state = [{
   id: 1,
   name: "tyler",
-  isTurn: true,
-  hand: [],
-  stable: []
+  hand: [{
+    "id": 8,
+    "name": "CANNIBAL BABY UNICORN",
+    "type": "Baby Unicorn",
+    "description": "If this card would be sacrificed, destroyed, or returned to your hand, return it to the Nursery instead.",
+    "Quantity": 1,
+    "Color": "Magenta"
+  }],
+  stable: [],
+  unicorn: {
+    "id": 8,
+    "name": "CANNIBAL BABY UNICORN",
+    "type": "Baby Unicorn",
+    "description": "If this card would be sacrificed, destroyed, or returned to your hand, return it to the Nursery instead.",
+    "Quantity": 1,
+    "Color": "Magenta"
+  }
 },{
   id: 2,
   name: "Malik",
-  isTurn: false,
-  hand: [],
-  stable: []
+  hand: [{
+    "id": 4,
+    "name": "FUCKING CUTE BABY UNICORN",
+    "type": "Baby Unicorn",
+    "description": "If this card would be sacrificed, destroyed, or returned to your hand, return it to the Nursery instead.",
+    "Quantity": 1,
+    "Color": "Magenta"
+  }],
+  stable: [],
+  unicorn: {
+    "id": 4,
+    "name": "FUCKING CUTE BABY UNICORN",
+    "type": "Baby Unicorn",
+    "description": "If this card would be sacrificed, destroyed, or returned to your hand, return it to the Nursery instead.",
+    "Quantity": 1,
+    "Color": "Magenta"
+  }
 },{
   id: 3,
   name: "Liz",
-  isTurn: false,
-  hand: [],
-  stable: []
+  hand: [{
+    "id": 13,
+    "name": "PAGEANT BABY UNICORN",
+    "type": "Baby Unicorn",
+    "description": "If this card would be sacrificed, destroyed, or returned to your hand, return it to the Nursery instead.",
+    "Quantity": 1,
+    "Color": "Magenta"
+  }],
+  stable: [],
+  unicorn: {
+    "id": 13,
+    "name": "PAGEANT BABY UNICORN",
+    "type": "Baby Unicorn",
+    "description": "If this card would be sacrificed, destroyed, or returned to your hand, return it to the Nursery instead.",
+    "Quantity": 1,
+    "Color": "Magenta"
+  }
+},{
+  id: 4,
+  name: "Troy",
+  hand: [{
+    "id": 7,
+    "name": "BABY UNICORN OF INCEST",
+    "type": "Baby Unicorn",
+    "description": "If this card would be sacrificed, destroyed, or returned to your hand, return it to the Nursery instead.",
+    "Quantity": 1,
+    "Color": "Magenta"
+  }],
+  stable: [],
+  unicorn: {
+    "id": 7,
+    "name": "BABY UNICORN OF INCEST",
+    "type": "Baby Unicorn",
+    "description": "If this card would be sacrificed, destroyed, or returned to your hand, return it to the Nursery instead.",
+    "Quantity": 1,
+    "Color": "Magenta"
+  }
 }], action) {
     switch (action.type) {
-        case 'SET_PLAYERS': return action.players
+        case 'SET_PLAYERS':
+        case 'START_GAME': return action.players
 
         default:
             return state
@@ -55,13 +119,15 @@ function players (state = [{
 }
 
 function decks (state = {
-  drawPile: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20],
+  drawPile: [],
   nursery: [],
   discardPile: []
 }, action) {
     switch (action.type) {
         case 'UPDATE_DECKS':
-            return action.desks
+        case 'START_GAME':
+            console.log(action)
+            return action.decks
 
         case 'UPDATE_DRAWPILE':
             return decks.drawPile = action.deck
@@ -81,7 +147,8 @@ const rootReducer = combineReducers({
     game,
     options,
     players,
-    decks
+    decks,
+    cards
 })
 
 export default rootReducer

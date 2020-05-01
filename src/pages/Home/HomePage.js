@@ -4,43 +4,117 @@ import { connect } from 'react-redux';
 import socketIOClient from "socket.io-client";
 import './HomePage.css';
 import { setPlayers, startGame } from 'actions';
+import GroupBy from 'lodash/groupBy';
+import Remove  from 'lodash/remove';
+import Shuffle  from 'lodash/shuffle';
+import { Dropdown, Image, Item, Segment } from 'semantic-ui-react';
 const ENDPOINT = "http://127.0.0.1:3001";
+const colors = ['purple', 'blue', 'teal', 'green', 'yellow', 'orange', 'red'];
 
 function HomePage(props) {
   const [players, setPlayers] = useState(props.players);
   const [username, setUsername] = useState("");
-  const [response, setResponse] = useState("");
+  const [unicorn, setUnicorn] = useState({});
+  const [babyUnicorns, setBabyUnicorns] = useState(GroupBy(props.game.cards, 'type')['Baby Unicorn']);
 
   useEffect(() => {
     const socket = socketIOClient(ENDPOINT);
-    socket.on("FromAPI", data => {
-      setResponse(data);
-    });
+    // socket.on("FromAPI", data => {
+    //   setResponse(data);
+    // });
 
-    socket.emit('drawCard', 'hey')
+    socket.emit('drawCard', '')
+
+    // Uncomment this to start game on load
+    // startGame()
   }, []);
 
 
 
   function addPlayer() {
-    const updatedPlayers = [...players, username]
+    const updatedPlayers = [...players, {
+      id: players.length + 1,
+      name: username,
+      unicorn,
+      hand: [unicorn]
+    }]
+
+    let unicornsLeft = babyUnicorns.splice(unicorn.index, 1);
+    setBabyUnicorns(babyUnicorns);
     setPlayers(updatedPlayers)
     setUsername("")
-    props.setUsers(updatedPlayers)
+    setUnicorn({})
+    props.setPlayers(updatedPlayers)
+  }
+
+  function selectUnicorn(unicorn, index) {
+    setUnicorn({
+      index,
+      ...unicorn
+    });
+  }
+
+  function deal(deck, players = props.players) {
+    let dealAmount = players.length < 6 ? 5 : 6;
+    for (let i = 0; i < (players.length * dealAmount); i++ ){
+      const playerIndex = i % players.length;
+      const card = deck.splice(0,1)[0];
+      players[playerIndex].hand.push(card);
+    }
+    return [deck, players];
   }
 
   function startGame() {
-    props.startGame()
+    Remove(props.game.cards, c => {
+      return c.type === 'Baby Unicorn'
+    })
+
+    const [drawPile, players] = deal(Shuffle(props.game.cards), props.players)
+
+    props.startGame({}, {
+      drawPile,
+      nursery: babyUnicorns,
+      discardPile: []
+    },
+    players)
   }
 
   return (
     <div style={{display: props.game.playing ? 'none' : 'block'}}>
+    <Dropdown
+      text='Select Unicorn'
+      icon='plus'
+      floating
+      labeled
+      button
+      className='icon'
+    >
+      <Dropdown.Menu>
+        <Dropdown.Header content='Unicorns Available' />
+        {babyUnicorns.map((option, i) => (
+          <Dropdown.Item onClick={() => { selectUnicorn(option, i)}} key={option.id} value={option} text={option.name} image={`images/${option.id}.jpg`}  />
+        ))}
+      </Dropdown.Menu>
+    </Dropdown>
+      {unicorn.id ? <Image src={`images/${unicorn.id}.jpg`} avatar /> : null }
       Add Player: <input value={username} id="addUserText" onChange={(e) => setUsername(e.target.value)} /> <button onClick={addPlayer}>Add</button>
 
       <h2>Players</h2>
-      {players.map(player => {
-        return <p>{player.name}</p>
-      })}
+      <Item.Group style={{width: '500px'}}>
+        {players.map(player => {
+          return (
+            <Segment inverted color={colors[player.id - 1]}>
+              <Item>
+                <Item.Image size='tiny' src={`images/${player.unicorn.id}.jpg`} />
+                <Item.Content verticalAlign='middle'>
+                  <Item.Header>{player.name}</Item.Header>
+                </Item.Content>
+              </Item>
+            </Segment>
+          )
+        })}
+      </Item.Group>
+
 
       <button onClick={startGame}>Start Game</button>
     </div>

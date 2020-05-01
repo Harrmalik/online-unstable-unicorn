@@ -3,34 +3,17 @@ import './GamePage.css';
 import socketIOClient from "socket.io-client";
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import GameInitialization from './GameInitialization.js';
 import { startGame } from 'actions';
 import StableComponent from './components/Stable/StableComponent'
 
 const ENDPOINT = "http://127.0.0.1:3001";
-
-const hand = [{
-  id: 1,
-  name: 'SHOTGUN BABY UNICORN',
-  type: 'Baby Unicorn',
-  description: 'If this card would be sacrificed, destroyed, or returned to your hand, return it to the Nursery instead.'
-},{
-  id: 2,
-  name: 'BYE BYE BABY UNICORN',
-  type: 'Baby Unicorn',
-  description: 'If this card would be sacrificed, destroyed, or returned to your hand, return it to the Nursery instead.'
-},{
-  id: 3,
-  name: 'DUMPSTER BABY UNICORN',
-  type: 'Baby Unicorn',
-  description: 'If this card would be sacrificed, destroyed, or returned to your hand, return it to the Nursery instead.'
-},]
 
 function GamePage(props) {
   useEffect(() => {
     // document.background = url('https://img.freepik.com/free-vector/unicorn-cool-dance_77271-71.jpg?size=338&ext=jpg');
   })
 
+  if (props.game.playing)
   return (
     <div style={{display: !props.game.playing ? 'none' : 'block'}}>
 
@@ -42,10 +25,18 @@ function GamePage(props) {
         - My hand -> cards view -> quick view and click for more details
         - Options -> for later */}
 
-      <GameInitialization/>
-      <StableComponent hand={hand}/>
+        {props.players.map(player => {
+          return (
+            <div>
+              <StableComponent hand={player.hand}/>
+            </div>
+          )
+        })}
+
     </div>
   );
+
+  return null
 }
 
 // NOTES
