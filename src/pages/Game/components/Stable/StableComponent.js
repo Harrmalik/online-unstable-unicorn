@@ -6,7 +6,7 @@ import CardComponent from 'components/Card/CardComponent';
 
 function StableComponent(props) {
   return (
-    <div>
+    <div className="stable">
       <Card.Group>
         {props.hand.map(card => {
           return <CardComponent key={card.id} card={card}/>

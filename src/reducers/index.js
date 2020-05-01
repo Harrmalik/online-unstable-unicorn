@@ -30,6 +30,7 @@ function options (state = defaultOptions, action) {
 
 function players (state = [{
   id: 1,
+  color: 'purple',
   name: "tyler",
   hand: [{
     "id": 8,
@@ -51,6 +52,7 @@ function players (state = [{
 },{
   id: 2,
   name: "Malik",
+  color: 'blue',
   hand: [{
     "id": 4,
     "name": "FUCKING CUTE BABY UNICORN",
@@ -71,6 +73,7 @@ function players (state = [{
 },{
   id: 3,
   name: "Liz",
+  color: 'teal',
   hand: [{
     "id": 13,
     "name": "PAGEANT BABY UNICORN",
@@ -90,6 +93,7 @@ function players (state = [{
   }
 },{
   id: 4,
+  color: 'green',
   name: "Troy",
   hand: [{
     "id": 7,

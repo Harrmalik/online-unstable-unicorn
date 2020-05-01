@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { startGame } from 'actions';
 import StableComponent from './components/Stable/StableComponent'
+import PlayersView from 'components/PlayersView/PlayersView.js'
 
 const ENDPOINT = "http://127.0.0.1:3001";
 
@@ -24,15 +25,8 @@ function GamePage(props) {
         - stables -> cards in play for each user
         - My hand -> cards view -> quick view and click for more details
         - Options -> for later */}
-
-        {props.players.map(player => {
-          return (
-            <div>
-              <StableComponent hand={player.hand}/>
-            </div>
-          )
-        })}
-
+        <PlayersView players={props.players}/>
+        <StableComponent hand={props.players[1].hand}/>
     </div>
   );
 

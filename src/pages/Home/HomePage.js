@@ -34,6 +34,7 @@ function HomePage(props) {
   function addPlayer() {
     const updatedPlayers = [...players, {
       id: players.length + 1,
+      color: colors[players.length + 1],
       name: username,
       unicorn,
       hand: [unicorn]
@@ -103,7 +104,7 @@ function HomePage(props) {
       <Item.Group style={{width: '500px'}}>
         {players.map(player => {
           return (
-            <Segment inverted color={colors[player.id - 1]}>
+            <Segment inverted color={player.color}>
               <Item>
                 <Item.Image size='tiny' src={`images/${player.unicorn.id}.jpg`} />
                 <Item.Content verticalAlign='middle'>

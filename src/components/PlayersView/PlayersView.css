@@ -1,0 +1,9 @@
+#players-view {
+  position: absolute;
+  left: 0;
+  width: 7em;
+}
+
+#players-view .ui.card {
+
+}
