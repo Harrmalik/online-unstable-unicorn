@@ -9,43 +9,38 @@ import Remove  from 'lodash/remove';
 import Shuffle  from 'lodash/shuffle';
 import { Dropdown, Image, Item, Segment } from 'semantic-ui-react';
 const ENDPOINT = "http://127.0.0.1:3001";
+
+const socket = socketIOClient(ENDPOINT);
 const colors = ['purple', 'blue', 'teal', 'green', 'yellow', 'orange', 'red'];
 
 function HomePage(props) {
-  const [players, setPlayers] = useState(props.players);
   const [username, setUsername] = useState("");
   const [unicorn, setUnicorn] = useState({});
   const [babyUnicorns, setBabyUnicorns] = useState(GroupBy(props.game.cards, 'type')['Baby Unicorn']);
 
   useEffect(() => {
-    const socket = socketIOClient(ENDPOINT);
-    // socket.on("FromAPI", data => {
-    //   setResponse(data);
-    // });
-
-    socket.emit('drawCard', '')
-
+    socket.on('player added', players => {
+      props.setPlayers(players)
+    })
     // Uncomment this to start game on load
     // startGame()
   }, []);
 
-
-
   function addPlayer() {
-    const updatedPlayers = [...players, {
-      id: players.length + 1,
-      color: colors[players.length + 1],
+    const newPlayer = {
+      id: props.players.length + 1,
+      color: colors[props.players.length + 1],
       name: username,
       unicorn,
       hand: [unicorn]
-    }]
+    };
+    const updatedPlayers = [...props.players, newPlayer]
 
     let unicornsLeft = babyUnicorns.splice(unicorn.index, 1);
     setBabyUnicorns(babyUnicorns);
-    setPlayers(updatedPlayers)
     setUsername("")
     setUnicorn({})
-    props.setPlayers(updatedPlayers)
+    socket.emit('add player', updatedPlayers)
   }
 
   function selectUnicorn(unicorn, index) {
@@ -93,7 +88,7 @@ function HomePage(props) {
       <Dropdown.Menu>
         <Dropdown.Header content='Unicorns Available' />
         {babyUnicorns.map((option, i) => (
-          <Dropdown.Item onClick={() => { selectUnicorn(option, i)}} key={option.id} value={option} text={option.name} image={`images/${option.id}.jpg`}  />
+          <Dropdown.Item onClick={() => { selectUnicorn(option, i)}} key={option.id} text={option.name} image={`images/${option.id}.jpg`}  />
         ))}
       </Dropdown.Menu>
     </Dropdown>
@@ -102,9 +97,9 @@ function HomePage(props) {
 
       <h2>Players</h2>
       <Item.Group style={{width: '500px'}}>
-        {players.map(player => {
+        {props.players.map(player => {
           return (
-            <Segment inverted color={player.color}>
+            <Segment key={player.id} inverted color={player.color}>
               <Item>
                 <Item.Image size='tiny' src={`images/${player.unicorn.id}.jpg`} />
                 <Item.Content verticalAlign='middle'>
