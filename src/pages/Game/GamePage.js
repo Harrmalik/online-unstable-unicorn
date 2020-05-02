@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { startGame } from 'actions';
 import StableComponent from './components/Stable/StableComponent'
+import Field from './components/Field/Field.js'
 import PlayersView from 'components/PlayersView/PlayersView.js'
 
 function GamePage(props) {
@@ -26,6 +27,7 @@ function GamePage(props) {
         - My hand -> cards view -> quick view and click for more details
         - Options -> for later */}
         <PlayersView players={props.players}/>
+        <Field></Field>
         <StableComponent hand={props.players[playerId-1].hand}/>
     </div>
   );
