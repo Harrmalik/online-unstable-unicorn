@@ -17,6 +17,14 @@ function socket (state = socketServer, action) {
     }
 }
 
+function currentPlayer (state = {}, action) {
+    switch (action.type) {
+        case 'SET_PLAYER': return action.player;
+        default:
+            return state
+    }
+}
+
 function game (state = {
   playing: false,
   cards,
@@ -129,7 +137,7 @@ let testPlayers = [{
   }
 }]
 
-function players (state = testPlayers, action) {
+function players (state = [], action) {
     switch (action.type) {
         case 'SET_PLAYERS':
         case 'START_GAME': return action.players
@@ -170,6 +178,7 @@ function decks (state = {
 
 const rootReducer = combineReducers({
     socket,
+    currentPlayer,
     game,
     options,
     players,

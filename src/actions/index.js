@@ -1,3 +1,8 @@
+export const setCurrentPlayer = (player) => ({
+    type: 'SET_PLAYER',
+    player
+})
+
 export const setPlayers = (players) => ({
     type: 'SET_PLAYERS',
     players

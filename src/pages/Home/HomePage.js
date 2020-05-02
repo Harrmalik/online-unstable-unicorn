@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import './HomePage.css';
-import { setPlayers, startGame } from 'actions';
+import { setCurrentPlayer, setPlayers, startGame } from 'actions';
 import GroupBy from 'lodash/groupBy';
 import Remove  from 'lodash/remove';
 import Shuffle  from 'lodash/shuffle';
@@ -127,6 +127,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
+    setCurrentPlayer: bindActionCreators(setCurrentPlayer, dispatch),
     setPlayers: bindActionCreators(setPlayers, dispatch),
     startGame: bindActionCreators(startGame, dispatch),
 })
