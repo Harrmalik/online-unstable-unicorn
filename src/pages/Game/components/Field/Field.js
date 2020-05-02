@@ -7,21 +7,20 @@ import './Field.css';
 
 function Field(props) {
   function clickDeck(deckKey) {
-    // if (deckKey == 'drawPile') {
-    //   const nextCard = props.decks[deckKey].splice(0, 1);
-    //   props.player.hand.push(nextCard);
-    //   updateDeck(props.decks[deckKey]);
-    //   updateHand(props.player.hand);
-    // }
+    if (deckKey == 'drawPile') {
+      const nextCard = props.decks[deckKey].splice(0, 1);
+      props.player.hand.push(nextCard);
+      updateDeck(props.decks[deckKey]);
+      updateHand(props.player.hand);
+    }
   }
 
-  console.log(props)
   return (
-    <div class="field">
+    <div className="field">
       {
         Object.keys(props.decks).map(deckKey => {
           return (
-          <Card raised className="nursery" onClick={() => { clickDeck(deckKey)}}>
+          <Card key={deckKey} raised className="nursery" onClick={() => { clickDeck(deckKey)}}>
             <Image
             label={{
                 color: 'black',
@@ -48,6 +47,6 @@ const mapDispatchToProps = dispatch => ({
 })
 
 export default connect(
-  mapDispatchToProps,
-  mapStateToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(Field)

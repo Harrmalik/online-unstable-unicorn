@@ -8,7 +8,7 @@ function PlayersView(props) {
       <Card.Group itemsPerRow={1}>
         {props.players.map(player => {
           return (
-            <Card raised key={player.id} image={`images/${player.unicorn.id}.jpg`}>
+            <Card raised key={player.id}>
               <Image
               label={{
                   color: player.color,

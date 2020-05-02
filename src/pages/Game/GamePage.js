@@ -8,29 +8,23 @@ import Field from './components/Field/Field.js'
 import PlayersView from 'components/PlayersView/PlayersView.js'
 
 function GamePage(props) {
-  const [playerId, setPlayerId] = useState(0);
-  useEffect(() => {
-    props.socket.on('youAre', index => {
-      setPlayerId(index);
-    })
-  })
+  if (props.game.playing) {
+    return (
+      <div style={{display: !props.game.playing ? 'none' : 'block'}}>
 
-  if (props.game.playing)
-  return (
-    <div style={{display: !props.game.playing ? 'none' : 'block'}}>
+        {/* // Each should be a separate component
 
-      {/* // Each should be a separate component
-
-        - props.usersUI -> user avatar + num cards in hands
-        - Decks UI [draw, nursery, discard]
-        - stables -> cards in play for each user
-        - My hand -> cards view -> quick view and click for more details
-        - Options -> for later */}
-        <PlayersView players={props.players}/>
-        <Field player={props.players[playerId-1]}></Field>
-        <StableComponent hand={props.players[playerId-1].hand}/>
-    </div>
-  );
+          - props.usersUI -> user avatar + num cards in hands
+          - Decks UI [draw, nursery, discard]
+          - stables -> cards in play for each user
+          - My hand -> cards view -> quick view and click for more details
+          - Options -> for later */}
+          <PlayersView players={props.players}/>
+          <Field player={props.players[props.currentPlayer - 1]}></Field>
+          <StableComponent hand={props.players[props.currentPlayer - 1].hand}/>
+      </div>
+    );
+  }
 
   return null
 }
@@ -47,6 +41,7 @@ function GamePage(props) {
 // socketIOClient.emit('functionName') for later user but an FYI
 
 const mapStateToProps = state => ({
+  currentPlayer: state.currentPlayer,
   players: state.players,
   game: state.game,
   decks: state.decks,

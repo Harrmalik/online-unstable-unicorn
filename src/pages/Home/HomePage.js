@@ -6,25 +6,55 @@ import { setCurrentPlayer, setPlayers, startGame } from 'actions';
 import GroupBy from 'lodash/groupBy';
 import Remove  from 'lodash/remove';
 import Shuffle  from 'lodash/shuffle';
+import Reduce  from 'lodash/reduce';
 import { Dropdown, Image, Item, Segment } from 'semantic-ui-react';
 const colors = ['purple', 'blue', 'teal', 'green', 'yellow', 'orange', 'red'];
 
 function HomePage(props) {
+  const [currentPlayer, setCurrentPlayer] = useState(localStorage.getItem('currentPlayer'));
+  const [babyUnicorns, setBabyUnicorns] = useState(GroupBy(props.game.cards, 'type')['Baby Unicorn']);
+  const [inLobby, setLobby] = useState(0);
   const [username, setUsername] = useState("");
   const [unicorn, setUnicorn] = useState({});
-  const [babyUnicorns, setBabyUnicorns] = useState(GroupBy(props.game.cards, 'type')['Baby Unicorn']);
 
   useEffect(() => {
-    props.socket.on('player added', players => {
+    // Set current player, if they refreshed the page after creating a player
+    if (!props.currentPlayer && currentPlayer) {
+      props.setCurrentPlayer(currentPlayer);
+    }
+
+    // Set current lobby and remove any unicorns currently in use
+    props.socket.on('userConnected', (inLobby, inGame) => {
+      const usedUnicorns = Reduce(inGame, (newArr, player) => {
+        return [...newArr, player.unicorn.id];
+      }, []);
+      const babyUnicornsRemaining = []
+
+      for (var i = 0; i < babyUnicorns.length; i++) {
+        let unicornIndex = usedUnicorns.findIndex(usedUnicornId => {
+          return usedUnicornId === babyUnicorns[i].id
+        })
+
+        if (unicornIndex === -1) {
+          babyUnicornsRemaining.push(babyUnicorns[i])
+        }
+      }
+
+      setLobby(inLobby);
+      props.setPlayers(inGame)
+      setBabyUnicorns(babyUnicornsRemaining);
+
+      // Uncomment to start game on load
+      // startGame(props.game.cards, inGame)
+    })
+
+    props.socket.on('playerAdded', players => {
       props.setPlayers(players)
     })
 
     props.socket.on('startingGame', (options, decks, players) => {
       props.startGame(options, decks, players)
     })
-
-    // Uncomment this to start game on load
-    // startGame()
   }, []);
 
   function addPlayer() {
@@ -41,7 +71,10 @@ function HomePage(props) {
     setBabyUnicorns(babyUnicorns);
     setUsername("")
     setUnicorn({})
-    props.socket.emit('add player', updatedPlayers)
+    props.setCurrentPlayer(newPlayer);
+    localStorage.setItem('currentPlayer', newPlayer.id);
+    setCurrentPlayer(newPlayer.id);
+    props.socket.emit('addPlayer', updatedPlayers);
   }
 
   function selectUnicorn(unicorn, index) {
@@ -61,25 +94,28 @@ function HomePage(props) {
     return [deck, players];
   }
 
-  function startGame() {
-    Remove(props.game.cards, c => {
+  function startGame(cards = props.game.cards, currentPlayers = props.players) {
+    console.log(cards, currentPlayers)
+    Remove(cards, c => {
       return c.type === 'Baby Unicorn'
     })
 
-    const [drawPile, players] = deal(Shuffle(props.game.cards), props.players)
+    const [drawPile, updatedPlayers] = deal(Shuffle(cards), currentPlayers)
 
     props.socket.emit('startGame', {
-      whosTurn: props.players[0]
+      whosTurn: currentPlayers[0]
     }, {
       drawPile,
       nursery: babyUnicorns,
       discardPile: []
     },
-    players)
+    updatedPlayers)
   }
 
   return (
     <div style={{display: props.game.playing ? 'none' : 'block'}}>
+    { !currentPlayer ?
+      <div>
     <Dropdown
       text='Select Unicorn'
       icon='plus'
@@ -97,6 +133,8 @@ function HomePage(props) {
     </Dropdown>
       {unicorn.id ? <Image src={`images/${unicorn.id}.jpg`} avatar /> : null }
       Add Player: <input value={username} id="addUserText" onChange={(e) => setUsername(e.target.value)} /> <button onClick={addPlayer}>Add</button>
+      </div>
+      : null }
 
       <h2>Players</h2>
       <Item.Group style={{width: '500px'}}>
@@ -115,12 +153,14 @@ function HomePage(props) {
       </Item.Group>
 
 
-      <button onClick={startGame}>Start Game</button>
+      <p>{inLobby - props.players.length} player(s) left to make characters</p>
+      <button onClick={() => { startGame() }}>Start Game</button>
     </div>
   );
 }
 
 const mapStateToProps = state => ({
+  currentPlayer: state.player,
   players: state.players,
   game: state.game,
   socket: state.socket
