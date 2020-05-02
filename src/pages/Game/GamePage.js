@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from "react";
 import './GamePage.css';
-import socketIOClient from "socket.io-client";
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { startGame } from 'actions';
 import StableComponent from './components/Stable/StableComponent'
 import PlayersView from 'components/PlayersView/PlayersView.js'
 
-const ENDPOINT = "http://127.0.0.1:3001";
-
 function GamePage(props) {
+  const [playerId, setPlayerId] = useState(0);
   useEffect(() => {
-    // document.background = url('https://img.freepik.com/free-vector/unicorn-cool-dance_77271-71.jpg?size=338&ext=jpg');
+    props.socket.on('youAre', index => {
+      setPlayerId(index);
+    })
   })
 
   if (props.game.playing)
@@ -26,7 +26,7 @@ function GamePage(props) {
         - My hand -> cards view -> quick view and click for more details
         - Options -> for later */}
         <PlayersView players={props.players}/>
-        <StableComponent hand={props.players[1].hand}/>
+        <StableComponent hand={props.players[playerId-1].hand}/>
     </div>
   );
 
@@ -47,7 +47,8 @@ function GamePage(props) {
 const mapStateToProps = state => ({
   players: state.players,
   game: state.game,
-  decks: state.decks
+  decks: state.decks,
+  socket: state.socket
 })
 
 const mapDispatchToProps = dispatch => ({

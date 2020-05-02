@@ -1,16 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import socketIOClient from "socket.io-client";
 import './HomePage.css';
 import { setPlayers, startGame } from 'actions';
 import GroupBy from 'lodash/groupBy';
 import Remove  from 'lodash/remove';
 import Shuffle  from 'lodash/shuffle';
 import { Dropdown, Image, Item, Segment } from 'semantic-ui-react';
-const ENDPOINT = "http://127.0.0.1:3001";
-
-const socket = socketIOClient(ENDPOINT);
 const colors = ['purple', 'blue', 'teal', 'green', 'yellow', 'orange', 'red'];
 
 function HomePage(props) {
@@ -19,9 +15,14 @@ function HomePage(props) {
   const [babyUnicorns, setBabyUnicorns] = useState(GroupBy(props.game.cards, 'type')['Baby Unicorn']);
 
   useEffect(() => {
-    socket.on('player added', players => {
+    props.socket.on('player added', players => {
       props.setPlayers(players)
     })
+
+    props.socket.on('startingGame', (options, decks, players) => {
+      props.startGame(options, decks, players)
+    })
+
     // Uncomment this to start game on load
     // startGame()
   }, []);
@@ -40,7 +41,7 @@ function HomePage(props) {
     setBabyUnicorns(babyUnicorns);
     setUsername("")
     setUnicorn({})
-    socket.emit('add player', updatedPlayers)
+    props.socket.emit('add player', updatedPlayers)
   }
 
   function selectUnicorn(unicorn, index) {
@@ -67,7 +68,9 @@ function HomePage(props) {
 
     const [drawPile, players] = deal(Shuffle(props.game.cards), props.players)
 
-    props.startGame({}, {
+    props.socket.emit('startGame', {
+      whosTurn: props.players[0]
+    }, {
       drawPile,
       nursery: babyUnicorns,
       discardPile: []
@@ -119,7 +122,8 @@ function HomePage(props) {
 
 const mapStateToProps = state => ({
   players: state.players,
-  game: state.game
+  game: state.game,
+  socket: state.socket
 })
 
 const mapDispatchToProps = dispatch => ({
