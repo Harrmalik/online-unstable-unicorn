@@ -1,17 +1,32 @@
-import { combineReducers } from 'redux'
-import cards from './cards.js'
+import { combineReducers } from 'redux';
+import cards from './cards.js';
+import socketIOClient from "socket.io-client";
 
 let defaultOptions = {
   gameid: 0,
   gameDuration: '',
   expansion: '',
   winCondition: ''
+};
+const socketServer = socketIOClient("http://127.0.0.1:3001");
+
+function socket (state = socketServer, action) {
+    switch (action.type) {
+        default:
+            return state
+    }
 }
 
-
-function game (state = {playing: false, cards}, action) {
+function game (state = {
+  playing: false,
+  cards,
+  whosTurn: {},
+  turn: 1
+}, action) {
     switch (action.type) {
-        case 'START_GAME': return {
+        case 'START_GAME':
+        return {
+          ...state,
           ...action.options,
           playing: true
         }
@@ -28,7 +43,7 @@ function options (state = defaultOptions, action) {
     }
 }
 
-function players (state = [{
+let testPlayers = [{
   id: 1,
   color: 'purple',
   name: "tyler",
@@ -112,7 +127,9 @@ function players (state = [{
     "Quantity": 1,
     "Color": "Magenta"
   }
-}], action) {
+}]
+
+function players (state = testPlayers, action) {
     switch (action.type) {
         case 'SET_PLAYERS':
         case 'START_GAME': return action.players
@@ -152,6 +169,7 @@ function decks (state = {
 }
 
 const rootReducer = combineReducers({
+    socket,
     game,
     options,
     players,

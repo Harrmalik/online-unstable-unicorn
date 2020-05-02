@@ -2,11 +2,11 @@ var app = require('express')();
 var http = require('http').createServer(app);
 var io = require('socket.io')(http);
 
-let users = [];
+let count = 1;
 
 io.on('connection', (socket) => {
-  users.push(socket)
   console.log('a user connected');
+  socket.emit('youAre', count++);
   socket.on('add player', players => {
     io.emit('player added', players)
     console.log('users connected: ', players.length);
@@ -15,8 +15,8 @@ io.on('connection', (socket) => {
     console.log('message: ' + msg);
   });
 
-  socket.on('startGame', (msg) => {
-    console.log('start');
+  socket.on('startGame', (options, decks, players) => {
+    io.emit('startingGame', options, decks, players)
   });
 
   socket.on('drawCard', (msg) => {
@@ -33,6 +33,10 @@ io.on('connection', (socket) => {
 
   socket.on('endGame', (msg) => {
     console.log('end turn');
+  });
+
+  socket.on('disconnect', () => {
+    console.log('user disconnected');
   });
 });
 
