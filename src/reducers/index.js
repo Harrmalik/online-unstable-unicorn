@@ -167,6 +167,10 @@ function decks (state = {
         case 'UPDATE_DISCARDPILE':
             return decks.discardPile = action.deck
 
+        case 'DRAW_CARD':
+          
+
+
         default:
             return state
     }

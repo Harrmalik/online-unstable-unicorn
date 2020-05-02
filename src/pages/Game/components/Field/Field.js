@@ -10,7 +10,7 @@ function Field(props) {
       {
         Object.keys(props.decks).map(deckKey => {
           return (
-          <Card raised className="nursery">
+          <Card raised className="nursery" onClick={clickDeck(deckKey)}>
             <Image
             label={{
                 color: 'black',
@@ -26,11 +26,26 @@ function Field(props) {
   )
 }
 
+function clickDeck(deckKey) {
+  if (deckKey == 'drawPile') {
+    const nextCard = props.decks[deckKey].splice(0, 1);
+    props.player.hand.push(nextCard);
+    updateDeck(props.decks[deckKey]);
+    updateHand(props.player.hand);
+  }
+}
+
 const mapStateToProps = state => ({
   game: state.game,
   decks: state.decks
 })
 
+const mapDispatchToProps = dispatch => ({
+  updateDeck: bindActionCreators(updateDeck, dispatch),
+  updateHand: bindActionCreators(updateHand, dispatch),
+})
+
 export default connect(
+  mapDispatchToProps,
   mapStateToProps
 )(Field)

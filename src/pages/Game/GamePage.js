@@ -27,6 +27,7 @@ function GamePage(props) {
         - My hand -> cards view -> quick view and click for more details
         - Options -> for later */}
         <PlayersView players={props.players}/>
+        <Field player={props.players[playerId-1]}></Field>
         <Field></Field>
         <StableComponent hand={props.players[playerId-1].hand}/>
     </div>
