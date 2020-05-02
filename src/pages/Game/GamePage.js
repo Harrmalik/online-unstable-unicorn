@@ -28,7 +28,6 @@ function GamePage(props) {
         - Options -> for later */}
         <PlayersView players={props.players}/>
         <Field player={props.players[playerId-1]}></Field>
-        <Field></Field>
         <StableComponent hand={props.players[playerId-1].hand}/>
     </div>
   );

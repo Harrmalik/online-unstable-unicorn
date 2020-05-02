@@ -1,16 +1,27 @@
 import React, { useState, useEffect } from "react";
+import { bindActionCreators } from 'redux';
+import { updateDeck, updateHand } from 'actions';
 import { Card, Label, Image } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import './Field.css';
 
 function Field(props) {
+  function clickDeck(deckKey) {
+    // if (deckKey == 'drawPile') {
+    //   const nextCard = props.decks[deckKey].splice(0, 1);
+    //   props.player.hand.push(nextCard);
+    //   updateDeck(props.decks[deckKey]);
+    //   updateHand(props.player.hand);
+    // }
+  }
 
+  console.log(props)
   return (
     <div class="field">
       {
         Object.keys(props.decks).map(deckKey => {
           return (
-          <Card raised className="nursery" onClick={clickDeck(deckKey)}>
+          <Card raised className="nursery" onClick={() => { clickDeck(deckKey)}}>
             <Image
             label={{
                 color: 'black',
@@ -24,15 +35,6 @@ function Field(props) {
       }
     </div>
   )
-}
-
-function clickDeck(deckKey) {
-  if (deckKey == 'drawPile') {
-    const nextCard = props.decks[deckKey].splice(0, 1);
-    props.player.hand.push(nextCard);
-    updateDeck(props.decks[deckKey]);
-    updateHand(props.player.hand);
-  }
 }
 
 const mapStateToProps = state => ({
