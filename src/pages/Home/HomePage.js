@@ -45,7 +45,7 @@ function HomePage(props) {
       setBabyUnicorns(babyUnicornsRemaining);
 
       // Uncomment to start game on load
-      // startGame(props.game.cards, inGame)
+      // startGame(props.game.cards, inGame, currentPlayer)
     })
 
     props.socket.on('playerAdded', players => {
@@ -53,7 +53,7 @@ function HomePage(props) {
     })
 
     props.socket.on('startingGame', (options, decks, players) => {
-      props.startGame(options, decks, players)
+      props.startGame(options, decks, players, currentPlayer)
     })
   }, []);
 
@@ -95,7 +95,6 @@ function HomePage(props) {
   }
 
   function startGame(cards = props.game.cards, currentPlayers = props.players) {
-    console.log(cards, currentPlayers)
     Remove(cards, c => {
       return c.type === 'Baby Unicorn'
     })
@@ -103,6 +102,7 @@ function HomePage(props) {
     const [drawPile, updatedPlayers] = deal(Shuffle(cards), currentPlayers)
 
     props.socket.emit('startGame', {
+      ...props.game,
       whosTurn: currentPlayers[0]
     }, {
       drawPile,

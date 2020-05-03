@@ -1,5 +1,6 @@
 .stable .ui.cards>.card {
   max-width: 10em;
+  flex: 1;
 }
 
 .stable .ui.cards>.card:hover {

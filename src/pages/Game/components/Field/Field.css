@@ -3,7 +3,7 @@
   justify-content: center;
 }
 
-.nursery {
+.field .ui.card {
   height: 165px !important;
   width: 125px !important;
   margin: 10px !important;

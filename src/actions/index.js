@@ -8,21 +8,26 @@ export const setPlayers = (players) => ({
     players
 })
 
-export const startGame = (options, decks, players) => ({
+export const startGame = (options, decks, players, currentPlayer) => ({
     type: 'START_GAME',
     options,
     decks,
-    players
+    players,
+    currentPlayer
 })
 
-export const updateDeck = (deck) => ({
-    type: 'UPDATE_DECK',
-    deck
+export const updateDecks = (decks) => ({
+    type: `UPDATE_DECKS`,
+    decks
 })
 
 export const updateHand = (player) => ({
     type: 'UPDATE_HAND',
     player
+})
+
+export const nextPhase = () => ({
+    type: 'UPDATE_HAND'
 })
 
 export const addToInPlay = ({

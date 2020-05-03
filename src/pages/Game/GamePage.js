@@ -3,9 +3,11 @@ import './GamePage.css';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { startGame } from 'actions';
-import StableComponent from './components/Stable/StableComponent'
-import Field from './components/Field/Field.js'
-import PlayersView from 'components/PlayersView/PlayersView.js'
+import StableComponent from './components/Stable/StableComponent';
+import HandComponent from './components/Hand/HandComponent';
+import Field from './components/Field/Field.js';
+import ActionViewComponent from './components/ActionView/ActionViewComponent.js';
+import PlayersView from 'components/PlayersView/PlayersView.js';
 
 function GamePage(props) {
   if (props.game.playing) {
@@ -21,7 +23,8 @@ function GamePage(props) {
           - Options -> for later */}
           <PlayersView players={props.players}/>
           <Field player={props.players[props.currentPlayer - 1]}></Field>
-          <StableComponent hand={props.players[props.currentPlayer - 1].hand}/>
+          <ActionViewComponent/>
+          <HandComponent hand={props.players[props.currentPlayer - 1].hand}/>
       </div>
     );
   }

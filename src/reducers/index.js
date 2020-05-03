@@ -27,6 +27,20 @@ function currentPlayer (state = '', action) {
 
 function game (state = {
   playing: false,
+  phase: 0,
+  phases: [{
+    name: 'Effect',
+    actions: ['checkForEffects']
+  }, {
+    name: 'Draw',
+    actions: ['drawCard']
+  }, {
+    name: 'Action',
+    actions: ['playCard', 'drawCard']
+  }, {
+    name: 'EndTurn',
+    actions:['endTurn']
+  }],
   cards,
   whosTurn: {},
   turn: 1
@@ -38,23 +52,6 @@ function game (state = {
           ...action.options,
           playing: true
         }
-
-        default:
-            return state
-    }
-}
-
-function options (state = defaultOptions, action) {
-    switch (action.type) {
-        default:
-            return state
-    }
-}
-
-function players (state = [], action) {
-    switch (action.type) {
-        case 'SET_PLAYERS':
-        case 'START_GAME': return action.players
 
         default:
             return state
@@ -89,11 +86,31 @@ function decks (state = {
     }
 }
 
+function isMyTurn (state = defaultOptions, action) {
+
+    switch (action.type) {
+        case 'START_GAME':
+          return action.options.whosTurn.id === parseInt(action.currentPlayer)
+        default:
+            return state
+    }
+}
+
+function players (state = [], action) {
+    switch (action.type) {
+        case 'SET_PLAYERS':
+        case 'START_GAME': return action.players
+
+        default:
+            return state
+    }
+}
+
 const rootReducer = combineReducers({
     socket,
     currentPlayer,
     game,
-    options,
+    isMyTurn,
     players,
     decks,
     cards

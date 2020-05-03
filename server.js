@@ -90,14 +90,17 @@ let testPlayers = [
   }
 }]
 let connectedUsers = 0;
-let activePlayers = [];
+
+let currentGame = {};
+let currentDecks = {};
+let currentPlayers = [];
 
 io.on('connection', (socket) => {
   console.log(`a player connected, ${++connectedUsers} in lobby`);
    io.emit('userConnected', connectedUsers, testPlayers) // switch back to active users when ready
 
   socket.on('addPlayer', players => {
-    activePlayers = players
+    currentPlayers = players
     io.emit('playerAdded', players)
     console.log('users in game: ', players.length);
   })
@@ -105,12 +108,20 @@ io.on('connection', (socket) => {
     console.log('message: ' + msg);
   });
 
-  socket.on('startGame', (options, decks, players) => {
-    io.emit('startingGame', options, decks, players)
+  socket.on('startGame', (game, decks, players) => {
+    // if (!currentGame.turn) {
+      currentGame = game;
+      currentDecks = decks;
+      currentPlayers = players;
+    // }
+    io.emit('startingGame', currentGame, currentDecks, currentPlayers)
   });
 
-  socket.on('drawCard', (msg) => {
+  socket.on('drawCard', (decks, players) => {
     console.log('drawing card');
+    currentDecks.drawPile = decks;
+    currentPlayers = players;
+    io.emit('cardDrew', currentDecks, currentPlayers)
   });
 
   socket.on('playCard', (card) => {
