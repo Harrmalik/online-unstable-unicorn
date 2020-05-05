@@ -109,6 +109,7 @@ io.on('connection', (socket) => {
   });
 
   socket.on('startGame', (game, decks, players) => {
+    console.log('Starting Game')
     // if (!currentGame.turn) {
       currentGame = game;
       currentDecks = decks;
@@ -117,19 +118,51 @@ io.on('connection', (socket) => {
     io.emit('startingGame', currentGame, currentDecks, currentPlayers)
   });
 
-  socket.on('drawCard', (decks, players) => {
+  socket.on('endEffectPhase', phase => {
+    if (currentGame.phase === 0) {
+      console.log('Switching to ', phase, ' phase');
+      currentGame.phase = phase
+      io.emit('switchingPhase', phase);
+    }
+  })
+
+  socket.on('drawCard', (decks, players, phase) => {
+    if ([1,2].includes(currentGame.phase))
     console.log('drawing card');
     currentDecks.drawPile = decks;
     currentPlayers = players;
-    io.emit('cardDrew', currentDecks, currentPlayers)
+    currentGame.phase = phase;
+    io.emit('cardDrew', currentDecks, currentPlayers);
+    if (phase) {
+      io.emit('switchingPhase', phase);
+    }
   });
 
-  socket.on('playCard', (card) => {
-    console.log('play card');
+  socket.on('playCard', (card, updatedPlayers) => {
+    console.log('Attemping to play: ', card.name)
+    io.emit('attemptCardPlay', card, updatedPlayers);
   });
 
-  socket.on('endTurn', (msg) => {
-    console.log('end turn');
+  socket.on('endActionPhase', (phase, updatedDecks, updatedPlayers) => {
+    if (currentGame.phase === 2) {
+      console.log('card played');
+      currentGame.phase = phase;
+      currentPlayers = updatedPlayers;
+      currentDecks = updatedDecks;
+      io.emit('endingActionPhase', phase, updatedDecks, updatedPlayers);
+    }
+  });
+
+  socket.on('endTurn', (gameUpdates) => {
+    if (currentGame.phase === 3) {
+      console.log('Ending turn');
+      currentGame = {
+        ...currentGame,
+        ...gameUpdates,
+        phase: 0
+      }
+      io.emit('endingTurn', gameUpdates);
+    }
   });
 
   socket.on('endGame', (msg) => {

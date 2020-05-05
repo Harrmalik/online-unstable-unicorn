@@ -1,7 +1,10 @@
-.stable .ui.cards {
+.hand {
   position: absolute;
   bottom: 0;
   width: 70%;
   left: 15%;
+}
+
+.hand .ui.cards {
   display: flex;
 }

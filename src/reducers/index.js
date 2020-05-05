@@ -45,13 +45,27 @@ function game (state = {
   whosTurn: {},
   turn: 1
 }, action) {
+  let game = {...state};
     switch (action.type) {
         case 'START_GAME':
-        return {
-          ...state,
-          ...action.options,
-          playing: true
-        }
+          return {
+            ...state,
+            ...action.options,
+            playing: true
+          }
+
+        case 'NEXT_PHASE':
+        case 'END_ACTION_PHASE':
+          console.log('calling next phase')
+          game.phase = action.newPhase
+
+          return game
+
+        case 'END_TURN':
+          return {
+            ...game,
+            ...action.gameUpdates
+          }
 
         default:
             return state
@@ -66,7 +80,10 @@ function decks (state = {
     switch (action.type) {
         case 'UPDATE_DECKS':
         case 'START_GAME':
-            return action.decks
+            return action.decks;
+
+        case 'END_ACTION_PHASE':
+            return action.updatedDecks;
 
         case 'UPDATE_DRAWPILE':
             return decks.drawPile = action.deck
@@ -86,11 +103,28 @@ function decks (state = {
     }
 }
 
-function isMyTurn (state = defaultOptions, action) {
+function isMyTurn (state = false, action) {
 
     switch (action.type) {
         case 'START_GAME':
           return action.options.whosTurn.id === parseInt(action.currentPlayer)
+
+        case 'END_TURN':
+          return action.gameUpdates.whosTurn.id === parseInt(action.currentPlayer)
+
+        default:
+            return state
+    }
+}
+
+function isPlayingCard (state = false, action) {
+    switch (action.type) {
+        case 'PLAYING_CARD':
+          return action.isPlayingCard;
+
+        case 'END_ACTION_PHASE':
+          return false;
+
         default:
             return state
     }
@@ -99,7 +133,10 @@ function isMyTurn (state = defaultOptions, action) {
 function players (state = [], action) {
     switch (action.type) {
         case 'SET_PLAYERS':
-        case 'START_GAME': return action.players
+        case 'START_GAME': return action.players;
+
+        case 'END_ACTION_PHASE':
+          return action.updatedPlayers;
 
         default:
             return state
@@ -111,6 +148,7 @@ const rootReducer = combineReducers({
     currentPlayer,
     game,
     isMyTurn,
+    isPlayingCard,
     players,
     decks,
     cards

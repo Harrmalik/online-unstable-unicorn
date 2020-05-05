@@ -6,7 +6,7 @@ function CardComponent(props) {
   return (
     <Popup inverted
       trigger={
-        <Card>
+        <Card onClick={() => { props.callback(props.card, props.index) }}>
           <Image src={`images/${props.card.id}.jpg`} />
           <Card.Content>
             <Card.Header>{props.card.name}</Card.Header>

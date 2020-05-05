@@ -13,18 +13,11 @@ function GamePage(props) {
   if (props.game.playing) {
     return (
       <div style={{display: !props.game.playing ? 'none' : 'block'}}>
-
-        {/* // Each should be a separate component
-
-          - props.usersUI -> user avatar + num cards in hands
-          - Decks UI [draw, nursery, discard]
-          - stables -> cards in play for each user
-          - My hand -> cards view -> quick view and click for more details
-          - Options -> for later */}
           <PlayersView players={props.players}/>
           <Field player={props.players[props.currentPlayer - 1]}></Field>
           <ActionViewComponent/>
           <HandComponent hand={props.players[props.currentPlayer - 1].hand}/>
+          <StableComponent stable={props.players[props.currentPlayer - 1].stable}/>
       </div>
     );
   }
@@ -34,7 +27,6 @@ function GamePage(props) {
 
 // NOTES
 //-------------
-
 
 // Reducers folder -> contains state object for entire App
 // Action folder -> contains functions to be imported from -> import { setUsers, startGame } from './../../actions';

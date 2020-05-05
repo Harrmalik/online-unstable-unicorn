@@ -1,13 +1,11 @@
+// Current player actions
 export const setCurrentPlayer = (player) => ({
     type: 'SET_PLAYER',
     player
 })
 
-export const setPlayers = (players) => ({
-    type: 'SET_PLAYERS',
-    players
-})
 
+// Game actions
 export const startGame = (options, decks, players, currentPlayer) => ({
     type: 'START_GAME',
     options,
@@ -16,6 +14,26 @@ export const startGame = (options, decks, players, currentPlayer) => ({
     currentPlayer
 })
 
+export const nextPhase = (newPhase) => ({
+    type: 'NEXT_PHASE',
+    newPhase
+})
+
+export const endActionPhase = (newPhase, updatedDecks, updatedPlayers) => ({
+    type: 'END_ACTION_PHASE',
+    newPhase,
+    updatedDecks,
+    updatedPlayers
+})
+
+export const endTurn = (gameUpdates, currentPlayer) => ({
+    type: 'END_TURN',
+    gameUpdates,
+    currentPlayer
+})
+
+
+// Deck Actions
 export const updateDecks = (decks) => ({
     type: `UPDATE_DECKS`,
     decks
@@ -26,14 +44,21 @@ export const updateHand = (player) => ({
     player
 })
 
-export const nextPhase = () => ({
-    type: 'UPDATE_HAND'
+// Player actions
+export const setPlayers = (players) => ({
+    type: 'SET_PLAYERS',
+    players
 })
 
-export const addToInPlay = ({
+export const playCard = ({
   users,
   options
 }) => ({
     type: 'START_GAME',
     options
+})
+
+export const playingCard = (isPlayingCard) => ({
+    type: 'PLAYING_CARD',
+    isPlayingCard
 })

@@ -63,7 +63,8 @@ function HomePage(props) {
       color: colors[props.players.length + 1],
       name: username,
       unicorn,
-      hand: [unicorn]
+      hand: [unicorn],
+      playingCard: false
     };
     const updatedPlayers = [...props.players, newPlayer]
 
