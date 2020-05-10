@@ -11,7 +11,7 @@ import { Dropdown, Image, Item, Segment } from 'semantic-ui-react';
 const colors = ['purple', 'blue', 'teal', 'green', 'yellow', 'orange', 'red'];
 
 function HomePage(props) {
-  const [currentPlayer, setCurrentPlayer] = useState(localStorage.getItem('currentPlayer'));
+  const [currentPlayer, setCurrentPlayer] = useState(+localStorage.getItem('currentPlayer'));
   const [babyUnicorns, setBabyUnicorns] = useState(GroupBy(props.game.cards, 'type')['Baby Unicorn']);
   const [inLobby, setLobby] = useState(0);
   const [username, setUsername] = useState("");
