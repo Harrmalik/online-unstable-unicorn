@@ -15,7 +15,7 @@ function PlayersView(props) {
                   content: `${player.name}: H: ${player.hand.length} S: ${player.stable.length}`,
                   ribbon: true
                 }}
-               src={`images/${player.unicorn.id}.jpg`}/>
+               src={player.unicorn.url}/>
             </Card>
           )
         })}

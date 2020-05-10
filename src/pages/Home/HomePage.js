@@ -7,7 +7,7 @@ import GroupBy from 'lodash/groupBy';
 import Remove  from 'lodash/remove';
 import Shuffle  from 'lodash/shuffle';
 import Reduce  from 'lodash/reduce';
-import { Dropdown, Image, Item, Segment } from 'semantic-ui-react';
+import { Dropdown, Image, Item, Segment, Button } from 'semantic-ui-react';
 const colors = ['purple', 'blue', 'teal', 'green', 'yellow', 'orange', 'red'];
 
 function HomePage(props) {
@@ -63,7 +63,10 @@ function HomePage(props) {
       color: colors[props.players.length + 1],
       name: username,
       unicorn,
-      hand: [unicorn],
+      hand: [],
+      stable: [unicorn],
+      upgrades: [],
+      downgrades: [],
       playingCard: false
     };
     const updatedPlayers = [...props.players, newPlayer]
@@ -155,7 +158,7 @@ function HomePage(props) {
 
 
       <p>{inLobby - props.players.length} player(s) left to make characters</p>
-      <button onClick={() => { startGame() }}>Start Game</button>
+      <Button onClick={() => { startGame() }}  color="blue" size="massive">Start Game</Button>
     </div>
   );
 }

@@ -3,24 +3,52 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { setCurrentPlayer, setPlayers, startGame, nextPhase, endTurn, playingCard } from 'actions';
 import { Dropdown, Image, Item, Segment, Button } from 'semantic-ui-react';
+import groupBy from 'lodash/groupBy';
 
 
 function PlayerView(props) {
   const [phase, setPhase] = useState(props.game.phase);
   const [startedEffectPhase, setStartedEffectPhase] = useState(false)
   const [startedEndPhase, setStartedEndPhase] = useState(false)
+  const [effects, setEffects] = useState([])
+  const [numPlayersCheckedForInstants, setNumPlayersCheckedForInstants] = useState(0)
+  console.log(props)
+
+  useEffect(() => {
+    // console.log('calling use effect for player view')
+    props.socket.on('playerCheckedForInstant', player => {
+      // console.log('hey man from ', player.name)
+      setNumPlayersCheckedForInstants(numPlayersCheckedForInstants + 1)
+    })
+  })
+
   function checkForEffects() {
     console.log('has started effect phase: ', startedEffectPhase)
     if (!startedEffectPhase) {
-      console.log('emitint next turn')
+      let player = props.players[props.currentPlayer -1];
+      let stable = player.stable
+      const cardTypes = groupBy(stable, 'activateAtBeginning');
       setStartedEffectPhase(true)
-      setTimeout(() => {
-        props.nextPhase(1)
-        props.socket.emit('endEffectPhase', 1);
-        setStartedEndPhase(false)
-        // setPhase(phase + 1)
-      }, 3000)
+      setStartedEndPhase(false)
+      if (cardTypes['true']) {
+        setEffects(cardTypes['true'].map(card => {
+          //TODO: added in upgrades, downgrades
+          return {
+            ...card
+          }
+        }))
+      } else {
+          props.nextPhase(1)
+          props.socket.emit('endEffectPhase', 1);
+          setStartedEffectPhase(true)
+          setStartedEndPhase(false)
+      }
     }
+  }
+
+  function skipPhase() {
+    props.nextPhase(1)
+    props.socket.emit('endEffectPhase', 1);
   }
 
   function drawCard(phase) {
@@ -72,7 +100,10 @@ function PlayerView(props) {
     switch (props.game.phases[props.game.phase].name) {
       case 'Effect':
         checkForEffects()
-        return <EffectsView/>
+
+        return <EffectsView
+                  effects={effects}
+                  skipPhase={skipPhase}/>
         break;
       case 'Draw':
         return (
@@ -106,9 +137,13 @@ function PlayerView(props) {
 }
 
 function EffectsView(props) {
+  console.log('WE GO SOMETHING????? ', props)
   return (
     <div>
-      No Effects Found
+      {props.effects.map(effect => {
+        return <Button onClick={() => { props.skipPhase(2) }}>{effect.name}</Button>
+      })}
+      <Button onClick={() => { props.skipPhase(2) }}>Skip</Button>
     </div>
   )
 }
@@ -147,13 +182,14 @@ const mapStateToProps = state => ({
   socket: state.socket
 })
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch, ownProps) => ({
     setCurrentPlayer: bindActionCreators(setCurrentPlayer, dispatch),
     setPlayers: bindActionCreators(setPlayers, dispatch),
     startGame: bindActionCreators(startGame, dispatch),
     nextPhase: bindActionCreators(nextPhase, dispatch),
     playingCard: bindActionCreators(playingCard, dispatch),
-    endTurn: bindActionCreators(endTurn, dispatch)
+    endTurn: bindActionCreators(endTurn, dispatch),
+    ownProps
 })
 
 export default connect(

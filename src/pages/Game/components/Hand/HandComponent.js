@@ -14,6 +14,8 @@ function HandComponent(props) {
         case 'Baby Unicorn':
         case 'Basic Unicorn':
         case 'Magical Unicorn':
+        case 'Upgrade':
+        case 'Downgrade':
           let updatedPlayers = [
             ...props.players
           ]
@@ -29,8 +31,7 @@ function HandComponent(props) {
           break;
 
         case 'Magic':
-        case 'Upgrade':
-        case 'Downgrade':
+        case 'Instant':
           console.log('PLAYING EFFECT')
           break;
         default:

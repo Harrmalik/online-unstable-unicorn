@@ -9,7 +9,8 @@ import Shuffle  from 'lodash/shuffle';
 import Reduce  from 'lodash/reduce';
 import { Dropdown, Image, Item, Segment } from 'semantic-ui-react';
 
-import PlayerView from './components/PlayerView/Playerview.js'
+import PlayerView from './components/PlayerView/Playerview.js';
+import CardComponent from 'components/Card/CardComponent';
 
 function ActionViewComponent (props) {
   const [currentPlayer, setCurrentPlayer] = useState(localStorage.getItem('currentPlayer'));
@@ -25,7 +26,7 @@ function ActionViewComponent (props) {
   }, []);
 
   return (
-    <div>
+    <Segment raised id="actionView">
       {props.game.phases[props.game.phase].name} Phase
       {
         props.isMyTurn ?
@@ -39,11 +40,13 @@ function ActionViewComponent (props) {
           decks={props.decks}
           endTurn={props.endTurn} />
       }
-    </div>
+    </Segment>
   );
 }
 
 function SpectatorView(props) {
+  const [card, setCard] = useState({});
+
   useEffect(() => {
     props.socket.on('switchingPhase', phase => {
       console.log('CALLING NEW PHASE');
@@ -52,8 +55,22 @@ function SpectatorView(props) {
 
     props.socket.on('attemptCardPlay', (card, updatedPlayers) => {
       console.log('Player attemping to play card');
-      //TODO: show screen of card being played and if a instant can be activated
+      // let myPlayer = updatedPlayers[props.currentPlayer - 1]
+      // //TODO: show screen of card being played and if a instant can be activated
+      // let handGroupedByType = GroupBy(myPlayer.hand, 'type');
+      //
+      // console.log(handGroupedByType);
+      // if (handGroupedByType['Instant']) {
+      //   setTimeout(() => {
+      //     props.socket.emit('skippingInstant', myPlayer);
+      //   }, 5000)
+      // } else {
+      //   //TODO: Add player count to check if everyone skipped their instants
+      //   props.socket.emit('skippingInstant', myPlayer);
+      // }
+      // setCard(card);
 
+      // UNCOMMENT THIS IF YOU WANNA SKIP THE CHECK
       setTimeout(() => {
         //TODO: for now wait 3 secs then play card, maybe add a timer?
         const updatedDecks = props.decks;
@@ -62,16 +79,20 @@ function SpectatorView(props) {
     })
 
     props.socket.on('endingTurn', (gameUpdates) => {
+      console.log('calling ending turn')
       // TODO: look into too
-      if (props.phase === 3) {
+      console.log(props.phase)
+      if (props.phase === 0) {
         console.log('EDNING TURN');
         props.endTurn(gameUpdates, props.currentPlayer)
       }
     })
-  })
+  }, [])
   return (
     <div>
       {props.name} Turn
+
+      <CardComponent card={card}/>
     </div>
   )
 }

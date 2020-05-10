@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import cards from './cards.js';
+import cards from '../db/cards.js';
 import socketIOClient from "socket.io-client";
 
 let defaultOptions = {

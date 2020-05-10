@@ -25,16 +25,6 @@ function GamePage(props) {
   return null
 }
 
-// NOTES
-//-------------
-
-// Reducers folder -> contains state object for entire App
-// Action folder -> contains functions to be imported from -> import { setUsers, startGame } from './../../actions';
-// mapStateToProps maps the state object from reducers to be used in a component
-// mapDispatchToProps maps actions to be called in a component
-// To call a dispatch user `props.[functionName]`
-// socketIOClient.emit('functionName') for later user but an FYI
-
 const mapStateToProps = state => ({
   currentPlayer: state.currentPlayer,
   players: state.players,
