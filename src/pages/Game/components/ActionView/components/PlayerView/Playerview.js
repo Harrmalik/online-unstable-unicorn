@@ -47,7 +47,7 @@ function PlayerView(props) {
       setStartedEndPhase(true)
       setTimeout(() => {
         let nextTurn = props.game.turn + 1;
-        let nextPlayerID = nextTurn % props.players.length;
+        let nextPlayerID = (nextTurn % props.players.length) == 0 ? props.players.length : (nextTurn % props.players.length);
         let whosTurn = props.players[nextPlayerID -1];
 
         const gameUpdates = {
