@@ -17,6 +17,7 @@ let testPlayers = [
     "Color": "Magenta"
   }],
   stable: [],
+  viewingStableId: 1,
   unicorn: {
     "id": 8,
     "name": "CANNIBAL BABY UNICORN",
@@ -38,6 +39,7 @@ let testPlayers = [
     "Color": "Magenta"
   }],
   stable: [],
+  viewingStableId: 2,
   unicorn: {
     "id": 4,
     "name": "FUCKING CUTE BABY UNICORN",
@@ -59,6 +61,7 @@ let testPlayers = [
     "Color": "Magenta"
   }],
   stable: [],
+  viewingStableId: 3,
   unicorn: {
     "id": 13,
     "name": "PAGEANT BABY UNICORN",
@@ -80,6 +83,7 @@ let testPlayers = [
     "Color": "Magenta"
   }],
   stable: [],
+  viewingStableId: 4,
   unicorn: {
     "id": 7,
     "name": "BABY UNICORN OF INCEST",

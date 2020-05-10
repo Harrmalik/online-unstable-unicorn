@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import './GamePage.css';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -10,14 +10,16 @@ import ActionViewComponent from './components/ActionView/ActionViewComponent.js'
 import PlayersView from 'components/PlayersView/PlayersView.js';
 
 function GamePage(props) {
+  let currentPlayer = props.players[props.currentPlayer - 1];
+  let stablePlayer = props.players.find(player => player.id == currentPlayer.viewingStableId);
   if (props.game.playing) {
     return (
       <div style={{display: !props.game.playing ? 'none' : 'block'}}>
           <PlayersView players={props.players}/>
-          <Field player={props.players[props.currentPlayer - 1]}></Field>
+          <Field player={currentPlayer}></Field>
           <ActionViewComponent/>
-          <HandComponent hand={props.players[props.currentPlayer - 1].hand}/>
-          <StableComponent stable={props.players[props.currentPlayer - 1].stable}/>
+          <HandComponent hand={currentPlayer.hand}/>
+          <StableComponent playerName={stablePlayer.name} stable={stablePlayer.stable}/>
       </div>
     );
   }

@@ -19,6 +19,13 @@ export const nextPhase = (newPhase) => ({
     newPhase
 })
 
+export const viewStable = (currentPlayer, viewingPlayer) => (
+    {
+    type: 'VIEW_STABLE',
+    currentPlayer,
+    viewingPlayer
+});
+
 export const endActionPhase = (newPhase, updatedDecks, updatedPlayers) => ({
     type: 'END_ACTION_PHASE',
     newPhase,

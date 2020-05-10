@@ -138,6 +138,17 @@ function players (state = [], action) {
         case 'END_ACTION_PHASE':
           return action.updatedPlayers;
 
+        case 'VIEW_STABLE':
+          const newState = [].concat(state);
+          const currIndex = newState.findIndex(player => player.id == action.currentPlayer.id);
+          if (currIndex < 0)
+            break;
+
+          const viewingStableId = action.viewingPlayer != null ? action.viewingPlayer.id : action.currentPlayer.id;
+          action.currentPlayer.viewingStableId = viewingStableId;
+          newState[currIndex] = action.currentPlayer;
+          return newState;
+
         default:
             return state
     }
