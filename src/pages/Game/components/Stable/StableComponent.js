@@ -7,7 +7,7 @@ import CardComponent from 'components/Card/CardComponent';
 function StableComponent(props) {
   return (
     <div className="stable">
-      <Header>My Stable</Header>
+      <Header>{props.playerName}'s Stable</Header>
       <Card.Group>
         {props.stable.map(card => {
           return <CardComponent key={card.id} card={card}/>
