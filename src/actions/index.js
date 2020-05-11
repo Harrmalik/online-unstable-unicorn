@@ -1,3 +1,13 @@
+// Socket Actions
+export const joinLobby = (lobby) => ({
+    type: 'JOIN_LOBBY',
+    lobby
+})
+
+export const leaveLobby = () => ({
+    type: 'LEAVE_LOBBY'
+})
+
 // Current player actions
 export const setCurrentPlayer = (player) => ({
     type: 'SET_PLAYER',

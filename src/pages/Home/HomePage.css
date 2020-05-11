@@ -1,6 +1,16 @@
 body {
-  background: url('https://ksr-ugc.imgix.net/assets/022/217/568/6c2bc068394a5e58c4f1305fca6e1ca4_original.jpg?ixlib=rb-2.1.0&crop=faces&w=1552&h=873&fit=crop&v=1534190392&auto=format&frame=1&q=92&s=4e906136eb1ae0de657b0cc6c5cd21a2');
-  background-size: cover;
-  background-repeat: no-repeat;
-  
+  /* background: url('https://cf.geekdo-images.com/opengraph/img/UClm667x_KHFRlYDCLReJZTZuzI=/fit-in/1200x630/pic3912914.jpg'); */
+  /* background-size: cover;
+  background-repeat: no-repeat; */
+
+}
+
+#home-page {
+  /* background: url('https://cf.geekdo-images.com/opengraph/img/UClm667x_KHFRlYDCLReJZTZuzI=/fit-in/1200x630/pic3912914.jpg'); */
+  width: 70vw;
+  height: 300px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import './GamePage.css';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -8,24 +8,37 @@ import HandComponent from './components/Hand/HandComponent';
 import Field from './components/Field/Field.js';
 import ActionViewComponent from './components/ActionView/ActionViewComponent.js';
 import PlayersView from 'components/PlayersView/PlayersView.js';
+import {useMyPlayer} from 'utils/hooks.js';
+import { useHistory } from 'react-router-dom';
 
 function GamePage(props) {
-  let currentPlayer = props.players[props.currentPlayer - 1];
-  let stablePlayer = props.players.find(player => player.id == currentPlayer.viewingStableId);
-  if (props.game.playing) {
-    return (
-      <div style={{display: !props.game.playing ? 'none' : 'block'}}>
-          <PlayersView players={props.players}/>
-          <Field player={currentPlayer}></Field>
-          <ActionViewComponent/>
-          <HandComponent hand={currentPlayer.hand}/>
-          <StableComponent playerName={stablePlayer.name} stable={stablePlayer.stable}/>
-      </div>
-    );
-  }
+  const myPlayer = useMyPlayer();
+  const history = useHistory();
+  console.log('rendered game');
 
-  return null
+  useEffect(() => {
+    console.log(props.game)
+    if (!props.game.id) {
+      history.push('/');
+    }
+  }, [props.game])
+  console.log(myPlayer);
+  console.log('render home page')
+  let currentPlayer = {}//props.players[props.currentPlayer - 1];
+  let stablePlayer = {}//props.players.find(player => player.id == currentPlayer.viewingStableId);
+
+  return (
+    <div>
+      hi
+    </div>
+  );
 }
+
+// <PlayersView players={props.players}/>
+// <Field player={currentPlayer}></Field>
+// <ActionViewComponent/>
+// <HandComponent hand={currentPlayer.hand}/>
+// <StableComponent playerName={stablePlayer.name} stable={stablePlayer.stable}/>
 
 const mapStateToProps = state => ({
   currentPlayer: state.currentPlayer,

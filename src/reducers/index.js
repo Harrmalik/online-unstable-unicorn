@@ -6,26 +6,7 @@ let defaultOptions = {
   gameid: 0,
   gameDuration: '',
   expansion: '',
-  winCondition: ''
-};
-const socketServer = socketIOClient("http://127.0.0.1:3001");
-
-function socket (state = socketServer, action) {
-    switch (action.type) {
-        default:
-            return state
-    }
-}
-
-function currentPlayer (state = '', action) {
-    switch (action.type) {
-        case 'SET_PLAYER': return action.player;
-        default:
-            return state
-    }
-}
-
-function game (state = {
+  winCondition: '',
   playing: false,
   phase: 0,
   phases: [{
@@ -44,9 +25,35 @@ function game (state = {
   cards,
   whosTurn: {},
   turn: 1
-}, action) {
+};
+const socketServer = socketIOClient("http://127.0.0.1:3001");
+
+function socket (state = socketServer, action) {
+    switch (action.type) {
+        default: return state
+    }
+}
+
+function currentPlayer (state = '', action) {
+    switch (action.type) {
+        case 'SET_PLAYER': return action.player;
+        default:
+            return state
+    }
+}
+
+function game (state = defaultOptions, action) {
   let game = {...state};
     switch (action.type) {
+        case 'JOIN_LOBBY':
+          return {
+            ...state,
+            roomId: action.lobby.key,
+            uri: action.lobby.name
+          };
+
+        case 'LEAVE_LOBBY': return defaultOptions;
+
         case 'START_GAME':
           return {
             ...state,
