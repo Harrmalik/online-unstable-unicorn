@@ -121,7 +121,7 @@ let currentPlayers = [];
 io.on('connection', (socket) => {
   console.log(`a player connected, ${++connectedUsers} in lobby`);
   if (!currentGame.id) {
-    io.emit('userConnected', connectedUsers, testPlayers)// switch back to active users when ready
+    io.emit('userConnected', connectedUsers, testPlayers.filter((testPlayer, index) => index < connectedUsers))// switch back to active users when ready
   }
 
   socket.on('addPlayer', players => {
