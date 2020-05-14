@@ -3,27 +3,127 @@ var http = require('http').createServer(app);
 var io = require('socket.io')(http);
 
 let connectedUsers = 0;
-let servers = {
-};
-let lobbies = {
-  'test': {
-    game: {
-      id: 1
+let testPlayers = [
+  {
+    id: 1,
+    connected: true,
+    color: 'purple',
+    name: "tyler",
+    hand: [],
+    stable: [{
+      "id": 8,
+      "name": "CANNIBAL BABY UNICORN",
+      "type": "Baby Unicorn",
+      "description": "If this card would be sacrificed, destroyed, or returned to your hand, return it to the Nursery instead.",
+      "Quantity": 1,
+      "Color": "Magenta",
+      "url": "/images/8.jpg"
+    }],
+    viewingStableId: 1,
+    unicorn: {
+      "id": 8,
+      "name": "CANNIBAL BABY UNICORN",
+      "type": "Baby Unicorn",
+      "description": "If this card would be sacrificed, destroyed, or returned to your hand, return it to the Nursery instead.",
+      "Quantity": 1,
+      "Color": "Magenta",
+      "url": "/images/8.jpg",
     },
-    decks: {},
-    players: {}
-  },
-  'demo': {
-    game: {
-      id: 2
+    upgrades: [],
+    downgrades: []
+  },{
+    id: 2,
+    connected: true,
+    name: "Malik",
+    color: 'blue',
+    hand: [],
+    stable: [{
+      "id": 4,
+      "name": "FUCKING CUTE BABY UNICORN",
+      "type": "Baby Unicorn",
+      "description": "If this card would be sacrificed, destroyed, or returned to your hand, return it to the Nursery instead.",
+      "Quantity": 1,
+      "Color": "Magenta",
+      "url": "/images/4.jpg",
+    }],
+    viewingStableId: 2,
+    unicorn: {
+      "id": 4,
+      "name": "FUCKING CUTE BABY UNICORN",
+      "type": "Baby Unicorn",
+      "description": "If this card would be sacrificed, destroyed, or returned to your hand, return it to the Nursery instead.",
+      "Quantity": 1,
+      "Color": "Magenta",
+      "url": "/images/4.jpg",
     },
-    decks: {},
-    players: []
+    upgrades: [],
+    downgrades: []
   },
+  {
+    id: 3,
+    connected: true,
+    name: "Liz",
+    color: 'teal',
+    hand: [],
+    stable: [{
+      "id": 13,
+      "name": "PAGEANT BABY UNICORN",
+      "type": "Baby Unicorn",
+      "description": "If this card would be sacrificed, destroyed, or returned to your hand, return it to the Nursery instead.",
+      "Quantity": 1,
+      "Color": "Magenta",
+      "url": "/images/13.jpg",
+    }],
+    viewingStableId: 3,
+    unicorn: {
+      "id": 13,
+      "name": "PAGEANT BABY UNICORN",
+      "type": "Baby Unicorn",
+      "description": "If this card would be sacrificed, destroyed, or returned to your hand, return it to the Nursery instead.",
+      "Quantity": 1,
+      "Color": "Magenta",
+      "url": "/images/13.jpg",
+    },
+    upgrades: [],
+    downgrades: []
+  },
+  {
+    id: 4,
+    connected: true,
+    color: 'green',
+    name: "Troy",
+    hand: [],
+    stable: [{
+      "id": 7,
+      "name": "BABY UNICORN OF INCEST",
+      "type": "Baby Unicorn",
+      "description": "If this card would be sacrificed, destroyed, or returned to your hand, return it to the Nursery instead.",
+      "Quantity": 1,
+      "Color": "Magenta",
+      "url": "/images/7.jpg",
+    }],
+    viewingStableId: 4,
+    unicorn: {
+      "id": 7,
+      "name": "BABY UNICORN OF INCEST",
+      "type": "Baby Unicorn",
+      "description": "If this card would be sacrificed, destroyed, or returned to your hand, return it to the Nursery instead.",
+      "Quantity": 1,
+      "Color": "Magenta",
+      "url": "/images/7.jpg",
+    },
+    upgrades: [],
+    downgrades: []
+  }
+]
+// let lobbies = [];
+let games = {
+  'unicornsarelit': {
+    currentGame: {},
+    currentDecks: {},
+    currentPlayers: testPlayers
+  }
 }
-let currentGame = {};
-let currentDecks = {};
-let currentPlayers = [];
 
 function getLobbies(lobbies) {
   return Object.keys(lobbies).reduce((currentLobbies, key) => {
@@ -31,7 +131,7 @@ function getLobbies(lobbies) {
       return [...currentLobbies, {
         key: key,
         name: key.split(':')[1],
-        url: key.split(':')[1].split(' ').join(''),
+        uri: removeSpaces(key.split(':')[1]),
         players: lobbies[key].length
       }]
     }
@@ -40,53 +140,99 @@ function getLobbies(lobbies) {
   }, []);
 }
 
+function returnLobbies(updated) {
+  lobbies = getLobbies(socket.adapter.rooms)
+  socket.broadcast.emit('returnLobbies', getLobbies(socket.adapter.rooms));
+}
+
+function removeSpaces(string) {
+  return string.split(' ').join('');
+}
+
+function encodeUriToRoomId(uri) {
+  return `game:${uri}`;
+}
+
+function findLobby(uri) {
+  const roomId = encodeUriToRoomId(uri);
+  return
+}
+
 io.on('connection', (socket) => {
-  if (!currentGame.id) {
-    console.log(`a player connected, ${++connectedUsers} in lobby`);
-    // socket.join([`game:${connectesdUsers}`])
-    io.emit('userConnected', connectedUsers, testPlayers)// switch back to active users when ready
-    socket.broadcast.emit('returnLobbies', getLobbies(socket.adapter.rooms));
-    console.log(getLobbies(socket.adapter.rooms))
-  } else {
-    console.log('new spectator');
-  }
+  socket.join([`game:unicornsarelit`])
+  lobbies = getLobbies(socket.adapter.rooms)
+  socket.emit('returnLobbies', getLobbies(socket.adapter.rooms));
+  // if (!currentGame.id) {
+  //   console.log(`a player connected, ${++connectedUsers} in lobby`);
+  //
+  //   socket.broadcast.emit('returnLobbies', getLobbies(socket.adapter.rooms));
+  //   console.log(getLobbies(socket.adapter.rooms))
+  // } else {
+  //   console.log('new spectator');
+  // }
+
+
+
   // LOBBY EVENTS
   socket.on('getLobbies', () => {
-    console.log(getLobbies(socket.adapter.rooms));
     socket.emit('returnLobbies', getLobbies(socket.adapter.rooms));
   })
 
   socket.on('joinLobby', (lobbyName) => {
-    socket.join([`game:${lobbyName}`]);
+    const room = `game:${lobbyName}`;
+    socket.join([room]);
+    lobbies = getLobbies(socket.adapter.rooms);
+    currentLobby = lobbies.find(l => l.key === room)
+    io.to(room).emit('userConnected', currentLobby.players, games[lobbyName].currentPlayers.filter((testPlayer, index) => index < currentLobby.players))// switch back to active users when ready
     socket.broadcast.emit('returnLobbies', getLobbies(socket.adapter.rooms));
   })
 
   socket.on('createLobby', (lobbyName) => {
     socket.join([`game:${lobbyName}`]);
+    games[removeSpaces(lobbyName)] = {
+      currentGame: {},
+      currentDecks: {},
+      currentPlayers: []
+    }
     socket.broadcast.emit('returnLobbies', getLobbies(socket.adapter.rooms));
   })
 
   socket.on('leaveLobby', (lobbyName) => {
-    socket.leave([`game:${lobbyName}`]);
+    const room = `game:${lobbyName}`;
+    socket.leave([room]);
+    lobbies = getLobbies(socket.adapter.rooms);
+    currentLobby = lobbies.find(l => l.key === room);
+    if (currentLobby) {
+      io.to(room).emit('userConnected', currentLobby.players, games[lobbyName].currentPlayers.filter((testPlayer, index) => index < currentLobby.players))
+    } else {
+      delete games[lobbyName]
+    }
     socket.broadcast.emit('returnLobbies', getLobbies(socket.adapter.rooms));
+  })
+
+  socket.on('checkForRoom', uri => {
+    let lobbies = getLobbies(socket.adapter.rooms);
+    const lobby = lobbies.find(l => l.uri === uri)
+    socket.emit('reconnect', lobby, games[uri]);
   })
 
 
   // INITIALIZING GAME EVENTS
-  socket.on('addPlayer', players => {
-    currentPlayers = players
-    io.emit('playerAdded', players)
-    console.log('users in game: ', players.length);
+  socket.on('addPlayer', (lobbyName, players) => {
+    console.log('adding player')
+    console.log(`players in ${lobbyName}: ${players.length}`);
+    const room = `game:${lobbyName}`;
+    games[lobbyName].currentPlayers = players
+    io.to(room).emit('playerAdded', players)
   })
 
-  socket.on('startGame', (game, decks, players) => {
+  socket.on('startGame', (lobbyName, game, decks, players) => {
     console.log('Starting Game')
-    // if (!currentGame.turn) {
-      currentGame = game;
-      currentDecks = decks;
-      currentPlayers = players;
-    // }
-    io.emit('startingGame', currentGame, currentDecks, currentPlayers)
+    const room = `game:${lobbyName}`;
+    games[lobbyName].currentGame = game;
+    games[lobbyName].currentDecks = decks;
+    games[lobbyName].currentPlayers = players;
+    io.to(room).emit('startingGame', currentGame, currentDecks, currentPlayers)
   });
 
 
@@ -149,7 +295,6 @@ io.on('connection', (socket) => {
 
   socket.on('disconnect', () => {
     console.log(`a player left, ${--connectedUsers} in lobby`);
-    console.log(getLobbies(socket.adapter.rooms))
     socket.broadcast.emit('returnLobbies', getLobbies(socket.adapter.rooms));
   });
 });
@@ -157,113 +302,3 @@ io.on('connection', (socket) => {
 http.listen(3001, () => {
   console.log('listening on *:3001');
 });
-
-let testPlayers = [
-  {
-    id: 1,
-    color: 'purple',
-    name: "tyler",
-    hand: [],
-    stable: [{
-      "id": 8,
-      "name": "CANNIBAL BABY UNICORN",
-      "type": "Baby Unicorn",
-      "description": "If this card would be sacrificed, destroyed, or returned to your hand, return it to the Nursery instead.",
-      "Quantity": 1,
-      "Color": "Magenta",
-      "url": "images/8.jpg"
-    }],
-    viewingStableId: 1,
-    unicorn: {
-      "id": 8,
-      "name": "CANNIBAL BABY UNICORN",
-      "type": "Baby Unicorn",
-      "description": "If this card would be sacrificed, destroyed, or returned to your hand, return it to the Nursery instead.",
-      "Quantity": 1,
-      "Color": "Magenta",
-      "url": "images/8.jpg",
-    },
-    upgrades: [],
-    downgrades: []
-  },{
-    id: 2,
-    name: "Malik",
-    color: 'blue',
-    hand: [],
-    stable: [{
-      "id": 4,
-      "name": "FUCKING CUTE BABY UNICORN",
-      "type": "Baby Unicorn",
-      "description": "If this card would be sacrificed, destroyed, or returned to your hand, return it to the Nursery instead.",
-      "Quantity": 1,
-      "Color": "Magenta",
-      "url": "images/4.jpg",
-    }],
-    viewingStableId: 2,
-    unicorn: {
-      "id": 4,
-      "name": "FUCKING CUTE BABY UNICORN",
-      "type": "Baby Unicorn",
-      "description": "If this card would be sacrificed, destroyed, or returned to your hand, return it to the Nursery instead.",
-      "Quantity": 1,
-      "Color": "Magenta",
-      "url": "images/4.jpg",
-    },
-    upgrades: [],
-    downgrades: []
-  },
-  {
-    id: 3,
-    name: "Liz",
-    color: 'teal',
-    hand: [],
-    stable: [{
-      "id": 13,
-      "name": "PAGEANT BABY UNICORN",
-      "type": "Baby Unicorn",
-      "description": "If this card would be sacrificed, destroyed, or returned to your hand, return it to the Nursery instead.",
-      "Quantity": 1,
-      "Color": "Magenta",
-      "url": "images/13.jpg",
-    }],
-    viewingStableId: 3,
-    unicorn: {
-      "id": 13,
-      "name": "PAGEANT BABY UNICORN",
-      "type": "Baby Unicorn",
-      "description": "If this card would be sacrificed, destroyed, or returned to your hand, return it to the Nursery instead.",
-      "Quantity": 1,
-      "Color": "Magenta",
-      "url": "images/13.jpg",
-    },
-    upgrades: [],
-    downgrades: []
-  },
-  {
-    id: 4,
-    color: 'green',
-    name: "Troy",
-    hand: [],
-    stable: [{
-      "id": 7,
-      "name": "BABY UNICORN OF INCEST",
-      "type": "Baby Unicorn",
-      "description": "If this card would be sacrificed, destroyed, or returned to your hand, return it to the Nursery instead.",
-      "Quantity": 1,
-      "Color": "Magenta",
-      "url": "images/7.jpg",
-    }],
-    viewingStableId: 4,
-    unicorn: {
-      "id": 7,
-      "name": "BABY UNICORN OF INCEST",
-      "type": "Baby Unicorn",
-      "description": "If this card would be sacrificed, destroyed, or returned to your hand, return it to the Nursery instead.",
-      "Quantity": 1,
-      "Color": "Magenta",
-      "url": "images/7.jpg",
-    },
-    upgrades: [],
-    downgrades: []
-  }
-]

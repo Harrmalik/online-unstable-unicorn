@@ -6,13 +6,12 @@ import { viewStable } from 'actions';
 import './PlayersView.css'
 
 function PlayersView(props) {
-  let currPlayer = props.players.find(player => player.id == props.currentPlayer);
   return (
     <div id="players-view">
       <Card.Group itemsPerRow={1}>
         {props.players.map(player => {
           return (
-            <Card onClick={() => {props.viewStable(currPlayer, player)}} raised key={player.id}>
+            <Card onClick={() => {props.viewPlayer(player)}} raised key={player.id}>
               <Image
               label={{
                   color: player.color,

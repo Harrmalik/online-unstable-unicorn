@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import './LobbyPage.css';
-import { setCurrentPlayer, setPlayers, startGame } from 'actions';
+import { setCurrentPlayer, setPlayers, startGame, joinLobby, leaveLobby } from 'actions';
 import { useHistory, useParams } from "react-router-dom";
+import { useCurrentPlayerIndex } from 'utils/hooks.js';
 import GroupBy from 'lodash/groupBy';
 import Remove  from 'lodash/remove';
 import Shuffle  from 'lodash/shuffle';
@@ -12,23 +13,61 @@ import { Dropdown, Image, Item, Segment, Button } from 'semantic-ui-react';
 const colors = ['purple', 'blue', 'teal', 'green', 'yellow', 'orange', 'red'];
 
 function LobbyPage(props) {
-  const [currentPlayer, setCurrentPlayer] = useState(+localStorage.getItem('currentPlayer'));
+  const [currentPlayerIndex, setCurrentPlayerIndex] = useState(localStorage.getItem('currentPlayerIndex'));
   const [babyUnicorns, setBabyUnicorns] = useState(GroupBy(props.game.cards, 'type')['Baby Unicorn']);
   const [inLobby, setLobby] = useState(0);
   const [username, setUsername] = useState("");
   const [unicorn, setUnicorn] = useState({});
   const history = useHistory();
   const urlParams = useParams().id;
-  console.log('rendered lobby');
+  // console.log('rendered lobby');
 
   useEffect(() => {
-    // Set current player, if they refreshed the page after creating a player
-    if (!props.currentPlayer && currentPlayer) {
-      props.setCurrentPlayer(currentPlayer);
+    console.log(props.game.roomId)
+    console.log(currentPlayerIndex);
+    if (currentPlayerIndex) {
+      console.log('called')
+      props.setCurrentPlayer(currentPlayerIndex);
+    }
+
+    if (!props.game.roomId) {
+      console.log('checking for roomid');
+      props.socket.on('reconnect', (lobby, gameState) => {
+        console.log('found lobby')
+        if (lobby) {
+          console.log(gameState)
+          const inGame = gameState.currentPlayers;
+          const usedUnicorns = Reduce(inGame, (newArr, player) => {
+            return [...newArr, player.unicorn.id];
+          }, []);
+          const babyUnicornsRemaining = []
+
+          for (var i = 0; i < babyUnicorns.length; i++) {
+            let unicornIndex = usedUnicorns.findIndex(usedUnicornId => {
+              return usedUnicornId === babyUnicorns[i].id
+            })
+
+            if (unicornIndex === -1) {
+              babyUnicornsRemaining.push(babyUnicorns[i])
+            }
+          }
+
+          props.joinLobby(lobby)
+          setLobby(inLobby);
+          console.log(inGame)
+          props.setPlayers(inGame)
+          setBabyUnicorns(babyUnicornsRemaining);
+        } else {
+          history.push('/')
+        }
+      })
+      props.socket.emit('checkForRoom', urlParams)
     }
 
     // Set current lobby and remove any unicorns currently in use
     props.socket.on('userConnected', (inLobby, inGame) => {
+      console.log('users connected')
+      console.log('ingame', inLobby, inGame)
       const usedUnicorns = Reduce(inGame, (newArr, player) => {
         return [...newArr, player.unicorn.id];
       }, []);
@@ -50,22 +89,50 @@ function LobbyPage(props) {
     })
 
     props.socket.on('playerAdded', players => {
+      console.log('player added')
+      const usedUnicorns = Reduce(players, (newArr, player) => {
+        return [...newArr, player.unicorn.id];
+      }, []);
+      const babyUnicornsRemaining = []
+
+      for (var i = 0; i < babyUnicorns.length; i++) {
+        let unicornIndex = usedUnicorns.findIndex(usedUnicornId => {
+          return usedUnicornId === babyUnicorns[i].id
+        })
+
+        if (unicornIndex === -1) {
+          babyUnicornsRemaining.push(babyUnicorns[i])
+        }
+      }
       props.setPlayers(players)
+      setBabyUnicorns(babyUnicornsRemaining);
     })
 
     props.socket.on('startingGame', (options, decks, players) => {
-      props.startGame(options, decks, players, currentPlayer)
+      console.log(options);
+      props.startGame(options, decks, players, currentPlayerIndex)
+      history.push(`/${urlParams}/game`);
     })
-  }, []);
+
+    return () => {
+      props.socket.removeListener('userConnected');
+      props.socket.removeListener('reconnect');
+      props.socket.removeListener('playerAdded');
+      props.socket.removeListener('startingGame');
+
+    };
+  }, [props.socket]);
 
   function leaveLobby() {
     props.socket.emit('leaveLobby', urlParams)
+    props.leaveLobby()
     history.push(`/`)
   }
 
   function addPlayer() {
     const newPlayer = {
       id: props.players.length + 1,
+      connected: true,
       color: colors[props.players.length + 1],
       name: username,
       unicorn,
@@ -81,13 +148,14 @@ function LobbyPage(props) {
     setBabyUnicorns(babyUnicorns);
     setUsername("")
     setUnicorn({})
-    props.setCurrentPlayer(newPlayer);
-    localStorage.setItem('currentPlayer', newPlayer.id);
-    setCurrentPlayer(newPlayer.id);
-    props.socket.emit('addPlayer', updatedPlayers);
+    props.setCurrentPlayer(props.players.length);
+    localStorage.setItem('currentPlayerIndex', props.players.length);
+    setCurrentPlayerIndex(props.players.length);
+    props.socket.emit('addPlayer', urlParams, updatedPlayers);
   }
 
   function selectUnicorn(unicorn, index) {
+    //TODO: update players so 2 players can't set the same unicorn
     setUnicorn({
       index,
       ...unicorn
@@ -111,7 +179,7 @@ function LobbyPage(props) {
 
     const [drawPile, updatedPlayers] = deal(Shuffle(cards), currentPlayers)
 
-    props.socket.emit('startGame', {
+    props.socket.emit('startGame', urlParams, {
       ...props.game,
       whosTurn: currentPlayers[0]
     }, {
@@ -120,12 +188,11 @@ function LobbyPage(props) {
       discardPile: []
     },
     updatedPlayers)
-    history.push("/game");
   }
 
   return (
     <div>
-    { !currentPlayer ?
+    { currentPlayerIndex === null ?
       <div>
     <Dropdown
       text='Select Unicorn'
@@ -138,22 +205,22 @@ function LobbyPage(props) {
       <Dropdown.Menu>
         <Dropdown.Header content='Unicorns Available' />
         {babyUnicorns.map((option, i) => (
-          <Dropdown.Item onClick={() => { selectUnicorn(option, i)}} key={option.id} text={option.name} image={`images/${option.id}.jpg`}  />
+          <Dropdown.Item onClick={() => { selectUnicorn(option, i)}} key={option.id} text={option.name} image={option.url}  />
         ))}
       </Dropdown.Menu>
     </Dropdown>
-      {unicorn.id ? <Image src={`images/${unicorn.id}.jpg`} avatar /> : null }
+      {unicorn.id ? <Image src={unicorn.url} avatar /> : null }
       Add Player: <input value={username} id="addUserText" onChange={(e) => setUsername(e.target.value)} /> <button onClick={addPlayer}>Add</button>
       </div>
       : null }
 
       <h2>Players</h2>
-      <Item.Group style={{width: '500px'}}>
+      <Item.Group style={{display: 'flex'}}>
         {props.players.map(player => {
           return (
             <Segment key={player.id} inverted color={player.color}>
               <Item>
-                <Item.Image size='tiny' src={`images/${player.unicorn.id}.jpg`} />
+                <Item.Image size='tiny' src={player.unicorn.url} />
                 <Item.Content verticalAlign='middle'>
                   <Item.Header>{player.name}</Item.Header>
                 </Item.Content>
@@ -165,14 +232,13 @@ function LobbyPage(props) {
 
 
       <p>{inLobby - props.players.length} player(s) left to make characters</p>
-      <Button onClick={leaveLobby}  color="blue" size="massive">leave</Button>
+      <Button onClick={leaveLobby}  color="blue" size="massive">Leave Lobby</Button>
       <Button onClick={() => { startGame() }}  color="blue" size="massive">Start Game</Button>
     </div>
   );
 }
 
 const mapStateToProps = state => ({
-  currentPlayer: state.player,
   players: state.players,
   game: state.game,
   socket: state.socket
@@ -182,6 +248,8 @@ const mapDispatchToProps = dispatch => ({
     setCurrentPlayer: bindActionCreators(setCurrentPlayer, dispatch),
     setPlayers: bindActionCreators(setPlayers, dispatch),
     startGame: bindActionCreators(startGame, dispatch),
+    joinLobby: bindActionCreators(joinLobby, dispatch),
+    leaveLobby: bindActionCreators(leaveLobby, dispatch)
 })
 
 export default connect(

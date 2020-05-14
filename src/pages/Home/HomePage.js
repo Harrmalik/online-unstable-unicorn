@@ -24,7 +24,12 @@ function HomePage() {
     socketServer.on('lobbyCreated', lobbies => {
       setLobbies(lobbies);
     });
-  },[]);
+
+    return () => {
+      socketServer.removeListener('lobbyCreated');
+      socketServer.removeListener('returnLobbies');
+    }
+  },[socketServer]);
 
   function joinPublicLobby(lobby) {
     setLobby(lobby)
@@ -72,7 +77,6 @@ function HomePage() {
             return (
               <Card
                 link
-                onClick={() => { joinPublicLobby(lobby) }}
                 color={color}
                 key={lobby.name}>
 

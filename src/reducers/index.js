@@ -34,7 +34,7 @@ function socket (state = socketServer, action) {
     }
 }
 
-function currentPlayer (state = '', action) {
+function currentPlayerIndex (state = null, action) {
     switch (action.type) {
         case 'SET_PLAYER': return action.player;
         default:
@@ -142,6 +142,8 @@ function players (state = [], action) {
         case 'SET_PLAYERS':
         case 'START_GAME': return action.players;
 
+        case 'LEAVE_LOBBY': return [];
+
         case 'END_ACTION_PHASE':
           return action.updatedPlayers;
 
@@ -163,7 +165,7 @@ function players (state = [], action) {
 
 const rootReducer = combineReducers({
     socket,
-    currentPlayer,
+    currentPlayerIndex,
     game,
     isMyTurn,
     isPlayingCard,
