@@ -213,7 +213,7 @@ io.on('connection', (socket) => {
   socket.on('checkForRoom', lobbyName => {
     const room = `game:${lobbyName}`;
     console.log(lobbyName);
-    
+
     if (games[lobbyName]) {
       console.log('found lobby')
       socket.join([room]);
@@ -295,7 +295,7 @@ io.on('connection', (socket) => {
     }
   });
 
-  socket.on('endTurn', (lobbyName, gameUpdates) => {
+  socket.on('endTurn', (lobbyName, gameUpdates, nextPlayerIndex) => {
     if (games[lobbyName].currentGame.phase === 3) {
       console.log('Ending turn');
       games[lobbyName].currentGame = {
@@ -303,7 +303,7 @@ io.on('connection', (socket) => {
         ...gameUpdates
       }
 
-      io.to(`game:${lobbyName}`).emit('endingTurn', gameUpdates);
+      io.to(`game:${lobbyName}`).emit('endingTurn', gameUpdates, nextPlayerIndex);
     }
   });
 

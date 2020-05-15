@@ -43,10 +43,10 @@ export const endActionPhase = (newPhase, updatedDecks, updatedPlayers) => ({
     updatedPlayers
 })
 
-export const endTurn = (gameUpdates, currentPlayer) => ({
+export const endTurn = (gameUpdates, isMyTurn) => ({
     type: 'END_TURN',
     gameUpdates,
-    currentPlayer
+    isMyTurn
 })
 
 

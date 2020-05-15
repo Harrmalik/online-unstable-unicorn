@@ -113,10 +113,8 @@ function isMyTurn (state = false, action) {
 
     switch (action.type) {
         case 'START_GAME':
-          return action.isMyTurn
-
         case 'END_TURN':
-          return action.gameUpdates.whosTurn.id === parseInt(action.currentPlayer)
+          return action.isMyTurn
 
         default:
             return state

@@ -25,9 +25,9 @@ function GamePage() {
 
   useEffect(() => {
     if (!isPlaying) {
-      socketServer.on('reconnect', (options, decks, players) => {
-        if (options.playing) {
-          dispatch(startGame(options, decks, players, false))
+      socketServer.on('reconnect', (game, decks, players) => {
+        if (game.playing) {
+          dispatch(startGame(game, decks, players, game.turn % players.length === parseInt(localStorage.getItem('currentPlayerIndex'))))
         } else {
           history.push('/');
         }
@@ -38,7 +38,6 @@ function GamePage() {
       socketServer.emit('checkForRoom', lobbyName)
     }
   }, [isPlaying])
-  console.log('render game page')
 
   return (
     <div>

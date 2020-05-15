@@ -3,12 +3,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { setCurrentPlayer } from 'actions';
 
-export function useCurrentPlayerIndex() {
-  const currentPlayer = useSelector(state => state.currentPlayer);
-
-  return currentPlayer;
-}
-
 export function useMyServer() {
   const urlParams = useParams().id;
 
@@ -16,14 +10,6 @@ export function useMyServer() {
 
   return socketServer
 }
-
-// export function useMyServer() {
-//   const urlParams = useParams().id;
-//
-//   const [socketServer, setMySocketServer] = useState({});
-//
-//   return server
-// }
 
 export function useMyPlayer() {
   const [myPlayer, setMyPlayer] = useState({
@@ -35,17 +21,17 @@ export function useMyPlayer() {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    console.log('currentPlayerIndex: ', currentPlayerIndex)
     if (!currentPlayerIndex) {
-      console.log('no currentPlayerIndex')
       dispatch(setCurrentPlayer(localStorage.getItem('currentPlayerIndex')));
     }
 
     if (players[currentPlayerIndex]) {
-      console.log('got player ', players[currentPlayerIndex])
-      setMyPlayer(players[currentPlayerIndex])
+      setMyPlayer({
+        currentPlayerIndex,
+        ...players[currentPlayerIndex]
+      })
     }
-    console.log('playerrrrrrs')
+
   }, [players, currentPlayerIndex])
 
   return myPlayer;

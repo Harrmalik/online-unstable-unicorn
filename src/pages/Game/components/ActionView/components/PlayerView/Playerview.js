@@ -1,132 +1,102 @@
 import React, { useState, useEffect } from "react";
-import { bindActionCreators } from 'redux';
-import { connect, useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { setCurrentPlayer, setPlayers, startGame, nextPhase, endTurn, playingCard } from 'actions';
-import { Dropdown, Image, Item, Segment, Button } from 'semantic-ui-react';
-import groupBy from 'lodash/groupBy';
 import { useMyPlayer } from 'utils/hooks.js';
+import groupBy from 'lodash/groupBy';
+import { Dropdown, Image, Item, Segment, Button } from 'semantic-ui-react';
 
-const mapStateToProps = state => ({
-  isMyTurn: state.isMyTurn,
-  currentPlayer: state.currentPlayer,
-  decks: state.decks,
-  players: state.players,
-  game: state.game,
-  socket: state.socket
-})
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
-    setCurrentPlayer: bindActionCreators(setCurrentPlayer, dispatch),
-    setPlayers: bindActionCreators(setPlayers, dispatch),
-    startGame: bindActionCreators(startGame, dispatch),
-    nextPhase: bindActionCreators(nextPhase, dispatch),
-    playingCard: bindActionCreators(playingCard, dispatch),
-    endTurn: bindActionCreators(endTurn, dispatch),
-    ownProps
-})
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(PlayerView)
-
-function PlayerView(props) {
+function PlayerView() {
   const myPlayer = useMyPlayer();
-  const lobbyName = useSelector(state =>  state.game.uri)
-  const [phase, setPhase] = useState(props.game.phase);
-  const [startedEffectPhase, setStartedEffectPhase] = useState(false)
-  const [startedEndPhase, setStartedEndPhase] = useState(false)
+  const socketServer = useSelector(state => state.socket)
+  const lobbyName = useSelector(state =>  state.game.uri);
+  const isMyTurn = useSelector(state =>  state.isMyTurn);
+  const players = useSelector(state =>  state.players);
+  const game = useSelector(state =>  state.game);
+  const decks = useSelector(state =>  state.decks);
+  const dispatch = useDispatch();
+
   const [effects, setEffects] = useState([])
-  const [numPlayersCheckedForInstants, setNumPlayersCheckedForInstants] = useState(0)
+  const [numPlayersCheckedForInstants, setNumPlayersCheckedForInstants] = useState(0);
 
   useEffect(() => {
-    // console.log('calling use effect for player view')
-    props.socket.on('playerCheckedForInstant', player => {
+    socketServer.on('playerCheckedForInstant', player => {
       // console.log('hey man from ', player.name)
       setNumPlayersCheckedForInstants(numPlayersCheckedForInstants + 1)
     })
 
     return () => {
-      props.socket.removeListener('playerCheckedForInstant');
+      socketServer.removeListener('playerCheckedForInstant');
     }
-  },[props.socket])
+  },[socketServer])
 
   function checkForEffects() {
-    console.log('has started effect phase: ', startedEffectPhase)
-    if (!startedEffectPhase) {
-      let player = myPlayer;
-      let stable = player.stable
-      const cardTypes = groupBy(stable, 'activateAtBeginning');
-      setStartedEffectPhase(true)
-      setStartedEndPhase(false)
-      if (cardTypes['true']) {
-        setEffects(cardTypes['true'].map(card => {
-          //TODO: added in upgrades, downgrades
-          return {
-            ...card
-          }
-        }))
-      } else {
-          props.nextPhase(1)
-          props.socket.emit('endEffectPhase', lobbyName, 1);
-          setStartedEffectPhase(true)
-          setStartedEndPhase(false)
-      }
+    console.log('STARTING EFFECT PHASE')
+    let player = myPlayer;
+    let stable = player.stable
+    const cardTypes = groupBy(stable, 'activateAtBeginning');
+    if (cardTypes['true']) {
+      setEffects(cardTypes['true'].map(card => {
+        //TODO: added in upgrades, downgrades
+        return {
+          ...card
+        }
+      }))
+    } else {
+        dispatch(nextPhase(1))
+        socketServer.emit('endEffectPhase', lobbyName, 1);
     }
   }
 
   function skipPhase() {
-    props.nextPhase(1)
-    props.socket.emit('endEffectPhase', lobbyName, 1);
+    dispatch(nextPhase(1))
+    socketServer.emit('endEffectPhase', lobbyName, 1);
   }
 
   function drawCard(phase) {
-    let drawPile = props.decks.drawPile;
+    console.log('drawing card')
+    let drawPile = decks.drawPile;
     let player = myPlayer;
-    let players = props.players;
+    let allPlayers = players;
 
     const nextCards = drawPile.splice(0, 1);
     player.hand = [...player.hand, ...nextCards];
-    players[props.currentPlayer - 1] = player
+    allPlayers[player.currentPlayerIndex] = player;
 
-    props.socket.emit('drawCard', lobbyName, drawPile, players, phase)
-    props.nextPhase(phase)
+    socketServer.emit('drawCard', lobbyName, drawPile, allPlayers, phase)
+    dispatch(nextPhase(phase))
   }
 
   function playCard() {
-    props.playingCard(true)
-    // props.socket.emit('playCard', lobbyName, 3);
+    dispatch(playingCard(true))
+    // socketServer.emit('playCard', lobbyName, 3);
   }
 
-  function endTurn() {
-    console.log('has started effect phase: ', startedEndPhase)
-    if (!startedEndPhase) {
-      setStartedEndPhase(true)
-      setTimeout(() => {
-        let nextTurn = props.game.turn + 1;
-        let nextPlayerIndex = nextTurn % props.players.length;
-        let whosTurn = props.players[nextPlayerIndex];
+  function handleEndTurn() {
+    console.log('STARTING END TURN PHASE')
+    setTimeout(() => {
+      let nextTurn = game.turn + 1;
+      let nextPlayerIndex = nextTurn % players.length;
+      let whosTurn = players[nextPlayerIndex];
 
-        const gameUpdates = {
-          turn: nextTurn,
-          whosTurn,
-          phase: 0
-        }
+      const gameUpdates = {
+        turn: nextTurn,
+        whosTurn,
+        phase: 0
+      }
 
-        props.endTurn(gameUpdates, nextTurn % props.players.length === parseInt(props.currentPlayer))
-        props.socket.emit('endTurn', lobbyName, gameUpdates);
-        setStartedEffectPhase(false)
-      }, 3000)
-    }
+      dispatch(endTurn(gameUpdates, nextPlayerIndex === parseInt(localStorage.getItem('currentPlayerIndex'))))
+      socketServer.emit('endTurn', lobbyName, gameUpdates, nextPlayerIndex);
+    }, 3000)
   }
 
   function endGame() {
-    props.endGame()
-    props.socket.emit('endGame', lobbyName);
+    dispatch(endGame())
+    socketServer.emit('endGame', lobbyName);
   }
 
   function renderView() {
-    switch (props.game.phases[props.game.phase].name) {
+    switch (game.phases[game.phase].name) {
       case 'Effect':
         checkForEffects()
 
@@ -147,7 +117,7 @@ function PlayerView(props) {
                   playCard={playCard}/>
         break;
       case 'EndTurn':
-        endTurn()
+        handleEndTurn()
         return <EndView />
         break;
       default:
@@ -155,8 +125,6 @@ function PlayerView(props) {
     }
   }
 
-
-  console.log('rendered')
   return (
     <div>
       My Turn
@@ -201,3 +169,5 @@ function EndView(props) {
     </div>
   )
 }
+
+export default PlayerView
