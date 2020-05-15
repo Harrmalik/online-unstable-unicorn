@@ -14,6 +14,7 @@ import { useHistory } from 'react-router-dom';
 
 
 const MemoGamePage = React.memo(GamePage);
+
 function GamePage() {
   const myPlayer = useMyPlayer();
   const isPlaying = useSelector(state => state.game.playing)

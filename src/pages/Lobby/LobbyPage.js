@@ -114,7 +114,7 @@ function LobbyPage(props) {
 
     props.socket.on('startingGame', (options, decks, players) => {
       console.log(options);
-      props.startGame(options, decks, players, currentPlayerIndex)
+      props.startGame(options, decks, players, currentPlayerIndex === '0')
       history.push(`/${urlParams}/game`);
     })
 

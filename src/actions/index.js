@@ -16,12 +16,12 @@ export const setCurrentPlayer = (player) => ({
 
 
 // Game actions
-export const startGame = (options, decks, players, currentPlayer) => ({
+export const startGame = (options, decks, players, isMyTurn) => ({
     type: 'START_GAME',
     options,
     decks,
     players,
-    currentPlayer
+    isMyTurn
 })
 
 export const nextPhase = (newPhase) => ({

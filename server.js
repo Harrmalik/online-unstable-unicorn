@@ -291,13 +291,13 @@ io.on('connection', (socket) => {
   });
 
   socket.on('endTurn', (lobbyName, gameUpdates) => {
-    if (currentGame.phase === 3) {
+    if (games[lobbyName].currentGame.phase === 3) {
       console.log('Ending turn');
-      currentGame = {
-        ...currentGame,
-        ...gameUpdates,
-        phase: 0
+      games[lobbyName].currentGame = {
+        ...games[lobbyName].currentGame,
+        ...gameUpdates
       }
+      
       io.to(`game:${lobbyName}`).emit('endingTurn', gameUpdates);
     }
   });

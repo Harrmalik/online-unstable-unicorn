@@ -24,7 +24,7 @@ let defaultOptions = {
   }],
   cards,
   whosTurn: {},
-  turn: 1
+  turn: 0
 };
 const socketServer = socketIOClient("http://127.0.0.1:3001");
 
@@ -114,7 +114,7 @@ function isMyTurn (state = false, action) {
 
     switch (action.type) {
         case 'START_GAME':
-          return action.options.whosTurn.id === parseInt(action.currentPlayer)
+          return action.isMyTurn
 
         case 'END_TURN':
           return action.gameUpdates.whosTurn.id === parseInt(action.currentPlayer)

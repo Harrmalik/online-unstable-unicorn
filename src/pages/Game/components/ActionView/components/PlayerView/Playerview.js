@@ -59,7 +59,7 @@ function PlayerView(props) {
 
   function drawCard(phase) {
     let drawPile = props.decks.drawPile;
-    let player = props.players[props.currentPlayer -1];
+    let player = myPlayer;
     let players = props.players;
 
     const nextCards = drawPile.splice(0, 1);
@@ -81,8 +81,8 @@ function PlayerView(props) {
       setStartedEndPhase(true)
       setTimeout(() => {
         let nextTurn = props.game.turn + 1;
-        let nextPlayerID = (nextTurn % props.players.length) == 0 ? props.players.length : (nextTurn % props.players.length);
-        let whosTurn = props.players[nextPlayerID -1];
+        let nextPlayerIndex = nextTurn % props.players.length;
+        let whosTurn = props.players[nextPlayerIndex];
 
         const gameUpdates = {
           turn: nextTurn,
