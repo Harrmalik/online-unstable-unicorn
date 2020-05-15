@@ -57,8 +57,7 @@ function game (state = defaultOptions, action) {
         case 'START_GAME':
           return {
             ...state,
-            ...action.options,
-            playing: true
+            ...action.options
           }
 
         case 'NEXT_PHASE':

@@ -4,8 +4,31 @@ import { connect, useSelector } from 'react-redux';
 import { setCurrentPlayer, setPlayers, startGame, nextPhase, endTurn, playingCard } from 'actions';
 import { Dropdown, Image, Item, Segment, Button } from 'semantic-ui-react';
 import groupBy from 'lodash/groupBy';
-import {useMyPlayer} from 'utils/hooks.js';
+import { useMyPlayer } from 'utils/hooks.js';
 
+const mapStateToProps = state => ({
+  isMyTurn: state.isMyTurn,
+  currentPlayer: state.currentPlayer,
+  decks: state.decks,
+  players: state.players,
+  game: state.game,
+  socket: state.socket
+})
+
+const mapDispatchToProps = (dispatch, ownProps) => ({
+    setCurrentPlayer: bindActionCreators(setCurrentPlayer, dispatch),
+    setPlayers: bindActionCreators(setPlayers, dispatch),
+    startGame: bindActionCreators(startGame, dispatch),
+    nextPhase: bindActionCreators(nextPhase, dispatch),
+    playingCard: bindActionCreators(playingCard, dispatch),
+    endTurn: bindActionCreators(endTurn, dispatch),
+    ownProps
+})
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PlayerView)
 
 function PlayerView(props) {
   const myPlayer = useMyPlayer();
@@ -90,7 +113,7 @@ function PlayerView(props) {
           phase: 0
         }
 
-        props.endTurn(gameUpdates, props.currentPlayer)
+        props.endTurn(gameUpdates, nextTurn % props.players.length === parseInt(props.currentPlayer))
         props.socket.emit('endTurn', lobbyName, gameUpdates);
         setStartedEffectPhase(false)
       }, 3000)
@@ -178,27 +201,3 @@ function EndView(props) {
     </div>
   )
 }
-
-const mapStateToProps = state => ({
-  isMyTurn: state.isMyTurn,
-  currentPlayer: state.currentPlayer,
-  decks: state.decks,
-  players: state.players,
-  game: state.game,
-  socket: state.socket
-})
-
-const mapDispatchToProps = (dispatch, ownProps) => ({
-    setCurrentPlayer: bindActionCreators(setCurrentPlayer, dispatch),
-    setPlayers: bindActionCreators(setPlayers, dispatch),
-    startGame: bindActionCreators(startGame, dispatch),
-    nextPhase: bindActionCreators(nextPhase, dispatch),
-    playingCard: bindActionCreators(playingCard, dispatch),
-    endTurn: bindActionCreators(endTurn, dispatch),
-    ownProps
-})
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(PlayerView)

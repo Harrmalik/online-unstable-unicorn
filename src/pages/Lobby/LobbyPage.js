@@ -20,23 +20,15 @@ function LobbyPage(props) {
   const [unicorn, setUnicorn] = useState({});
   const history = useHistory();
   const urlParams = useParams().id;
-  // console.log('rendered lobby');
 
   useEffect(() => {
-    console.log(props.game.roomId)
-    console.log(currentPlayerIndex);
     if (currentPlayerIndex) {
-      console.log('called')
       props.setCurrentPlayer(currentPlayerIndex);
     }
 
     if (!props.game.roomId) {
-      console.log('checking for roomid');
       props.socket.on('reconnect', (lobby, gameState) => {
-        console.log('found lobby')
-        console.log(lobby, gameState)
         if (gameState) {
-          console.log(gameState)
           const inGame = gameState.currentPlayers;
           const usedUnicorns = Reduce(inGame, (newArr, player) => {
             return [...newArr, player.unicorn.id];
@@ -55,7 +47,6 @@ function LobbyPage(props) {
 
           props.joinLobby(lobby)
           setLobby(inLobby);
-          console.log(inGame)
           props.setPlayers(inGame)
           setBabyUnicorns(babyUnicornsRemaining);
         } else {
@@ -70,8 +61,6 @@ function LobbyPage(props) {
 
     // Set current lobby and remove any unicorns currently in use
     props.socket.on('userConnected', (inLobby, inGame) => {
-      console.log('users connected')
-      console.log('ingame', inLobby, inGame)
       const usedUnicorns = Reduce(inGame, (newArr, player) => {
         return [...newArr, player.unicorn.id];
       }, []);
@@ -93,7 +82,6 @@ function LobbyPage(props) {
     })
 
     props.socket.on('playerAdded', players => {
-      console.log('player added')
       const usedUnicorns = Reduce(players, (newArr, player) => {
         return [...newArr, player.unicorn.id];
       }, []);
@@ -113,7 +101,6 @@ function LobbyPage(props) {
     })
 
     props.socket.on('startingGame', (options, decks, players) => {
-      console.log(options);
       props.startGame(options, decks, players, currentPlayerIndex === '0')
       history.push(`/${urlParams}/game`);
     })
@@ -184,7 +171,8 @@ function LobbyPage(props) {
 
     props.socket.emit('startGame', urlParams, {
       ...props.game,
-      whosTurn: currentPlayers[0]
+      whosTurn: currentPlayers[0],
+      playing: true
     }, {
       drawPile,
       nursery: babyUnicorns,

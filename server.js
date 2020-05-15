@@ -213,19 +213,24 @@ io.on('connection', (socket) => {
   socket.on('checkForRoom', lobbyName => {
     const room = `game:${lobbyName}`;
     console.log(lobbyName);
-    // console.log(games[lobbyName])
+    
     if (games[lobbyName]) {
       console.log('found lobby')
       socket.join([room]);
       lobbies = getLobbies(socket.adapter.rooms);
       currentLobby = lobbies.find(l => l.key === room);
 
-      games[lobbyName].currentPlayers.filter((testPlayer, index) => index < currentLobby.players)
-      console.log(`Players: ${games[lobbyName].currentPlayers.length}, connected: ${currentLobby.players}`);
-      io.to(room).emit('reconnect', currentLobby.players, games[lobbyName]);
+      if (games[lobbyName].currentGame.playing) {
+        console.log('reconnect to game')
+        io.to(room).emit('reconnect', games[lobbyName].currentGame, games[lobbyName].currentDecks, games[lobbyName].currentPlayers)
+      } else {
+        games[lobbyName].currentPlayers.filter((testPlayer, index) => index < currentLobby.players)
+        console.log(`Players: ${games[lobbyName].currentPlayers.length}, connected: ${currentLobby.players}`);
+        socket.emit('reconnect', currentLobby.players, games[lobbyName]);
+      }
     } else {
       console.log('no lobby found')
-      io.to(room).emit('reconnect', null, null);
+      socket.emit('reconnect', null, null);
     }
   })
 
@@ -297,7 +302,7 @@ io.on('connection', (socket) => {
         ...games[lobbyName].currentGame,
         ...gameUpdates
       }
-      
+
       io.to(`game:${lobbyName}`).emit('endingTurn', gameUpdates);
     }
   });
