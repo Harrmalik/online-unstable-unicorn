@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import HomePage from './pages/Home/HomePage.js';
 import LobbyPage from './pages/Lobby/LobbyPage.js';
-import GamePage from './pages/Game/GamePage.js';
+import MemoGamePage from './pages/Game/GamePage.js';
 
 console.log(store.getState())
 store.subscribe(() =>
@@ -26,7 +26,7 @@ function App() {
            </Route>
 
            <Route path="/:id/game">
-             <GamePage/>
+             <MemoGamePage/>
            </Route>
         </div>
       </Router>

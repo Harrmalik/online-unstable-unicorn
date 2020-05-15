@@ -210,10 +210,23 @@ io.on('connection', (socket) => {
     socket.broadcast.emit('returnLobbies', getLobbies(socket.adapter.rooms));
   })
 
-  socket.on('checkForRoom', uri => {
-    let lobbies = getLobbies(socket.adapter.rooms);
-    const lobby = lobbies.find(l => l.uri === uri)
-    socket.emit('reconnect', lobby, games[uri]);
+  socket.on('checkForRoom', lobbyName => {
+    const room = `game:${lobbyName}`;
+    console.log(lobbyName);
+    // console.log(games[lobbyName])
+    if (games[lobbyName]) {
+      console.log('found lobby')
+      socket.join([room]);
+      lobbies = getLobbies(socket.adapter.rooms);
+      currentLobby = lobbies.find(l => l.key === room);
+
+      games[lobbyName].currentPlayers.filter((testPlayer, index) => index < currentLobby.players)
+      console.log(`Players: ${games[lobbyName].currentPlayers.length}, connected: ${currentLobby.players}`);
+      io.to(room).emit('reconnect', currentLobby.players, games[lobbyName]);
+    } else {
+      console.log('no lobby found')
+      io.to(room).emit('reconnect', null, null);
+    }
   })
 
 
@@ -232,52 +245,52 @@ io.on('connection', (socket) => {
     games[lobbyName].currentGame = game;
     games[lobbyName].currentDecks = decks;
     games[lobbyName].currentPlayers = players;
-    io.to(room).emit('startingGame', currentGame, currentDecks, currentPlayers)
+    io.to(room).emit('startingGame', games[lobbyName].currentGame, games[lobbyName].currentDecks, games[lobbyName].currentPlayers)
   });
 
 
   // GAME EVENTS
-  socket.on('endEffectPhase', phase => {
-    if (currentGame.phase === 0) {
+  socket.on('endEffectPhase', (lobbyName, phase) => {
+    if (games[lobbyName].currentGame.phase === 0) {
       console.log('Switching to ', phase, ' phase');
-      currentGame.phase = phase
-      io.emit('switchingPhase', phase);
+      games[lobbyName].currentGame.phase = phase
+      io.to(`game:${lobbyName}`).emit('switchingPhase', phase);
     }
   })
 
-  socket.on('drawCard', (decks, players, phase) => {
-    if ([1,2].includes(currentGame.phase))
+  socket.on('drawCard', (lobbyName, decks, players, phase) => {
+    if ([1,2].includes(games[lobbyName].currentGame.phase))
     console.log('drawing card');
-    currentDecks.drawPile = decks;
-    currentPlayers = players;
-    currentGame.phase = phase;
-    io.emit('cardDrew', currentDecks, currentPlayers);
+    games[lobbyName].currentDecks.drawPile = decks;
+    games[lobbyName].currentPlayers = players;
+    games[lobbyName].currentGame.phase = phase;
+    io.to(`game:${lobbyName}`).emit('cardDrew', games[lobbyName].currentDecks, games[lobbyName].currentPlayers);
     if (phase) {
-      io.emit('switchingPhase', phase);
+      io.to(`game:${lobbyName}`).emit('switchingPhase', phase);
     }
   });
 
-  socket.on('playCard', (card, updatedPlayers) => {
+  socket.on('playCard', (lobbyName, card, updatedPlayers) => {
     console.log('Attemping to play: ', card.name)
-    io.emit('attemptCardPlay', card, updatedPlayers);
+    io.to(`game:${lobbyName}`).emit('attemptCardPlay', card, updatedPlayers);
   });
 
-  socket.on('skippingInstant', player => {
+  socket.on('skippingInstant', (lobbyName, player) => {
     console.log('skippingInstant');
-    io.emit('playerCheckedForInstant', player);
+    io.to(`game:${lobbyName}`).emit('playerCheckedForInstant', player);
   })
 
-  socket.on('endActionPhase', (phase, updatedDecks, updatedPlayers) => {
-    if (currentGame.phase === 2) {
+  socket.on('endActionPhase', (lobbyName, phase, updatedDecks, updatedPlayers) => {
+    if (games[lobbyName].currentGame.phase === 2) {
       console.log('card played');
-      currentGame.phase = phase;
-      currentPlayers = updatedPlayers;
-      currentDecks = updatedDecks;
-      io.emit('endingActionPhase', phase, updatedDecks, updatedPlayers);
+      games[lobbyName].currentGame.phase = phase;
+      games[lobbyName].currentPlayers = updatedPlayers;
+      games[lobbyName].currentDecks = updatedDecks;
+      io.to(`game:${lobbyName}`).emit('endingActionPhase', phase, updatedDecks, updatedPlayers);
     }
   });
 
-  socket.on('endTurn', (gameUpdates) => {
+  socket.on('endTurn', (lobbyName, gameUpdates) => {
     if (currentGame.phase === 3) {
       console.log('Ending turn');
       currentGame = {
@@ -285,7 +298,7 @@ io.on('connection', (socket) => {
         ...gameUpdates,
         phase: 0
       }
-      io.emit('endingTurn', gameUpdates);
+      io.to(`game:${lobbyName}`).emit('endingTurn', gameUpdates);
     }
   });
 

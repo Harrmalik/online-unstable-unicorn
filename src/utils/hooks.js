@@ -25,8 +25,18 @@ export function useMyServer() {
 // }
 
 export function useMyPlayer() {
-  const [myPlayer, setMyPlayer] = useState({});
+  const [myPlayer, setMyPlayer] = useState({
+    hand: [],
+    stable: []
+  });
+  const currentPlayerIndex = useSelector(state => state.currentPlayerIndex);
+  const players = useSelector(state => state.players);
 
+  useEffect(() => {
+    if (players[currentPlayerIndex]) {
+      setMyPlayer(players[currentPlayerIndex])
+    }
+  }, [players])
 
   return myPlayer;
 }

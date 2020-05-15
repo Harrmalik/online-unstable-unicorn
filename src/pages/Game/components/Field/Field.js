@@ -80,7 +80,7 @@ function Deck(props) {
           content: `${props.id}: ${props.numCards}`,
           ribbon: true
         }}
-        src={`images/cardBack.jpg`}/>
+        src={`/images/cardBack.jpg`}/>
     </Card>
   )
 }

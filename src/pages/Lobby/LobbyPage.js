@@ -9,7 +9,7 @@ import GroupBy from 'lodash/groupBy';
 import Remove  from 'lodash/remove';
 import Shuffle  from 'lodash/shuffle';
 import Reduce  from 'lodash/reduce';
-import { Dropdown, Image, Item, Segment, Button } from 'semantic-ui-react';
+import { Dropdown, Image, Item, Segment, Button, Input } from 'semantic-ui-react';
 const colors = ['purple', 'blue', 'teal', 'green', 'yellow', 'orange', 'red'];
 
 function LobbyPage(props) {
@@ -34,7 +34,8 @@ function LobbyPage(props) {
       console.log('checking for roomid');
       props.socket.on('reconnect', (lobby, gameState) => {
         console.log('found lobby')
-        if (lobby) {
+        console.log(lobby, gameState)
+        if (gameState) {
           console.log(gameState)
           const inGame = gameState.currentPlayers;
           const usedUnicorns = Reduce(inGame, (newArr, player) => {
@@ -60,6 +61,9 @@ function LobbyPage(props) {
         } else {
           history.push('/')
         }
+
+        //TODO: may need to remove this
+        props.socket.removeListener('reconnect');
       })
       props.socket.emit('checkForRoom', urlParams)
     }
@@ -119,7 +123,6 @@ function LobbyPage(props) {
       props.socket.removeListener('reconnect');
       props.socket.removeListener('playerAdded');
       props.socket.removeListener('startingGame');
-
     };
   }, [props.socket]);
 
@@ -210,7 +213,7 @@ function LobbyPage(props) {
       </Dropdown.Menu>
     </Dropdown>
       {unicorn.id ? <Image src={unicorn.url} avatar /> : null }
-      Add Player: <input value={username} id="addUserText" onChange={(e) => setUsername(e.target.value)} /> <button onClick={addPlayer}>Add</button>
+      Add Player: <Input value={username} id="addUserText" onChange={(e) => setUsername(e.target.value)} /> <Button onClick={addPlayer}>Add</Button>
       </div>
       : null }
 

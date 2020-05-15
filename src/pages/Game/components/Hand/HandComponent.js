@@ -4,10 +4,13 @@ import './HandComponent.css';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { playingCard, playCard } from 'actions';
+import {useMyPlayer} from 'utils/hooks.js';
 
 import CardComponent from 'components/Card/CardComponent';
 
 function HandComponent(props) {
+  const myPlayer = useMyPlayer();
+
   function playCard(card, index) {
     if (props.isMyTurn && props.isPlayingCard) {
       switch (card.type) {
@@ -45,7 +48,7 @@ function HandComponent(props) {
     <div className="hand">
       { props.isPlayingCard ? <Header>Choose Card to Play</Header> : null }
       <Card.Group>
-        {props.hand.map((card, index) => {
+        {myPlayer.hand.map((card, index) => {
           return <CardComponent
             index={index}
             key={card.id}

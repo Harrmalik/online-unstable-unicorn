@@ -23,7 +23,11 @@ function ActionViewComponent (props) {
       console.log('called ending action phase');
       props.endActionPhase(phase, updatedDecks, updatedPlayers);
     })
-  }, []);
+
+    return () => {
+      props.socket.removeListener('endingActionPhase')
+    }
+  }, [props.socket]);
 
   return (
     <Segment raised id="actionView">
@@ -87,7 +91,13 @@ function SpectatorView(props) {
         props.endTurn(gameUpdates, props.currentPlayer)
       }
     })
-  }, [])
+
+    return () => {
+      props.socket.removeListener('switchingPhase')
+      props.socket.removeListener('attemptCardPlay')
+      props.socket.removeListener('endingTurn')
+    }
+  }, [props.socket])
   return (
     <div>
       {props.name} Turn
