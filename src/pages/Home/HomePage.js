@@ -1,7 +1,7 @@
 import './HomePage.css';
 import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { joinLobby } from 'actions';
+import { joinLobby, startGame } from 'actions';
 import { useHistory } from "react-router-dom";
 import { Header, Segment, Button, Divider, Input, Card, Icon } from 'semantic-ui-react';
 const colors = ['purple', 'blue', 'teal', 'green', 'yellow', 'orange', 'red'];
@@ -25,9 +25,18 @@ function HomePage() {
       setLobbies(lobbies);
     });
 
+
+    // JUST FOR TESTING
+    socketServer.on('startingGame', (game, decks, players) => {
+      dispatch(startGame(game, decks, players, game.turn % players.length === parseInt(localStorage.getItem('currentPlayerIndex'))))
+      history.push(`/${game.uri}/game`);
+      socketServer.removeListener('startGame');
+    })
+
     return () => {
       socketServer.removeListener('lobbyCreated');
       socketServer.removeListener('returnLobbies');
+      socketServer.removeListener('startGame');
     }
   },[socketServer]);
 

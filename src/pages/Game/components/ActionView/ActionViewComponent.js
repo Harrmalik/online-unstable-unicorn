@@ -20,9 +20,6 @@ function ActionViewComponent () {
     })
 
     socketServer.on('endingActionPhase', (phase, updatedDecks, updatedPlayers) => {
-      //TODO maybe make 2 calls based on if decks were updated
-      console.log(phase, updatedDecks, updatedPlayers)
-      console.log('called ending action phase');
       dispatch(endActionPhase(phase, updatedDecks, updatedPlayers));
     })
 

@@ -134,6 +134,19 @@ function isPlayingCard (state = false, action) {
     }
 }
 
+function cardBeingPlayed (state = {}, action) {
+    switch (action.type) {
+        case 'ATTEMPT_ADD_TO_STABLE':
+          return action.card;
+
+        case 'END_ACTION_PHASE':
+          return {};
+
+        default:
+            return state
+    }
+}
+
 function players (state = [], action) {
     switch (action.type) {
         case 'SET_PLAYERS':
@@ -168,7 +181,8 @@ const rootReducer = combineReducers({
     isPlayingCard,
     players,
     decks,
-    cards
+    cards,
+    cardBeingPlayed
 })
 
 export default rootReducer

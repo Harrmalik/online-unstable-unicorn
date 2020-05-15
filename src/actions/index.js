@@ -79,3 +79,8 @@ export const playingCard = (isPlayingCard) => ({
     type: 'PLAYING_CARD',
     isPlayingCard
 })
+
+export const attemptToPlay = (card) => ({
+    type: 'ATTEMPT_ADD_TO_STABLE',
+    card
+})

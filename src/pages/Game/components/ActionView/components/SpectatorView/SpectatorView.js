@@ -11,7 +11,8 @@ import CardComponent from 'components/Card/CardComponent';
 const MemoSpectatorView = React.memo(SpectatorView);
 
 function SpectatorView() {
-  const [card, setCard] = useState({});
+  const myPlayer = useMyPlayer();
+  const [card, setCard] = useState(null);
   const socketServer = useSelector(state => state.socket);
   const currentGame = useSelector(state => state.game);
   const decks = useSelector(state => state.decks);
@@ -38,14 +39,13 @@ function SpectatorView() {
       //   //TODO: Add player count to check if everyone skipped their instants
       //   socketServer.emit('skippingInstant', myPlayer);
       // }
-      // setCard(card);
+      setCard(card);
 
       // UNCOMMENT THIS IF YOU WANNA SKIP THE CHECK
-      setTimeout(() => {
-        //TODO: for now wait 3 secs then play card, maybe add a timer?
-        const updatedDecks = decks;
-        socketServer.emit('endActionPhase', 3, updatedDecks, updatedPlayers)
-      })
+      // setTimeout(() => {
+      //   const updatedDecks = decks;
+      //   socketServer.emit('endActionPhase', currentGame.uri, 3, updatedDecks, updatedPlayers)
+      // })
     })
 
     socketServer.on('endingTurn', (gameUpdates, nextPlayerIndex) => {
@@ -63,13 +63,75 @@ function SpectatorView() {
     }
   }, [socketServer])
 
+  function skipIntent() {
+    console.log('called skip intent')
+    socketServer.emit('skippingInstant', currentGame.uri, myPlayer.currentPlayerIndex, card)
+  }
+
+  function playInstant(card) {
+    console.log('called play intent', card)
+    socketServer.emit('playInstant', currentGame.uri, myPlayer.currentPlayerIndex, card)
+  }
+
   return (
     <div>
       {currentGame.whosTurn.name} Turn
 
-      <CardComponent card={card}/>
+      {
+        card ?
+        <MemoCounterActionView
+          card={card}
+          myPlayer={myPlayer}
+          skipIntent={skipIntent}/>
+          : null
+        }
     </div>
   )
 }
+
+
+const MemoCounterActionView = React.memo((props) => {
+  const { card, myPlayer, skipIntent, playIntent } = props;
+  const [actions, setActions] = useState([{
+    id: 0,
+    name: 'Skip',
+    callback: () => skipIntent()
+  }])
+
+  useEffect(() => {
+    console.log('CHECKING FOR INSTANTS')
+    const cardTypes = groupBy(myPlayer.hand, 'type');
+    if (cardTypes['Instant']) {
+      const newActions = cardTypes['Instant'].map(instant => {
+        return {
+          id: instant.id,
+          name: instant.name,
+          callback: () => {
+            playIntent(instant)
+          }
+        }
+      })
+      setActions([
+        ...actions,
+        newActions
+      ])
+    }
+  }, [card])
+
+  console.log(skipIntent)
+  return (
+    <div>
+      { actions.map(action => {
+        return (
+          <Button key={action.id}
+            content={action.name}
+            onClick={() => action.callback() }
+          />
+        )
+      })}
+      <CardComponent card={card}/>
+    </div>
+  )
+})
 
 export default MemoSpectatorView

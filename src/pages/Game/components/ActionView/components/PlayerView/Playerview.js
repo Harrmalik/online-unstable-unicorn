@@ -14,21 +14,40 @@ function PlayerView() {
   const players = useSelector(state =>  state.players);
   const game = useSelector(state =>  state.game);
   const decks = useSelector(state =>  state.decks);
+  const cardBeingPlayed = useSelector(state =>  state.cardBeingPlayed);
   const dispatch = useDispatch();
 
   const [effects, setEffects] = useState([])
   const [numPlayersCheckedForInstants, setNumPlayersCheckedForInstants] = useState(0);
 
   useEffect(() => {
-    socketServer.on('playerCheckedForInstant', player => {
-      // console.log('hey man from ', player.name)
-      setNumPlayersCheckedForInstants(numPlayersCheckedForInstants + 1)
+    socketServer.on('playerCheckedForInstant', playerIndex => {
+      console.log('hey man from ', players[playerIndex].name);
+      setNumPlayersCheckedForInstants(numPlayersCheckedForInstants + 1);
     })
 
     return () => {
       socketServer.removeListener('playerCheckedForInstant');
     }
   },[socketServer])
+
+  useEffect(() => {
+    if (numPlayersCheckedForInstants === players.length - 1) {
+      console.log('ready to play card');
+      //TODO: do some effects to users;
+      const cardIndex = myPlayer.hand.findIndex(card => {
+        return card.id === cardBeingPlayed.id
+      });
+      let updatedPlayers = players;
+      let updatedDecks = decks;
+
+      updatedPlayers[myPlayer.currentPlayerIndex].hand.splice(cardIndex,1);
+      updatedPlayers[myPlayer.currentPlayerIndex].stable.push(cardBeingPlayed);
+      socketServer.emit('endActionPhase', game .uri, 3, updatedDecks, updatedPlayers)
+    }
+
+    console.log(numPlayersCheckedForInstants)
+  }, [numPlayersCheckedForInstants])
 
   function checkForEffects() {
     console.log('STARTING EFFECT PHASE')
@@ -69,7 +88,6 @@ function PlayerView() {
 
   function playCard() {
     dispatch(playingCard(true))
-    // socketServer.emit('playCard', lobbyName, 3);
   }
 
   function handleEndTurn() {

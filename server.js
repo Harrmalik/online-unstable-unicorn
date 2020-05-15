@@ -275,14 +275,19 @@ io.on('connection', (socket) => {
     }
   });
 
-  socket.on('playCard', (lobbyName, card, updatedPlayers) => {
+  socket.on('attemptToPlayCard', (lobbyName, card) => {
     console.log('Attemping to play: ', card.name)
-    io.to(`game:${lobbyName}`).emit('attemptCardPlay', card, updatedPlayers);
+    io.to(`game:${lobbyName}`).emit('attemptCardPlay', card);
   });
 
-  socket.on('skippingInstant', (lobbyName, player) => {
+  socket.on('playCard', (lobbyName, updatedPlayers) => {
+    console.log('Attemping to play: ', card.name)
+    io.to(`game:${lobbyName}`).emit('cardPlayed', card, updatedPlayers);
+  });
+
+  socket.on('skippingInstant', (lobbyName, playerIndex) => {
     console.log('skippingInstant');
-    io.to(`game:${lobbyName}`).emit('playerCheckedForInstant', player);
+    io.to(`game:${lobbyName}`).emit('playerCheckedForInstant', playerIndex);
   })
 
   socket.on('endActionPhase', (lobbyName, phase, updatedDecks, updatedPlayers) => {

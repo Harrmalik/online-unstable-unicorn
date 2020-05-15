@@ -1,36 +1,32 @@
 import React from "react";
+import { useSelector, useDispatch } from 'react-redux';
+import { playingCard, attemptToPlay } from 'actions';
+import { useMyPlayer } from 'utils/hooks.js';
 import { Card, Header } from 'semantic-ui-react';
 import './HandComponent.css';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import { playingCard, playCard } from 'actions';
-import {useMyPlayer} from 'utils/hooks.js';
 
 import CardComponent from 'components/Card/CardComponent';
 
-function HandComponent(props) {
+function HandComponent() {
   const myPlayer = useMyPlayer();
+  const isMyTurn = useSelector(state => state.isMyTurn);
+  const isPlayingCard = useSelector(state => state.isPlayingCard);
+  // const players = useSelector(state => state.players);
+  const socketServer = useSelector(state => state.socket);
+  const lobbyName = useSelector(state => state.game.uri);
+  const dispatch = useDispatch()
 
   function playCard(card, index) {
-    if (props.isMyTurn && props.isPlayingCard) {
+    if (isMyTurn && isPlayingCard) {
       switch (card.type) {
         case 'Baby Unicorn':
         case 'Basic Unicorn':
         case 'Magical Unicorn':
         case 'Upgrade':
         case 'Downgrade':
-          let updatedPlayers = [
-            ...props.players
-          ]
-
-          updatedPlayers[props.currentPlayer - 1].hand.splice(index,1);
-          updatedPlayers[props.currentPlayer - 1].stable.push(card);
-
-          props.socket.emit('playCard', card, updatedPlayers)
-          console.log('ADDING TO STABLE');
-
-          //
-          // props.playCard(card, addToStable)
+          dispatch(playingCard(false))
+          dispatch(attemptToPlay(card))
+          socketServer.emit('attemptToPlayCard', lobbyName, card)
           break;
 
         case 'Magic':
@@ -40,20 +36,19 @@ function HandComponent(props) {
         default:
 
       }
-      console.log(card)
     }
   }
 
   return (
     <div className="hand">
-      { props.isPlayingCard ? <Header>Choose Card to Play</Header> : null }
+      { isPlayingCard ? <Header>Choose Card to Play</Header> : null }
       <Card.Group>
         {myPlayer.hand.map((card, index) => {
           return <CardComponent
             index={index}
             key={card.id}
             card={card}
-            isPlayingCard={props.isPlayingCard}
+            isPlayingCard={isPlayingCard}
             callback={playCard}/>
         })}
       </Card.Group>
@@ -61,20 +56,4 @@ function HandComponent(props) {
   );
 }
 
-const mapStateToProps = state => ({
-  isMyTurn: state.isMyTurn,
-  isPlayingCard: state.isPlayingCard,
-  players: state.players,
-  currentPlayer: state.currentPlayer,
-  socket: state.socket
-})
-
-const mapDispatchToProps = dispatch => ({
-    playingCard: bindActionCreators(playingCard, dispatch),
-    playCard: bindActionCreators(playCard, dispatch)
-})
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(HandComponent)
+export default HandComponent
