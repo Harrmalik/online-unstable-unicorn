@@ -134,6 +134,19 @@ function isPlayingCard (state = false, action) {
     }
 }
 
+function isDiscardingCard (state = false, action) {
+    switch (action.type) {
+        case 'DISCARDING_CARD':
+          return true;
+
+        case 'DISCARD_CARD':
+          return false;
+
+        default:
+            return state
+    }
+}
+
 function cardBeingPlayed (state = {}, action) {
     switch (action.type) {
         case 'ATTEMPT_ADD_TO_STABLE':
@@ -179,6 +192,7 @@ const rootReducer = combineReducers({
     game,
     isMyTurn,
     isPlayingCard,
+    isDiscardingCard,
     players,
     decks,
     cards,

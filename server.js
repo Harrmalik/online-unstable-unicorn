@@ -290,6 +290,12 @@ io.on('connection', (socket) => {
     io.to(`game:${lobbyName}`).emit('playerCheckedForInstant', playerIndex);
   })
 
+  socket.on('playInstant', (lobbyName, playerIndex, instant) => {
+    console.log('playingIntent: ', instant.name);
+    io.to(`game:${lobbyName}`).emit('playerCheckedForInstant', playerIndex, instant);
+  })
+
+
   socket.on('endActionPhase', (lobbyName, phase, updatedDecks, updatedPlayers) => {
     if (games[lobbyName].currentGame.phase === 2) {
       console.log('card played');

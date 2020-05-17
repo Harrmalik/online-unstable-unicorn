@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { setCurrentPlayer, setPlayers, startGame, nextPhase, endTurn, playingCard } from 'actions';
-import { useMyPlayer } from 'utils/hooks.js';
+import { useMyPlayer, useCheckForInstants } from 'utils/hooks.js';
 import groupBy from 'lodash/groupBy';
 import { Dropdown, Image, Item, Segment, Button } from 'semantic-ui-react';
 
@@ -19,11 +19,40 @@ function PlayerView() {
 
   const [effects, setEffects] = useState([])
   const [numPlayersCheckedForInstants, setNumPlayersCheckedForInstants] = useState(0);
+  const [opponentInteractions, setOpponentInteractions] = useState({
+    numPlayersCheckedForInstants: 0,
+    discardCard: false,
+    checkForInstant: false,
+    instant: null
+  });
+  const [checkForInstant, setCheckForInstant] = useState(false);
 
   useEffect(() => {
-    socketServer.on('playerCheckedForInstant', playerIndex => {
-      console.log('hey man from ', players[playerIndex].name);
-      setNumPlayersCheckedForInstants(numPlayersCheckedForInstants + 1);
+    socketServer.on('playerCheckedForInstant', (playerIndex, instant) => {
+      let interactions = opponentInteractions;
+      if (instant) {
+        console.log(`${players[playerIndex].name} played ${instant.name}`)
+        interactions.instant = {
+          ...instant,
+          playerIndex
+        }
+        switch (instant.name) {
+          case 'NEIGH MEANS NEIGH':
+            interactions.checkForInstant = false;
+            break;
+
+          case 'NEIGH, MOTHERFUCKER':
+            interactions.discardCard = true;
+            interactions.checkForInstant = true;
+            break;
+          default:
+            interactions.checkForInstant = true;
+        }
+      }
+
+      interactions.numPlayersCheckedForInstants++
+      setOpponentInteractions(interactions);
+      setNumPlayersCheckedForInstants(interactions.numPlayersCheckedForInstants)
     })
 
     return () => {
@@ -32,21 +61,23 @@ function PlayerView() {
   },[socketServer])
 
   useEffect(() => {
-    if (numPlayersCheckedForInstants === players.length - 1) {
-      console.log('ready to play card');
-      //TODO: do some effects to users;
-      const cardIndex = myPlayer.hand.findIndex(card => {
-        return card.id === cardBeingPlayed.id
-      });
-      let updatedPlayers = players;
-      let updatedDecks = decks;
-
-      updatedPlayers[myPlayer.currentPlayerIndex].hand.splice(cardIndex,1);
-      updatedPlayers[myPlayer.currentPlayerIndex].stable.push(cardBeingPlayed);
-      socketServer.emit('endActionPhase', game .uri, 3, updatedDecks, updatedPlayers)
-    }
-
+    console.log('opponentInteractions updated')
+    console.log(opponentInteractions, players.length)
     console.log(numPlayersCheckedForInstants)
+    if (opponentInteractions.instant) {
+      if (opponentInteractions.checkForInstant) {
+        console.log('checking for instant before ending turn');
+        setCheckForInstant(true);
+      } else {
+        console.log('discarding card and ending turn');
+        const [updatedDecks, updatedPlayers] = addToDiscardPile();
+        socketServer.emit('endActionPhase', game.uri, 3, updatedDecks, updatedPlayers);
+      }
+    } else if (opponentInteractions.numPlayersCheckedForInstants === players.length - 1) {
+      console.log('playing card and ending turn');
+      const [updatedDecks, updatedPlayers] = addToStable();
+      socketServer.emit('endActionPhase', game.uri, 3, updatedDecks, updatedPlayers)
+    }
   }, [numPlayersCheckedForInstants])
 
   function checkForEffects() {
@@ -67,13 +98,44 @@ function PlayerView() {
     }
   }
 
+  function addToStable() {
+    const updatedPlayers = players;
+    const updatedDecks = decks;
+    const cardIndex = myPlayer.hand.findIndex(card => {
+      return card.id === cardBeingPlayed.id
+    });
+
+    updatedPlayers[myPlayer.currentPlayerIndex].hand.splice(cardIndex,1);
+    updatedPlayers[myPlayer.currentPlayerIndex].stable.push(cardBeingPlayed);
+
+    return [updatedDecks, updatedPlayers];
+  }
+
+  function addToDiscardPile(shouldAlsoDiscardFromHand) {
+    const updatedPlayers = players;
+    const updatedDecks = decks;
+    const opponentIndex = opponentInteractions.instant.playerIndex;
+    const currentInstant = opponentInteractions.instant;
+    const cardIndex = myPlayer.hand.findIndex(card => {
+      return card.id === cardBeingPlayed.id
+    });
+    const instantIndex = updatedPlayers[opponentIndex].hand.findIndex(instant => {
+      return instant.id === currentInstant.id
+    });
+    
+    updatedDecks['discardPile'].push(cardBeingPlayed);
+    updatedDecks['discardPile'].push(updatedPlayers[opponentIndex].instantIndex);
+    updatedPlayers[myPlayer.currentPlayerIndex].hand.splice(cardIndex,1);
+    updatedPlayers[opponentIndex].hand.splice(instantIndex,1);
+    return [updatedDecks, updatedPlayers];
+  }
+
   function skipPhase() {
     dispatch(nextPhase(1))
     socketServer.emit('endEffectPhase', lobbyName, 1);
   }
 
   function drawCard(phase) {
-    console.log('drawing card')
     let drawPile = decks.drawPile;
     let player = myPlayer;
     let allPlayers = players;
@@ -83,11 +145,23 @@ function PlayerView() {
     allPlayers[player.currentPlayerIndex] = player;
 
     socketServer.emit('drawCard', lobbyName, drawPile, allPlayers, phase)
+    console.log(phase)
     dispatch(nextPhase(phase))
   }
 
   function playCard() {
     dispatch(playingCard(true))
+  }
+
+  function handleInstant(instant) {
+    if (instant.name === 'Skip') {
+      console.log('called skip intent')
+      const [updatedDecks, updatedPlayers] = addToDiscardPile();
+      socketServer.emit('endActionPhase', game.uri, 3, updatedDecks, updatedPlayers);
+    } else {
+      console.log('called play intent from player hand', instant)
+      // socketServer.emit('playInstant', currentGame.uri, myPlayer.currentPlayerIndex, instant)
+    }
   }
 
   function handleEndTurn() {
@@ -132,7 +206,9 @@ function PlayerView() {
       case 'Action':
         return <ActionView
                   drawCard={drawCard}
-                  playCard={playCard}/>
+                  playCard={playCard}
+                  checkForInstant={checkForInstant}
+                  handleInstant={handleInstant}/>
         break;
       case 'EndTurn':
         handleEndTurn()
@@ -153,34 +229,62 @@ function PlayerView() {
 
 function EffectsView(props) {
   console.log('WE GO SOMETHING????? ', props)
+  const { skipPhase, effects } = props;
   return (
     <div>
-      {props.effects.map(effect => {
-        return <Button onClick={() => { props.skipPhase(2) }}>{effect.name}</Button>
-      })}
-      <Button onClick={() => { props.skipPhase(2) }}>Skip</Button>
+      {
+        effects.map(effect => {
+          return <Button onClick={() => { skipPhase(2) }}>{effect.name}</Button>
+        })
+      }
+      <Button onClick={() => { skipPhase(2) }}>Skip</Button>
     </div>
   )
 }
 
 function DrawView(props) {
+  const { drawCard } = props;
   return (
     <div>
-      <Button onClick={() => { props.drawCard(2) }}>Draw Card</Button>
+      <Button onClick={() => { drawCard(2) }}>Draw Card</Button>
     </div>
   )
 }
 
+// TODO: make shared component with spectatorview
 function ActionView(props) {
+  const { drawCard, playCard, checkForInstant, handleInstant } = props;
+  const instantActions = useCheckForInstants();
+
+  function renderInstants() {
+    if (checkForInstant) {
+      return (
+        <div>
+          { instantActions.map(action => {
+            return (
+              <Button key={action.id}
+                content={action.name}
+                onClick={() => handleInstant(action) }
+              />
+            )
+          })}
+        </div>
+      )
+    }
+  }
+
   return (
     <div>
-      <Button onClick={() => { props.drawCard(3) }}>Draw Card</Button>
-      <Button onClick={props.playCard}>Play Card</Button>
+      <Button onClick={() => { drawCard(3) }}>Draw Card</Button>
+      <Button onClick={ playCard }>Play Card</Button>
+
+      { renderInstants() }
     </div>
   )
 }
 
 function EndView(props) {
+  const {} = props;
   return (
     <div>
       Ending turn
