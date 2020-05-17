@@ -1,6 +1,8 @@
 import { combineReducers } from 'redux';
-import cards from '../db/cards.js';
 import socketIOClient from "socket.io-client";
+import cards from '../db/cards.js';
+import upgrades from '../db/upgrades.js';
+import downgrades from '../db/downgrades.js';
 
 let defaultOptions = {
   gameid: 0,
@@ -23,6 +25,8 @@ let defaultOptions = {
     actions:['endTurn']
   }],
   cards,
+  upgrades,
+  downgrades,
   whosTurn: {},
   turn: 0
 };
@@ -195,7 +199,6 @@ const rootReducer = combineReducers({
     isDiscardingCard,
     players,
     decks,
-    cards,
     cardBeingPlayed
 })
 
