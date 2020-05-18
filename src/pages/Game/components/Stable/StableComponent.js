@@ -1,22 +1,36 @@
-import React from "react";
-import { Card, Header } from 'semantic-ui-react';
+import React, { useEffect } from "react";
+import { useDispatch } from 'react-redux';
+import { endGame } from 'actions';
+import { useMyPlayer } from 'utils/hooks.js';
 import './StableComponent.css';
-import { useMyPlayer } from 'utils/hooks.js'
+import { Card, Header } from 'semantic-ui-react';
 
+// Components
 import CardComponent from 'components/Card/CardComponent';
 
-function StableComponent() {
-  const myPlayer = useMyPlayer()
+const MemoStableComponent = React.memo(() => {
+  const { name, stable } = useMyPlayer();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (stable && stable.length === 7) {
+      console.log('ENDING THE GAME');
+      dispatch(endGame());
+    }
+  }, [stable])
+
   return (
     <div className="stable">
-      <Header>{myPlayer.name}'s Stable</Header>
+      <Header>{name}'s Stable</Header>
       <Card.Group>
-        {myPlayer.stable.map(card => {
-          return <CardComponent key={card.id} card={card}/>
-        })}
+        {
+          stable && stable.map(card => {
+            return <CardComponent key={card.id} card={card}/>
+          })
+        }
       </Card.Group>
     </div>
   );
-}
+})
 
-export default StableComponent
+export default MemoStableComponent

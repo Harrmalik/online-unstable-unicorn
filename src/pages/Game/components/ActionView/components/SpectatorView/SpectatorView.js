@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { setCurrentPlayer, setPlayers, startGame, nextPhase, endTurn, playingCard } from 'actions';
-import { Dropdown, Image, Item, Segment, Button } from 'semantic-ui-react';
 import groupBy from 'lodash/groupBy';
 import { useMyPlayer, useCheckForInstants } from 'utils/hooks.js';
+import { Dropdown, Image, Item, Segment, Button } from 'semantic-ui-react';
 
 // Components
 import CardComponent from 'components/Card/CardComponent';
@@ -39,6 +39,7 @@ const MemoSpectatorView = React.memo(() => {
   }, [socketServer])
 
   function handleInstant(instant) {
+    //TODO: make one call on there socket server
     if (instant.name === 'Skip') {
       socketServer.emit('skippingInstant', currentGame.uri, myPlayer.currentPlayerIndex, card)
     } else {

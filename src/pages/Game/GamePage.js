@@ -37,14 +37,31 @@ function GamePage() {
 
       socketServer.emit('checkForRoom', lobbyName)
     }
-  }, [isPlaying])
+  }, [isPlaying]);
+
+  // useEffect(() => {
+  //   if (gameOver) {
+  //     dispatch(endGame(game))
+  //     socketServer.emit('endGame', lobbyName, game);
+  //     history.push(`/${game.uri}/stats`);
+  //   }
+  // }, [gameOver]);
 
   return (
     <div>
+      { /* Shows list of players  */ }
       <PlayersView/>
+
+      { /* Shows decks  */ }
       <Field/>
+
+      { /* Shows current phase and cards being played  */ }
       <ActionViewComponent/>
+
+      { /* Shows player's current hand  */ }
       <HandComponent/>
+
+      { /* Shows player's current stable  */ }
       <StableComponent/>
     </div>
   );

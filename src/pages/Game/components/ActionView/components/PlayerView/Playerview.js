@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux';
-import { setCurrentPlayer, setPlayers, startGame, nextPhase, endTurn, playingCard } from 'actions';
+import { setCurrentPlayer, setPlayers, startGame, nextPhase, endTurn, playingCard, discardingCard } from 'actions';
 import { useMyPlayer, useCheckForInstants } from 'utils/hooks.js';
 import groupBy from 'lodash/groupBy';
 import { Dropdown, Image, Item, Segment, Button } from 'semantic-ui-react';
@@ -15,6 +15,7 @@ function PlayerView() {
   const game = useSelector(state =>  state.game);
   const decks = useSelector(state =>  state.decks);
   const cardBeingPlayed = useSelector(state =>  state.cardBeingPlayed);
+  const isDiscardingCard = useSelector(state =>  state.isDiscardingCard);
   const dispatch = useDispatch();
 
   const [effects, setEffects] = useState([])
@@ -26,6 +27,7 @@ function PlayerView() {
     instant: null
   });
   const [checkForInstant, setCheckForInstant] = useState(false);
+  const [readyToEndTurn, setReadyToEndTurn] = useState(false);
 
   useEffect(() => {
     socketServer.on('playerCheckedForInstant', (playerIndex, instant) => {
@@ -80,6 +82,53 @@ function PlayerView() {
     }
   }, [numPlayersCheckedForInstants])
 
+  useEffect(() => {
+
+    if (game.phase === 0) {
+      console.log('STARTING EFFECT PHASE')
+      let player = myPlayer;
+      let stable = player.stable
+      const cardTypes = groupBy(stable, 'activateAtBeginning');
+      if (cardTypes['true']) {
+        setEffects(cardTypes['true'].map(card => {
+          //TODO: added in upgrades, downgrades
+          return {
+            ...card
+          }
+        }))
+      } else {
+          dispatch(nextPhase(1))
+          socketServer.emit('endEffectPhase', lobbyName, 1);
+      }
+    }
+
+    if (game.phase === 3 && !isDiscardingCard) {
+      console.log('STARTING END TURN PHASE')
+      if (myPlayer.hand.length > 7) {
+        dispatch(discardingCard(true));
+      } else {
+        setReadyToEndTurn(true);
+      }
+    }
+  }, [game.phase, isDiscardingCard])
+
+  useEffect(() => {
+    if (readyToEndTurn) {
+      let nextTurn = game.turn + 1;
+      let nextPlayerIndex = nextTurn % players.length;
+      let whosTurn = players[nextPlayerIndex];
+
+      const gameUpdates = {
+        turn: nextTurn,
+        whosTurn,
+        phase: 0
+      }
+
+      dispatch(endTurn(gameUpdates, nextPlayerIndex === myPlayer.currentPlayerIndex));
+      socketServer.emit('endTurn', lobbyName, gameUpdates, nextPlayerIndex);
+    }
+  }, [readyToEndTurn])
+
   function checkForEffects() {
     console.log('STARTING EFFECT PHASE')
     let player = myPlayer;
@@ -101,9 +150,7 @@ function PlayerView() {
   function addToStable() {
     const updatedPlayers = players;
     const updatedDecks = decks;
-    const cardIndex = myPlayer.hand.findIndex(card => {
-      return card.id === cardBeingPlayed.id
-    });
+    const cardIndex = myPlayer.hand.findIndex(card => card.id === cardBeingPlayed.id);
 
     updatedPlayers[myPlayer.currentPlayerIndex].hand.splice(cardIndex,1);
     updatedPlayers[myPlayer.currentPlayerIndex].stable.push(cardBeingPlayed);
@@ -116,17 +163,14 @@ function PlayerView() {
     const updatedDecks = decks;
     const opponentIndex = opponentInteractions.instant.playerIndex;
     const currentInstant = opponentInteractions.instant;
-    const cardIndex = myPlayer.hand.findIndex(card => {
-      return card.id === cardBeingPlayed.id
-    });
-    const instantIndex = updatedPlayers[opponentIndex].hand.findIndex(instant => {
-      return instant.id === currentInstant.id
-    });
-    
+    const cardIndex = myPlayer.hand.findIndex(card => card.id === cardBeingPlayed.id);
+    const instantIndex = updatedPlayers[opponentIndex].hand.findIndex(instant => instant.id === currentInstant.id);
+
     updatedDecks['discardPile'].push(cardBeingPlayed);
     updatedDecks['discardPile'].push(updatedPlayers[opponentIndex].instantIndex);
     updatedPlayers[myPlayer.currentPlayerIndex].hand.splice(cardIndex,1);
     updatedPlayers[opponentIndex].hand.splice(instantIndex,1);
+
     return [updatedDecks, updatedPlayers];
   }
 
@@ -136,16 +180,16 @@ function PlayerView() {
   }
 
   function drawCard(phase) {
-    let drawPile = decks.drawPile;
+    let updatedDecks = decks;
     let player = myPlayer;
     let allPlayers = players;
 
-    const nextCards = drawPile.splice(0, 1);
+
+    const nextCards = updatedDecks.drawPile.splice(0, 1);
     player.hand = [...player.hand, ...nextCards];
     allPlayers[player.currentPlayerIndex] = player;
 
-    socketServer.emit('drawCard', lobbyName, drawPile, allPlayers, phase)
-    console.log(phase)
+    socketServer.emit('drawCard', lobbyName, updatedDecks, allPlayers, phase)
     dispatch(nextPhase(phase))
   }
 
@@ -160,38 +204,14 @@ function PlayerView() {
       socketServer.emit('endActionPhase', game.uri, 3, updatedDecks, updatedPlayers);
     } else {
       console.log('called play intent from player hand', instant)
-      // socketServer.emit('playInstant', currentGame.uri, myPlayer.currentPlayerIndex, instant)
+      //TODO: adding ability to instant an instant
+      // socketServer.emit('endActionPhase', game.uri, 3, updatedDecks, updatedPlayers);
     }
-  }
-
-  function handleEndTurn() {
-    console.log('STARTING END TURN PHASE')
-    setTimeout(() => {
-      let nextTurn = game.turn + 1;
-      let nextPlayerIndex = nextTurn % players.length;
-      let whosTurn = players[nextPlayerIndex];
-
-      const gameUpdates = {
-        turn: nextTurn,
-        whosTurn,
-        phase: 0
-      }
-
-      dispatch(endTurn(gameUpdates, nextPlayerIndex === parseInt(localStorage.getItem('currentPlayerIndex'))))
-      socketServer.emit('endTurn', lobbyName, gameUpdates, nextPlayerIndex);
-    }, 3000)
-  }
-
-  function endGame() {
-    dispatch(endGame())
-    socketServer.emit('endGame', lobbyName);
   }
 
   function renderView() {
     switch (game.phases[game.phase].name) {
       case 'Effect':
-        checkForEffects()
-
         return <EffectsView
                   effects={effects}
                   skipPhase={skipPhase}/>
@@ -211,11 +231,8 @@ function PlayerView() {
                   handleInstant={handleInstant}/>
         break;
       case 'EndTurn':
-        handleEndTurn()
         return <EndView />
         break;
-      default:
-        return <p>Game Over</p>
     }
   }
 

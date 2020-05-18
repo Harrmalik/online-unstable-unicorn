@@ -2,26 +2,26 @@ import React from "react";
 import { Card, Popup, Image } from 'semantic-ui-react';
 import './CardComponent.css';
 
-function CardComponent(props) {
+const MemoCardComponent = React.memo((props) => {
+  const { card, index, callback } = props;
+
   return (
     <Popup inverted
       trigger={
-        <Card onClick={() => { props.callback(props.card, props.index) }}>
-          <Image src={props.card.url} />
+        <Card onClick={() => { callback(card, index) }}>
+          <Image src={card.url} />
           <Card.Content>
-            <Card.Header>{props.card.name}</Card.Header>
+            <Card.Header>{card.name}</Card.Header>
           </Card.Content>
         </Card>
       }
     >
-      <Popup.Header>{props.card.type}</Popup.Header>
+      <Popup.Header>{card.type}</Popup.Header>
       <Popup.Content>
-        {props.card.description}
+        {card.description}
       </Popup.Content>
     </Popup>
   );
-}
+});
 
-
-
-export default CardComponent
+export default MemoCardComponent

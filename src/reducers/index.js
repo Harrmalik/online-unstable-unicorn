@@ -10,6 +10,7 @@ let defaultOptions = {
   expansion: '',
   winCondition: '',
   playing: false,
+  gameOver: false,
   phase: 0,
   phases: [{
     name: 'Effect',
@@ -77,6 +78,12 @@ function game (state = defaultOptions, action) {
             ...action.gameUpdates
           }
 
+        case 'END_GAME':
+          return {
+            ...game,
+            gameOver: true
+          };
+
         default:
             return state
     }
@@ -141,10 +148,7 @@ function isPlayingCard (state = false, action) {
 function isDiscardingCard (state = false, action) {
     switch (action.type) {
         case 'DISCARDING_CARD':
-          return true;
-
-        case 'DISCARD_CARD':
-          return false;
+          return action.isDiscardingCard;
 
         default:
             return state

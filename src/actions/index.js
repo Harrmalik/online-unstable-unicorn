@@ -86,11 +86,17 @@ export const discardCard = (updatedDecks, updatedPlayers) => ({
     updatedPlayers
 })
 
-export const discardingCard = () => ({
-    type: 'DISCARDING_CARD'
+export const discardingCard = (isDiscardingCard) => ({
+    type: 'DISCARDING_CARD',
+    isDiscardingCard
 })
 
 export const attemptToPlay = (card) => ({
     type: 'ATTEMPT_ADD_TO_STABLE',
     card
+})
+
+export const endGame = (updatedGame) => ({
+    type: 'END_GAME',
+    updatedGame
 })

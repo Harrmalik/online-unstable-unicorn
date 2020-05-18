@@ -19,12 +19,18 @@ function ActionViewComponent () {
       dispatch(setPlayers(updatedPlayers));
     })
 
+    socketServer.on('cardDiscarded', (card, updatedDecks, updatedPlayers) => {
+      dispatch(updateDecks(updatedDecks));
+      dispatch(setPlayers(updatedPlayers));
+    })
+
     socketServer.on('endingActionPhase', (phase, updatedDecks, updatedPlayers) => {
       dispatch(endActionPhase(phase, updatedDecks, updatedPlayers));
     })
 
     return () => {
       socketServer.removeListener('cardDrew');
+      socketServer.removeListener('cardDiscarded');
       socketServer.removeListener('endingActionPhase');
     }
   }, [socketServer]);

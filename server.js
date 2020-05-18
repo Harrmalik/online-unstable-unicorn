@@ -266,7 +266,7 @@ io.on('connection', (socket) => {
   socket.on('drawCard', (lobbyName, decks, players, phase) => {
     if ([1,2].includes(games[lobbyName].currentGame.phase))
     console.log('drawing card');
-    games[lobbyName].currentDecks.drawPile = decks;
+    games[lobbyName].currentDecks = decks;
     games[lobbyName].currentPlayers = players;
     games[lobbyName].currentGame.phase = phase;
     io.to(`game:${lobbyName}`).emit('cardDrew', games[lobbyName].currentDecks, games[lobbyName].currentPlayers);
@@ -285,6 +285,11 @@ io.on('connection', (socket) => {
     io.to(`game:${lobbyName}`).emit('cardPlayed', card, updatedPlayers);
   });
 
+  socket.on('discardCard', (lobbyName, card, updatedDecks, updatedPlayers) => {
+    console.log('Discarding Card')
+    io.to(`game:${lobbyName}`).emit('cardDiscarded', card, updatedDecks, updatedPlayers);
+  });
+
   socket.on('skippingInstant', (lobbyName, playerIndex) => {
     console.log('skippingInstant');
     io.to(`game:${lobbyName}`).emit('playerCheckedForInstant', playerIndex);
@@ -294,7 +299,6 @@ io.on('connection', (socket) => {
     console.log('playingIntent: ', instant.name);
     io.to(`game:${lobbyName}`).emit('playerCheckedForInstant', playerIndex, instant);
   })
-
 
   socket.on('endActionPhase', (lobbyName, phase, updatedDecks, updatedPlayers) => {
     if (games[lobbyName].currentGame.phase === 2) {
