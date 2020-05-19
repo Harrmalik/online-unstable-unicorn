@@ -83,8 +83,7 @@ function PlayerView() {
   }, [numPlayersCheckedForInstants])
 
   useEffect(() => {
-
-    if (game.phase === 0) {
+    if (game.phase === 0 && myPlayer.id) {
       console.log('STARTING EFFECT PHASE')
       let player = myPlayer;
       let stable = player.stable
@@ -93,13 +92,22 @@ function PlayerView() {
         setEffects(cardTypes['true'].map(card => {
           //TODO: added in upgrades, downgrades
           return {
-            ...card
+            ...card,
+            callback: () => handleEffects(card)
           }
         }))
       } else {
           dispatch(nextPhase(1))
           socketServer.emit('endEffectPhase', lobbyName, 1);
       }
+    }
+
+    if (game.phase === 1) {
+
+    }
+
+    if (game.phase === 2) {
+
     }
 
     if (game.phase === 3 && !isDiscardingCard) {
@@ -110,7 +118,7 @@ function PlayerView() {
         setReadyToEndTurn(true);
       }
     }
-  }, [game.phase, isDiscardingCard])
+  }, [game.phase, isDiscardingCard, myPlayer.stable])
 
   useEffect(() => {
     if (readyToEndTurn) {
@@ -128,24 +136,6 @@ function PlayerView() {
       socketServer.emit('endTurn', lobbyName, gameUpdates, nextPlayerIndex);
     }
   }, [readyToEndTurn])
-
-  function checkForEffects() {
-    console.log('STARTING EFFECT PHASE')
-    let player = myPlayer;
-    let stable = player.stable
-    const cardTypes = groupBy(stable, 'activateAtBeginning');
-    if (cardTypes['true']) {
-      setEffects(cardTypes['true'].map(card => {
-        //TODO: added in upgrades, downgrades
-        return {
-          ...card
-        }
-      }))
-    } else {
-        dispatch(nextPhase(1))
-        socketServer.emit('endEffectPhase', lobbyName, 1);
-    }
-  }
 
   function addToStable() {
     const updatedPlayers = players;
@@ -177,6 +167,11 @@ function PlayerView() {
   function skipPhase() {
     dispatch(nextPhase(1))
     socketServer.emit('endEffectPhase', lobbyName, 1);
+  }
+
+  function handleEffects(effect) {
+    console.log(game.upgrades)
+    console.log(game.upgrades[effect.upgrade])
   }
 
   function drawCard(phase) {
@@ -245,13 +240,12 @@ function PlayerView() {
 }
 
 function EffectsView(props) {
-  console.log('WE GO SOMETHING????? ', props)
   const { skipPhase, effects } = props;
   return (
     <div>
       {
         effects.map(effect => {
-          return <Button onClick={() => { skipPhase(2) }}>{effect.name}</Button>
+          return <Button key={effect.id} onClick={() => { effect.callback() }}>{effect.name}</Button>
         })
       }
       <Button onClick={() => { skipPhase(2) }}>Skip</Button>
