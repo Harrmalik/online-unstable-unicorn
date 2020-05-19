@@ -132,23 +132,53 @@ function isMyTurn (state = false, action) {
     }
 }
 
-function isPlayingCard (state = false, action) {
+function isPlayingCard (state = {isTrue: false, callback: null}, action) {
     switch (action.type) {
         case 'PLAYING_CARD':
           return action.isPlayingCard;
 
         case 'END_ACTION_PHASE':
-          return false;
+          return {isTrue: false, callback: null};
 
         default:
             return state
     }
 }
 
-function isDiscardingCard (state = false, action) {
+function isDiscardingCard (state = {isTrue: false, callback: null}, action) {
     switch (action.type) {
         case 'DISCARDING_CARD':
           return action.isDiscardingCard;
+
+        default:
+            return state
+    }
+}
+
+function isSacrificingCard (state = {isTrue: false, callback: null}, action) {
+    switch (action.type) {
+        case 'SACRIFICING_CARD':
+          return action.isSacrificingCard;
+
+        default:
+            return state
+    }
+}
+
+function isDestroyingCard (state = {isTrue: false, callback: null}, action) {
+    switch (action.type) {
+        case 'DESTROYING_CARD':
+          return action.isDestroyingCard;
+
+        default:
+            return state
+    }
+}
+
+function isReturningCard (state = {isTrue: false, callback: null}, action) {
+    switch (action.type) {
+        case 'RETURNING_CARD':
+          return action.isReturningCard;
 
         default:
             return state
@@ -201,6 +231,9 @@ const rootReducer = combineReducers({
     isMyTurn,
     isPlayingCard,
     isDiscardingCard,
+    isSacrificingCard,
+    isDestroyingCard,
+    isReturningCard,
     players,
     decks,
     cardBeingPlayed

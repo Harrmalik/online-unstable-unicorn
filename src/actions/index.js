@@ -91,6 +91,21 @@ export const discardingCard = (isDiscardingCard) => ({
     isDiscardingCard
 })
 
+export const sacrificingCard = (isSacrificingCard) => ({
+    type: 'SACRIFICING_CARD',
+    isSacrificingCard
+})
+
+export const destroyingCard = (isDestroyingCard) => ({
+    type: 'DESTROYING_CARD',
+    isDestroyingCard
+})
+
+export const returningCard = (isReturningCard) => ({
+    type: 'RETURNING_CARD',
+    isReturningCard
+})
+
 export const attemptToPlay = (card) => ({
     type: 'ATTEMPT_ADD_TO_STABLE',
     card

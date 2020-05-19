@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux';
-import { setCurrentPlayer, setPlayers, startGame, nextPhase, endTurn, playingCard, discardingCard } from 'actions';
+import { setCurrentPlayer, setPlayers, startGame, nextPhase, endTurn, playingCard, discardingCard, returningCard } from 'actions';
 import { useMyPlayer, useCheckForInstants } from 'utils/hooks.js';
 import groupBy from 'lodash/groupBy';
 import { Dropdown, Image, Item, Segment, Button } from 'semantic-ui-react';
@@ -18,7 +18,11 @@ function PlayerView() {
   const isDiscardingCard = useSelector(state =>  state.isDiscardingCard);
   const dispatch = useDispatch();
 
-  const [effects, setEffects] = useState([])
+  const [effects, setEffects] = useState([]);
+  const [numberOfEffectsTotal, setNumberOfEffectsTotal] = useState(null);
+  const [numberOfEffectsHandled, setNumberOfEffectsHandled] = useState(0);
+  const [allowSkip, setAllowSkip] = useState(true);
+
   const [numPlayersCheckedForInstants, setNumPlayersCheckedForInstants] = useState(0);
   const [opponentInteractions, setOpponentInteractions] = useState({
     numPlayersCheckedForInstants: 0,
@@ -28,6 +32,14 @@ function PlayerView() {
   });
   const [checkForInstant, setCheckForInstant] = useState(false);
   const [readyToEndTurn, setReadyToEndTurn] = useState(false);
+
+
+  // debuffs
+
+
+  // buffs
+  const [skipDrawPhase, setSkipDrawPhase] = useState(false);
+  const [skipActionPhase, setSkipActionPhase] = useState(false);
 
   useEffect(() => {
     socketServer.on('playerCheckedForInstant', (playerIndex, instant) => {
@@ -85,40 +97,132 @@ function PlayerView() {
   useEffect(() => {
     if (game.phase === 0 && myPlayer.id) {
       console.log('STARTING EFFECT PHASE')
-      let player = myPlayer;
-      let stable = player.stable
-      const cardTypes = groupBy(stable, 'activateAtBeginning');
+      const cardTypes = groupBy(myPlayer.stable, 'activateAtBeginning');
       if (cardTypes['true']) {
-        setEffects(cardTypes['true'].map(card => {
-          //TODO: added in upgrades, downgrades
-          return {
-            ...card,
-            callback: () => handleEffects(card)
+        let theEffects = [];
+        setNumberOfEffectsTotal(cardTypes['true'].length);
+
+        cardTypes['true'].forEach(card => {
+          if (card.hasOwnProperty('upgrade')) {
+            console.log(game.upgrades[card.upgrade])
+            switch (card.upgrade) {
+              case 0:
+                // skip either your draw or action phase
+                applyDebuff()
+                break;
+              case 1:
+                dispatch(isDiscardingCard(true));
+                break;
+              case 2:
+                // return a unicorn to hand
+                // TODO: discard debuff when stable reaches 0 <----- v2
+                applyDebuff()
+                break;
+              case 3:
+                // skip either your draw or action phase
+                applyDebuff()
+                break;
+              case 4:
+                dispatch(isDiscardingCard(true));
+                break;
+              case 5:
+                // return a unicorn to hand
+                // TODO: discard debuff when stable reaches 0 <----- v2
+                applyDebuff()
+                break;
+              case 6:
+                // skip either your draw or action phase
+                applyDebuff()
+                break;
+              case 9:
+                dispatch(isDiscardingCard(true));
+                break;
+            }
           }
-        }))
+
+          if (card.hasOwnProperty('downgrade')) {
+            switch (card.downgrade) {
+              case 0:
+                // skip either your draw or action phase
+                setAllowSkip(false);
+                theEffects.push({
+                  name: 'Skip Draw Phase',
+                  requiresAction: false,
+                  callback: () => setSkipDrawPhase(true)
+                });
+                theEffects.push({
+                  name: 'Skip Action Phase',
+                  requiresAction: false,
+                  callback: () => setSkipActionPhase(true)
+                });
+                break;
+              case 3:
+                // discard a card
+                setAllowSkip(false);
+                theEffects.push({
+                  name: 'Discard card',
+                  requiresAction: true,
+                  callback: () => dispatch(discardingCard({
+                    isTrue: true,
+                    callback: () => handleEffects(null, false)
+                  }))
+                });
+                break;
+              case 4:
+                // return a unicorn to hand
+                // TODO: discard debuff when stable reaches 0 <----- v2
+                setAllowSkip(false);
+                theEffects.push({
+                  name: 'Return unicorn',
+                  requiresAction: true,
+                  callback: () => dispatch(returningCard({
+                    isTrue: true,
+                    callback: () => handleEffects(null, false)
+                  }))
+                });
+                break;
+            }
+          }
+        })
+
+        setEffects(theEffects)
       } else {
-          dispatch(nextPhase(1))
-          socketServer.emit('endEffectPhase', lobbyName, 1);
+          setNumberOfEffectsTotal(0);
+          setNumberOfEffectsHandled(0);
       }
     }
 
     if (game.phase === 1) {
-
+      if (skipDrawPhase) {
+        dispatch(nextPhase(2))
+      }
     }
 
     if (game.phase === 2) {
-
+      if (skipActionPhase) {
+        dispatch(nextPhase(3))
+      }
     }
 
-    if (game.phase === 3 && !isDiscardingCard) {
+    if (game.phase === 3 && !isDiscardingCard.isTrue) {
       console.log('STARTING END TURN PHASE')
       if (myPlayer.hand.length > 7) {
-        dispatch(discardingCard(true));
+        dispatch(discardingCard({
+          isTrue: true,
+          callback: null
+        }));
       } else {
         setReadyToEndTurn(true);
       }
     }
   }, [game.phase, isDiscardingCard, myPlayer.stable])
+
+  useEffect(() => {
+    if (numberOfEffectsTotal && numberOfEffectsTotal === numberOfEffectsHandled) {
+      dispatch(nextPhase(1))
+      socketServer.emit('endEffectPhase', lobbyName, 1);
+    }
+  }, [numberOfEffectsTotal, numberOfEffectsHandled])
 
   useEffect(() => {
     if (readyToEndTurn) {
@@ -136,6 +240,8 @@ function PlayerView() {
       socketServer.emit('endTurn', lobbyName, gameUpdates, nextPlayerIndex);
     }
   }, [readyToEndTurn])
+
+  function applyDebuff() {}
 
   function addToStable() {
     const updatedPlayers = players;
@@ -169,9 +275,14 @@ function PlayerView() {
     socketServer.emit('endEffectPhase', lobbyName, 1);
   }
 
-  function handleEffects(effect) {
-    console.log(game.upgrades)
-    console.log(game.upgrades[effect.upgrade])
+  function handleEffects(effectCallback, requiresAction) {
+    if (effectCallback) {
+      effectCallback();
+    }
+
+    if (!requiresAction) {
+      setNumberOfEffectsHandled(numberOfEffectsHandled + 1);
+    }
   }
 
   function drawCard(phase) {
@@ -189,7 +300,7 @@ function PlayerView() {
   }
 
   function playCard() {
-    dispatch(playingCard(true))
+    dispatch(playingCard({isTrue: true, callback: null}))
   }
 
   function handleInstant(instant) {
@@ -209,6 +320,8 @@ function PlayerView() {
       case 'Effect':
         return <EffectsView
                   effects={effects}
+                  handleEffects={handleEffects}
+                  allowSkip={allowSkip}
                   skipPhase={skipPhase}/>
         break;
       case 'Draw':
@@ -240,15 +353,15 @@ function PlayerView() {
 }
 
 function EffectsView(props) {
-  const { skipPhase, effects } = props;
+  const { handleEffects, allowSkip, skipPhase, effects } = props;
   return (
     <div>
       {
         effects.map(effect => {
-          return <Button key={effect.id} onClick={() => { effect.callback() }}>{effect.name}</Button>
+          return <Button key={effect.id} onClick={() => { handleEffects(effect.callback, effect.requiresAction) }}>{effect.name}</Button>
         })
       }
-      <Button onClick={() => { skipPhase(2) }}>Skip</Button>
+      { allowSkip ? <Button onClick={() => { skipPhase(2) }}>Skip</Button> : null }
     </div>
   )
 }

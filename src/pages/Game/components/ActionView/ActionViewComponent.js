@@ -15,13 +15,23 @@ function ActionViewComponent () {
 
   useEffect(() => {
     socketServer.on('cardDrew', (updatedDecks, updatedPlayers) => {
-      dispatch(updateDecks(updatedDecks));
-      dispatch(setPlayers(updatedPlayers));
+      dispatchUpdates(updatedDecks, updatedPlayers)
     })
 
     socketServer.on('cardDiscarded', (card, updatedDecks, updatedPlayers) => {
-      dispatch(updateDecks(updatedDecks));
-      dispatch(setPlayers(updatedPlayers));
+      dispatchUpdates(updatedDecks, updatedPlayers)
+    })
+
+    socketServer.on('cardDestroyed', (card, updatedDecks, updatedPlayers) => {
+      dispatchUpdates(updatedDecks, updatedPlayers)
+    })
+
+    socketServer.on('cardSacrificed', (card, updatedDecks, updatedPlayers) => {
+      dispatchUpdates(updatedDecks, updatedPlayers)
+    })
+
+    socketServer.on('cardReturned', (card, updatedDecks, updatedPlayers) => {
+      dispatchUpdates(updatedDecks, updatedPlayers)
     })
 
     socketServer.on('endingActionPhase', (phase, updatedDecks, updatedPlayers) => {
@@ -31,9 +41,17 @@ function ActionViewComponent () {
     return () => {
       socketServer.removeListener('cardDrew');
       socketServer.removeListener('cardDiscarded');
+      socketServer.removeListener('cardDestroyed');
+      socketServer.removeListener('cardSacrificed');
+      socketServer.removeListener('cardReturned');
       socketServer.removeListener('endingActionPhase');
     }
   }, [socketServer]);
+
+  function dispatchUpdates(updatedDecks, updatedPlayers) {
+    dispatch(updateDecks(updatedDecks));
+    dispatch(setPlayers(updatedPlayers));
+  }
 
   return (
     <Segment raised id="actionView">

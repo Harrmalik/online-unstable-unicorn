@@ -25,7 +25,7 @@ function HandComponent() {
       handlePlayCard(card, index);
     }
 
-    if (isDiscardingCard) {
+    if (isDiscardingCard.isTrue) {
       handleDiscardCard(card, index);
     }
   }
@@ -53,18 +53,21 @@ function HandComponent() {
   function handleDiscardCard(card, index) {
     const updatedDecks = decks;
     const updatedPlayers = players;
-    const cardIndex = myPlayer.hand.findIndex(cardFromHand => cardFromHand.id === card.id);
 
     updatedDecks['discardPile'].push(card);
-    updatedPlayers[myPlayer.currentPlayerIndex].hand.splice(cardIndex,1);
+    updatedPlayers[myPlayer.currentPlayerIndex].hand.splice(index,1);
     socketServer.emit('discardCard', lobbyName, card, updatedDecks, updatedPlayers);
-    dispatch(discardingCard(false));
+    if (isDiscardingCard.callback) {
+      isDiscardingCard.callback();
+    }
+
+    dispatch(discardingCard({isTrue: false, callback: null}))
   }
 
   return (
     <div className="hand">
-      { isPlayingCard ? <Header>Choose Card to Play</Header> : null }
-      { isDiscardingCard ? <Header>Choose Card to Discard</Header> : null }
+      { isPlayingCard.isTrue ? <Header>Choose Card to Play</Header> : null }
+      { isDiscardingCard.isTrue ? <Header>Choose Card to Discard</Header> : null }
       <Card.Group>
         {myPlayer.hand.map((card, index) => {
           return <CardComponent

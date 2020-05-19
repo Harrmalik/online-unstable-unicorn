@@ -19,7 +19,7 @@ let testPlayers = [
       "Color": "Magenta",
       "url": "/images/8.jpg",
       activateAtBeginning: true,
-      downgrade: 1
+      downgrade: 4
     }],
     viewingStableId: 1,
     unicorn: {
@@ -32,7 +32,11 @@ let testPlayers = [
       "url": "/images/8.jpg",
     },
     upgrades: [],
-    downgrades: []
+    downgrades: [{
+      name: 'skipPhase',
+      description: 'Skip either your Draw phase or your Action phase.',
+      optional: false
+    }]
   },{
     id: 2,
     connected: true,
@@ -290,6 +294,21 @@ io.on('connection', (socket) => {
   socket.on('discardCard', (lobbyName, card, updatedDecks, updatedPlayers) => {
     console.log('Discarding Card')
     io.to(`game:${lobbyName}`).emit('cardDiscarded', card, updatedDecks, updatedPlayers);
+  });
+
+  socket.on('destroyCard', (lobbyName, card, updatedDecks, updatedPlayers) => {
+    console.log('Destroying Card')
+    io.to(`game:${lobbyName}`).emit('cardDestroyed', card, updatedDecks, updatedPlayers);
+  });
+
+  socket.on('sacrificeCard', (lobbyName, card, updatedDecks, updatedPlayers) => {
+    console.log('Sacrificing Card')
+    io.to(`game:${lobbyName}`).emit('cardSacrificed', card, updatedDecks, updatedPlayers);
+  });
+
+  socket.on('returnCard', (lobbyName, card, updatedDecks, updatedPlayers) => {
+    console.log('Returning Card')
+    io.to(`game:${lobbyName}`).emit('cardReturned', card, updatedDecks, updatedPlayers);
   });
 
   socket.on('skippingInstant', (lobbyName, playerIndex) => {
