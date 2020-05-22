@@ -199,6 +199,8 @@ function cardBeingPlayed (state = {}, action) {
 }
 
 function players (state = [], action) {
+  let newState;
+  let currIndex;
     switch (action.type) {
         case 'SET_PLAYERS':
         case 'START_GAME': return action.players;
@@ -209,13 +211,23 @@ function players (state = [], action) {
           return action.updatedPlayers;
 
         case 'VIEW_STABLE':
-          const newState = [].concat(state);
-          const currIndex = newState.findIndex(player => player.id == action.currentPlayer.id);
+          newState = [].concat(state);
+          currIndex = newState.findIndex(player => player.id == action.currentPlayer.id);
           if (currIndex < 0)
-            break;
+            return state;
 
           const viewingStableId = action.viewingPlayer != null ? action.viewingPlayer.id : action.currentPlayer.id;
           action.currentPlayer.viewingStableId = viewingStableId;
+          newState[currIndex] = action.currentPlayer;
+          return newState;
+
+        case 'VIEW_OTHER_PLAYER_MODAL':
+          newState = [].concat(state);
+          currIndex = newState.findIndex(player => player.id == action.currentPlayer.id);
+          if (currIndex < 0)
+            return state;
+          
+          action.currentPlayer.isViewingOtherPlayerModalOpen = action.isViewingModal;
           newState[currIndex] = action.currentPlayer;
           return newState;
 

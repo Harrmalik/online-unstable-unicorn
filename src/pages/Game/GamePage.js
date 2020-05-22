@@ -58,6 +58,9 @@ function GamePage() {
       { /* Shows current phase and cards being played  */ }
       <ActionViewComponent/>
 
+      {/* Allows current player to view another players hand */}
+      <ViewOtherPlayer isOpen={myPlayer.isViewingOtherPlayerModalOpen}/>
+
       { /* Shows player's current hand  */ }
       <HandComponent/>
 
