@@ -43,6 +43,7 @@ function LobbyPage(props) {
 
     socketServer.on('userConnected', (inLobby, inGame) => {
       setLobby(inLobby); 
+      dispatch(setPlayers(inGame))
     })
 
     socketServer.on('playerAdded', players => {
@@ -50,8 +51,9 @@ function LobbyPage(props) {
     })
 
     socketServer.on('startingGame', (options, decks, players) => {
-      dispatch(startGame(options, decks, players, myPlayer.currentPlayerIndex === '0'))
+      dispatch(startGame(options, decks, players, localStorage.getItem('currentPlayerIndex') === '0'))
       history.push(`/${urlParams}/game`);
+      
     })
 
     return () => {
