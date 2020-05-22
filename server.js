@@ -17,9 +17,7 @@ let testPlayers = [
       "description": "If this card would be sacrificed, destroyed, or returned to your hand, return it to the Nursery instead.",
       "Quantity": 1,
       "Color": "Magenta",
-      "url": "/images/8.jpg",
-      activateAtBeginning: true,
-      downgrade: 4
+      "url": "/images/8.jpg"
     }],
     viewingStableId: 1,
     unicorn: {
@@ -321,17 +319,21 @@ io.on('connection', (socket) => {
     io.to(`game:${lobbyName}`).emit('playerCheckedForInstant', playerIndex, instant);
   })
 
-  socket.on('endActionPhase', (lobbyName, phase, updatedDecks, updatedPlayers) => {
-    if (games[lobbyName].currentGame.phase === 2) {
-      console.log('card played');
-      games[lobbyName].currentGame.phase = phase;
-      games[lobbyName].currentPlayers = updatedPlayers;
-      games[lobbyName].currentDecks = updatedDecks;
-      io.to(`game:${lobbyName}`).emit('endingActionPhase', phase, updatedDecks, updatedPlayers);
-    }
+  socket.on('actionHappened', (lobbyName, updatedDecks, updatedPlayers) => {
+    console.log('card played');
+    games[lobbyName].currentPlayers = updatedPlayers;
+    games[lobbyName].currentDecks = updatedDecks;
+    io.to(`game:${lobbyName}`).emit('updateFromAction', updatedDecks, updatedPlayers);
+  });
+
+  socket.on('endActionPhase', (lobbyName) => {
+    console.log('ENDING ACTION PHASE');
+    games[lobbyName].currentGame.phase = 3
+    io.to(`game:${lobbyName}`).emit('endingActionPhase');
   });
 
   socket.on('endTurn', (lobbyName, gameUpdates, nextPlayerIndex) => {
+    console.log(games[lobbyName].currentGame.phase)
     if (games[lobbyName].currentGame.phase === 3) {
       console.log('Ending turn');
       games[lobbyName].currentGame = {

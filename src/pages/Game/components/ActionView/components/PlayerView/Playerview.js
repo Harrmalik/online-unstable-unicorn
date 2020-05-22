@@ -23,6 +23,8 @@ function PlayerView() {
   const [numberOfEffectsHandled, setNumberOfEffectsHandled] = useState(0);
   const [allowSkip, setAllowSkip] = useState(true);
 
+  const [numberOfActionsLeft, setNumberOfActionsLeft] = useState(1);
+
   const [numPlayersCheckedForInstants, setNumPlayersCheckedForInstants] = useState(0);
   const [opponentInteractions, setOpponentInteractions] = useState({
     numPlayersCheckedForInstants: 0,
@@ -34,10 +36,11 @@ function PlayerView() {
   const [readyToEndTurn, setReadyToEndTurn] = useState(false);
 
 
-  // debuffs
-
-
   // buffs
+  const [sacrificeAndDestroy, setSacrificeAndDestroy] = useState(false);
+  //const [doubleActions, setDoubleActions] = useState(false);
+
+  // debuffs
   const [skipDrawPhase, setSkipDrawPhase] = useState(false);
   const [skipActionPhase, setSkipActionPhase] = useState(false);
 
@@ -85,12 +88,18 @@ function PlayerView() {
       } else {
         console.log('discarding card and ending turn');
         const [updatedDecks, updatedPlayers] = addToDiscardPile();
-        socketServer.emit('endActionPhase', game.uri, 3, updatedDecks, updatedPlayers);
+        if (numberOfActionsLeft === 1) {
+          socketServer.emit('actionHappened', game.uri, updatedDecks, updatedPlayers);
+        }
+        setNumberOfActionsLeft(numberOfActionsLeft - 1)
       }
     } else if (opponentInteractions.numPlayersCheckedForInstants === players.length - 1) {
       console.log('playing card and ending turn');
       const [updatedDecks, updatedPlayers] = addToStable();
-      socketServer.emit('endActionPhase', game.uri, 3, updatedDecks, updatedPlayers)
+      if (numberOfActionsLeft === 1) {
+        socketServer.emit('actionHappened', game.uri, updatedDecks, updatedPlayers);
+      }
+      setNumberOfActionsLeft(numberOfActionsLeft - 1)
     }
   }, [numPlayersCheckedForInstants])
 
@@ -108,10 +117,11 @@ function PlayerView() {
             switch (card.upgrade) {
               case 0:
                 // skip either your draw or action phase
-                applyDebuff()
+                //TODO add when adding destroy
                 break;
               case 1:
-                dispatch(isDiscardingCard(true));
+                // Play 2 actions
+                setNumberOfActionsLeft(numberOfActionsLeft + 1);
                 break;
               case 2:
                 // return a unicorn to hand
@@ -218,7 +228,7 @@ function PlayerView() {
   }, [game.phase, isDiscardingCard, myPlayer.stable])
 
   useEffect(() => {
-    if (numberOfEffectsTotal && numberOfEffectsTotal === numberOfEffectsHandled) {
+    if (typeof numberOfEffectsTotal === 'number' && numberOfEffectsTotal === numberOfEffectsHandled) {
       dispatch(nextPhase(1))
       socketServer.emit('endEffectPhase', lobbyName, 1);
     }
@@ -295,8 +305,12 @@ function PlayerView() {
     player.hand = [...player.hand, ...nextCards];
     allPlayers[player.currentPlayerIndex] = player;
 
-    socketServer.emit('drawCard', lobbyName, updatedDecks, allPlayers, phase)
-    dispatch(nextPhase(phase))
+    socketServer.emit('drawCard', lobbyName, updatedDecks, allPlayers, phase === 3 ? 2 : phase)
+    if (phase === 3) {
+      setNumberOfActionsLeft(numberOfActionsLeft - 1);
+    } else {
+      dispatch(nextPhase(phase));
+    }
   }
 
   function playCard() {
@@ -314,6 +328,25 @@ function PlayerView() {
       // socketServer.emit('endActionPhase', game.uri, 3, updatedDecks, updatedPlayers);
     }
   }
+
+  function handleActions(action, callback) {
+    switch (action) {
+      case 'drawCard':
+        drawCard(3);
+        break;
+      case 'playCard':
+        playCard();
+        break;
+      default:
+        callback()
+    }
+  }
+
+  useEffect(() => {
+    if (numberOfActionsLeft === 0) {
+      socketServer.emit('endActionPhase', lobbyName);
+    }
+  }, [numberOfActionsLeft])
 
   function renderView() {
     switch (game.phases[game.phase].name) {
@@ -333,8 +366,7 @@ function PlayerView() {
         break;
       case 'Action':
         return <ActionView
-                  drawCard={drawCard}
-                  playCard={playCard}
+                  handleActions={handleActions}
                   checkForInstant={checkForInstant}
                   handleInstant={handleInstant}/>
         break;
@@ -377,8 +409,9 @@ function DrawView(props) {
 
 // TODO: make shared component with spectatorview
 function ActionView(props) {
-  const { drawCard, playCard, checkForInstant, handleInstant } = props;
-  const instantActions = useCheckForInstants();
+  const { handleActions, checkForInstant, handleInstant } = props;
+  const instantActions = useCheckForInstants
+  console.log('Should be showing instants: ', checkForInstant)
 
   function renderInstants() {
     if (checkForInstant) {
@@ -399,8 +432,8 @@ function ActionView(props) {
 
   return (
     <div>
-      <Button onClick={() => { drawCard(3) }}>Draw Card</Button>
-      <Button onClick={ playCard }>Play Card</Button>
+      <Button onClick={() => { handleActions('drawCard') }}>Draw Card</Button>
+      <Button onClick={() => { handleActions('playCard') }}>Play Card</Button>
 
       { renderInstants() }
     </div>

@@ -99,9 +99,6 @@ function decks (state = {
         case 'START_GAME':
             return action.decks;
 
-        case 'END_ACTION_PHASE':
-            return action.updatedDecks;
-
         case 'UPDATE_DRAWPILE':
             return decks.drawPile = action.deck
 
@@ -204,9 +201,6 @@ function players (state = [], action) {
         case 'START_GAME': return action.players;
 
         case 'LEAVE_LOBBY': return [];
-
-        case 'END_ACTION_PHASE':
-          return action.updatedPlayers;
 
         case 'VIEW_STABLE':
           const newState = [].concat(state);

@@ -34,8 +34,12 @@ function ActionViewComponent () {
       dispatchUpdates(updatedDecks, updatedPlayers)
     })
 
-    socketServer.on('endingActionPhase', (phase, updatedDecks, updatedPlayers) => {
-      dispatch(endActionPhase(phase, updatedDecks, updatedPlayers));
+    socketServer.on('updateFromAction', (updatedDecks, updatedPlayers) => {
+      dispatchUpdates(updatedDecks, updatedPlayers)
+    })
+
+    socketServer.on('endingActionPhase', () => {
+      dispatch(endActionPhase());
     })
 
     return () => {
@@ -44,6 +48,7 @@ function ActionViewComponent () {
       socketServer.removeListener('cardDestroyed');
       socketServer.removeListener('cardSacrificed');
       socketServer.removeListener('cardReturned');
+      socketServer.removeListener('updateFromAction');
       socketServer.removeListener('endingActionPhase');
     }
   }, [socketServer]);

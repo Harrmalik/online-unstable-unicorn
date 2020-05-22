@@ -21,7 +21,7 @@ function HandComponent() {
   const decks = useSelector(state => state.decks);
 
   function handleOnClick(card, index) {
-    if (isPlayingCard) {
+    if (isPlayingCard.isTrue) {
       handlePlayCard(card, index);
     }
 

@@ -36,11 +36,9 @@ export const viewStable = (currentPlayer, viewingPlayer) => (
     viewingPlayer
 });
 
-export const endActionPhase = (newPhase, updatedDecks, updatedPlayers) => ({
+export const endActionPhase = () => ({
     type: 'END_ACTION_PHASE',
-    newPhase,
-    updatedDecks,
-    updatedPlayers
+    newPhase: 3
 })
 
 export const endTurn = (gameUpdates, isMyTurn) => ({
