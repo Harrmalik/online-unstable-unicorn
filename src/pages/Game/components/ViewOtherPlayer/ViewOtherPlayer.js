@@ -1,16 +1,32 @@
 import React, { useState } from "react";
-import { Button, Modal } from 'semantic-ui-react'
+import { useSelector, useDispatch } from "react-redux";
+import { Button, Modal } from 'semantic-ui-react';
+import { viewStable, toggleViewingOtherPlayerModal } from 'actions';
+import { useViewingPlayer, useMyPlayer } from 'utils/hooks.js';
 
 function ViewOtherPlayer(props) {
-  const name = props.playerToView ? props.playerToView.name : '';
+  const dispatch = useDispatch();
+  const currentPlayer = useMyPlayer();
+  const playerToView = useViewingPlayer();
+  // const name = playerToView ? props.playerToView.name : '';
   const [isViewingHand, setisViewingHand] = useState(false);
   function viewHand() {
     setisViewingHand(true);
   }
 
+  function viewStableModal(selectedPlayer) {
+    // props.viewStable(currentPlayer, selectedPlayer);
+    dispatch(viewStable(currentPlayer, selectedPlayer));
+    // setPlayerToView(null);
+    // setIsViewingOtherPlayer(false);
+  }
+
   function close() {
     setisViewingHand(false);
-    props.close();
+    // props.close();
+    // useViewPlayerModal(currentPlayer);
+    dispatch(toggleViewingOtherPlayerModal(false));
+    dispatch(viewStable(currentPlayer, null));
   }
 
   return (
@@ -18,10 +34,10 @@ function ViewOtherPlayer(props) {
       open={props.isOpen}
       closeOnEscape={false}
       closeOnDimmerClick = {false}>
-      <Modal.Header>View {name}'s </Modal.Header>
+      <Modal.Header>View {playerToView.name}'s </Modal.Header>
       {isViewingHand &&
         <Modal.Content>
-          {props.playerToView.hand.map(card => {
+          {playerToView.hand.map(card => {
             return(
               <p>{card.name}</p>
             )
@@ -30,7 +46,7 @@ function ViewOtherPlayer(props) {
       }
         {!isViewingHand &&
         <Modal.Actions center>
-          <Button onClick={() => { props.viewStableModal(props.playerToView) }}>
+          <Button onClick={() => { viewStableModal(playerToView) }}>
             Stable
           </Button>
           <Button

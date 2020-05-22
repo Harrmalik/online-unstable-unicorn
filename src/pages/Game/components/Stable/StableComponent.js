@@ -7,7 +7,7 @@ import { Card, Header } from 'semantic-ui-react';
 
 // Components
 import CardComponent from 'components/Card/CardComponent';
-
+// I need to update this comp to check whos stable it should display
 const MemoStableComponent = React.memo(() => {
   const { currentPlayerIndex, name, stable } = useMyPlayer();
   const socketServer = useSelector(state => state.socket);
