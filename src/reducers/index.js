@@ -3,6 +3,7 @@ import socketIOClient from "socket.io-client";
 import cards from '../db/cards.js';
 import upgrades from '../db/upgrades.js';
 import downgrades from '../db/downgrades.js';
+import GroupBy from 'lodash/groupBy';
 
 let defaultOptions = {
   gameid: 0,
@@ -91,7 +92,7 @@ function game (state = defaultOptions, action) {
 
 function decks (state = {
   drawPile: [],
-  nursery: [],
+  nursery: GroupBy(cards, 'type')['Baby Unicorn'],
   discardPile: []
 }, action) {
     switch (action.type) {

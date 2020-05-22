@@ -1,176 +1,126 @@
 import React, { useState, useEffect } from "react";
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import './LobbyPage.css';
-import { setCurrentPlayer, setPlayers, startGame, joinLobby, leaveLobby } from 'actions';
+import { useSelector, useDispatch } from 'react-redux';
+import './LobbyPage.scss';
+import { setPlayers, startGame, joinLobby, leaveLobby } from 'actions';
 import { useHistory, useParams } from "react-router-dom";
-import { useCurrentPlayerIndex } from 'utils/hooks.js';
+import { useMyPlayer } from 'utils/hooks.js';
 import GroupBy from 'lodash/groupBy';
 import Remove  from 'lodash/remove';
 import Shuffle  from 'lodash/shuffle';
-import Reduce  from 'lodash/reduce';
-import { Dropdown, Image, Item, Segment, Button, Input } from 'semantic-ui-react';
-const colors = ['purple', 'blue', 'teal', 'green', 'yellow', 'orange', 'red'];
+import { Segment, Button, Label, Message } from 'semantic-ui-react';
+
+// Components
+import AddPlayer from './components/AddPlayer/AddPlayer';
+import PlayersView from 'components/PlayersView/PlayersView';
 
 function LobbyPage(props) {
-  const [currentPlayerIndex, setCurrentPlayerIndex] = useState(localStorage.getItem('currentPlayerIndex'));
-  const [babyUnicorns, setBabyUnicorns] = useState(GroupBy(props.game.cards, 'type')['Baby Unicorn']);
+  const myPlayer = useMyPlayer();
+  const socketServer = useSelector(state => state.socket);
+  const game = useSelector(state => state.game);
+  const players = useSelector(state => state.players);
+  const [babyUnicorns, setBabyUnicorns] = useState(GroupBy(game.cards, 'type')['Baby Unicorn']);
   const [inLobby, setLobby] = useState(0);
-  const [username, setUsername] = useState("");
-  const [unicorn, setUnicorn] = useState({});
+  const [showMessage, setShowMessage] = useState(false);
   const history = useHistory();
   const urlParams = useParams().id;
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    if (currentPlayerIndex) {
-      props.setCurrentPlayer(currentPlayerIndex);
-    }
-
-    if (!props.game.roomId) {
-      props.socket.on('reconnect', (lobby, gameState) => {
+    if (!game.roomId) {
+      socketServer.on('reconnect', (lobby, gameState) => {
         if (gameState) {
-          const inGame = gameState.currentPlayers;
-          const usedUnicorns = Reduce(inGame, (newArr, player) => {
-            return [...newArr, player.unicorn.id];
-          }, []);
-          const babyUnicornsRemaining = []
-
-          for (var i = 0; i < babyUnicorns.length; i++) {
-            let unicornIndex = usedUnicorns.findIndex(usedUnicornId => {
-              return usedUnicornId === babyUnicorns[i].id
-            })
-
-            if (unicornIndex === -1) {
-              babyUnicornsRemaining.push(babyUnicorns[i])
-            }
-          }
-
-          props.joinLobby(lobby)
+          dispatch(joinLobby(lobby))
           setLobby(inLobby);
-          props.setPlayers(inGame)
-          setBabyUnicorns(babyUnicornsRemaining);
+          dispatch(setPlayers(gameState.currentPlayers))
         } else {
           history.push('/')
         }
 
-        //TODO: may need to remove this
-        props.socket.removeListener('reconnect');
+        socketServer.removeListener('reconnect');
       })
-      props.socket.emit('checkForRoom', urlParams)
+      socketServer.emit('checkForRoom', urlParams)
     }
 
-    // Set current lobby and remove any unicorns currently in use
-    props.socket.on('userConnected', (inLobby, inGame) => {
-      const usedUnicorns = Reduce(inGame, (newArr, player) => {
-        return [...newArr, player.unicorn.id];
-      }, []);
-      const babyUnicornsRemaining = []
-
-      for (var i = 0; i < babyUnicorns.length; i++) {
-        let unicornIndex = usedUnicorns.findIndex(usedUnicornId => {
-          return usedUnicornId === babyUnicorns[i].id
-        })
-
-        if (unicornIndex === -1) {
-          babyUnicornsRemaining.push(babyUnicorns[i])
-        }
-      }
-
-      setLobby(inLobby);
-      props.setPlayers(inGame)
-      setBabyUnicorns(babyUnicornsRemaining);
+    socketServer.on('userConnected', (inLobby, inGame) => {
+      setLobby(inLobby); 
     })
 
-    props.socket.on('playerAdded', players => {
-      const usedUnicorns = Reduce(players, (newArr, player) => {
-        return [...newArr, player.unicorn.id];
-      }, []);
-      const babyUnicornsRemaining = []
-
-      for (var i = 0; i < babyUnicorns.length; i++) {
-        let unicornIndex = usedUnicorns.findIndex(usedUnicornId => {
-          return usedUnicornId === babyUnicorns[i].id
-        })
-
-        if (unicornIndex === -1) {
-          babyUnicornsRemaining.push(babyUnicorns[i])
-        }
-      }
-      props.setPlayers(players)
-      setBabyUnicorns(babyUnicornsRemaining);
+    socketServer.on('playerAdded', players => {
+      dispatch(setPlayers(players))
     })
 
-    props.socket.on('startingGame', (options, decks, players) => {
-      props.startGame(options, decks, players, currentPlayerIndex === '0')
+    socketServer.on('startingGame', (options, decks, players) => {
+      dispatch(startGame(options, decks, players, myPlayer.currentPlayerIndex === '0'))
       history.push(`/${urlParams}/game`);
     })
 
     return () => {
-      props.socket.removeListener('userConnected');
-      props.socket.removeListener('reconnect');
-      props.socket.removeListener('playerAdded');
-      props.socket.removeListener('startingGame');
+      socketServer.removeListener('userConnected');
+      socketServer.removeListener('reconnect');
+      socketServer.removeListener('playerAdded');
+      socketServer.removeListener('startingGame');
     };
-  }, [props.socket]);
+  }, [socketServer]);
 
-  function leaveLobby() {
-    props.socket.emit('leaveLobby', urlParams)
-    props.leaveLobby()
+  useEffect(() => {
+    if (inLobby === players.length) {
+      setShowMessage(false);
+    }
+  }, [inLobby, players.length])
+
+  function renderMessage() {
+    if (showMessage && myPlayer.currentPlayerIndex === "0") {
+      return (
+        <Message floating color="blue">
+          {inLobby - players.length} player(s) left to make characters
+        </Message>
+      )
+    }
+  }
+
+  function renderStartGameButton() {
+    if (myPlayer.currentPlayerIndex === "0") {
+      return <Button id="start-game-button" onClick={handleStartGame}  color="blue" size="massive">Start Game</Button>
+    }
+  }
+
+  function renderWaitingMessage() {
+    if (myPlayer.currentPlayerIndex !== "0") {
+      return (
+        <Message floating color="blue">
+          Waiting for game leader to start game ....
+        </Message>
+      )
+    }
+  }
+
+  function handleLeaveLobby() {
+    socketServer.emit('leaveLobby', urlParams)
+    dispatch(leaveLobby())
     history.push(`/`)
   }
 
-  function addPlayer() {
-    const newPlayer = {
-      id: props.players.length + 1,
-      connected: true,
-      color: colors[props.players.length + 1],
-      name: username,
-      unicorn,
-      hand: [],
-      stable: [unicorn],
-      upgrades: [],
-      downgrades: [],
-      playingCard: false
-    };
-    const updatedPlayers = [...props.players, newPlayer]
-
-    let unicornsLeft = babyUnicorns.splice(unicorn.index, 1);
-    setBabyUnicorns(babyUnicorns);
-    setUsername("")
-    setUnicorn({})
-    props.setCurrentPlayer(props.players.length);
-    localStorage.setItem('currentPlayerIndex', props.players.length);
-    setCurrentPlayerIndex(props.players.length);
-    props.socket.emit('addPlayer', urlParams, updatedPlayers);
-  }
-
-  function selectUnicorn(unicorn, index) {
-    //TODO: update players so 2 players can't set the same unicorn
-    setUnicorn({
-      index,
-      ...unicorn
-    });
-  }
-
-  function deal(deck, players = props.players) {
-    let dealAmount = players.length < 6 ? 5 : 6;
-    for (let i = 0; i < (players.length * dealAmount); i++ ){
-      const playerIndex = i % players.length;
+  function deal(deck, currentPlayers = players) {
+    let dealAmount = currentPlayers.length < 6 ? 5 : 6;
+    for (let i = 0; i < (currentPlayers.length * dealAmount); i++ ){
+      const playerIndex = i % currentPlayers.length;
       const card = deck.splice(0,1)[0];
-      players[playerIndex].hand.push(card);
+      currentPlayers[playerIndex].hand.push(card);
     }
     return [deck, players];
   }
 
-  function startGame(cards = props.game.cards, currentPlayers = props.players) {
+  function handleStartGame() {
+    let cards = game.cards;
+    let currentPlayers = players;
+
     Remove(cards, c => {
       return c.type === 'Baby Unicorn'
     })
 
     const [drawPile, updatedPlayers] = deal(Shuffle(cards), currentPlayers)
-
-    props.socket.emit('startGame', urlParams, {
-      ...props.game,
+    socketServer.emit('startGame', urlParams, {
+      ...game,
       whosTurn: currentPlayers[0],
       playing: true
     }, {
@@ -183,67 +133,18 @@ function LobbyPage(props) {
 
   return (
     <div>
-    { currentPlayerIndex === null ?
-      <div>
-    <Dropdown
-      text='Select Unicorn'
-      icon='plus'
-      floating
-      labeled
-      button
-      className='icon'
-    >
-      <Dropdown.Menu>
-        <Dropdown.Header content='Unicorns Available' />
-        {babyUnicorns.map((option, i) => (
-          <Dropdown.Item onClick={() => { selectUnicorn(option, i)}} key={option.id} text={option.name} image={option.url}  />
-        ))}
-      </Dropdown.Menu>
-    </Dropdown>
-      {unicorn.id ? <Image src={unicorn.url} avatar /> : null }
-      Add Player: <Input value={username} id="addUserText" onChange={(e) => setUsername(e.target.value)} /> <Button onClick={addPlayer}>Add</Button>
-      </div>
-      : null }
+      <Segment id="lobby-view">
+        <Label attached="top right" content="Leave Lobby" onClick={handleLeaveLobby}  color="red"/>
 
-      <h2>Players</h2>
-      <Item.Group style={{display: 'flex'}}>
-        {props.players.map(player => {
-          return (
-            <Segment key={player.id} inverted color={player.color}>
-              <Item>
-                <Item.Image size='tiny' src={player.unicorn.url} />
-                <Item.Content verticalAlign='middle'>
-                  <Item.Header>{player.name}</Item.Header>
-                </Item.Content>
-              </Item>
-            </Segment>
-          )
-        })}
-      </Item.Group>
+        {renderMessage()}
+        <AddPlayer/>
+        {renderStartGameButton()}
+        {renderWaitingMessage()}
+      </Segment>
 
-
-      <p>{inLobby - props.players.length} player(s) left to make characters</p>
-      <Button onClick={leaveLobby}  color="blue" size="massive">Leave Lobby</Button>
-      <Button onClick={() => { startGame() }}  color="blue" size="massive">Start Game</Button>
+      <PlayersView/>
     </div>
   );
 }
 
-const mapStateToProps = state => ({
-  players: state.players,
-  game: state.game,
-  socket: state.socket
-})
-
-const mapDispatchToProps = dispatch => ({
-    setCurrentPlayer: bindActionCreators(setCurrentPlayer, dispatch),
-    setPlayers: bindActionCreators(setPlayers, dispatch),
-    startGame: bindActionCreators(startGame, dispatch),
-    joinLobby: bindActionCreators(joinLobby, dispatch),
-    leaveLobby: bindActionCreators(leaveLobby, dispatch)
-})
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(LobbyPage)
+export default LobbyPage;
