@@ -3,6 +3,7 @@ import socketIOClient from "socket.io-client";
 import cards from '../db/cards.js';
 import upgrades from '../db/upgrades.js';
 import downgrades from '../db/downgrades.js';
+import GroupBy from 'lodash/groupBy';
 
 let defaultOptions = {
   gameid: 0,
@@ -91,7 +92,7 @@ function game (state = defaultOptions, action) {
 
 function decks (state = {
   drawPile: [],
-  nursery: [],
+  nursery: GroupBy(cards, 'type')['Baby Unicorn'],
   discardPile: []
 }, action) {
     switch (action.type) {
@@ -196,6 +197,8 @@ function cardBeingPlayed (state = {}, action) {
 }
 
 function players (state = [], action) {
+  let newState;
+  let currIndex;
     switch (action.type) {
         case 'SET_PLAYERS':
         case 'START_GAME': return action.players;
@@ -203,13 +206,23 @@ function players (state = [], action) {
         case 'LEAVE_LOBBY': return [];
 
         case 'VIEW_STABLE':
-          const newState = [].concat(state);
-          const currIndex = newState.findIndex(player => player.id == action.currentPlayer.id);
+          newState = [].concat(state);
+          currIndex = newState.findIndex(player => player.id == action.currentPlayer.id);
           if (currIndex < 0)
-            break;
+            return state;
 
           const viewingStableId = action.viewingPlayer != null ? action.viewingPlayer.id : action.currentPlayer.id;
           action.currentPlayer.viewingStableId = viewingStableId;
+          newState[currIndex] = action.currentPlayer;
+          return newState;
+
+        case 'VIEW_OTHER_PLAYER_MODAL':
+          newState = [].concat(state);
+          currIndex = newState.findIndex(player => player.id == action.currentPlayer.id);
+          if (currIndex < 0)
+            return state;
+          
+          action.currentPlayer.isViewingOtherPlayerModalOpen = action.isViewingModal;
           newState[currIndex] = action.currentPlayer;
           return newState;
 

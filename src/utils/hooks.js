@@ -12,6 +12,39 @@ export function useMyServer() {
   return socketServer
 }
 
+// export function useViewPlayerModal(selectedPlayer) {
+//   // const [isViewingOtherPlayer, setIsViewingOtherPlayer] = useState(false);
+//   // const [playerToView, setPlayerToView] = useState(false);
+
+//   const game = useSelector(state => state.game);
+//   // const currentPlayerIndex = useSelector(state => state.currentPlayerIndex);
+//   // const players = useSelector(state => state.players);
+//   // const currentPlayer = players[currentPlayerIndex];
+//   const currentPlayer = useMyPlayer();
+//   const dispatch = useDispatch();
+//   if (currentPlayer.id == selectedPlayer.id) {
+//     // setIsViewingOtherPlayer(false);
+//     dispatch(toggleViewingOtherPlayerModal(false));
+//     dispatch(viewStable(currentPlayer, null));
+//   } else if (game.whosTurn.id == currentPlayer.id) {
+//     // setPlayerToView(selectedPlayer);
+//     dispatch(viewStable(currentPlayer, selectedPlayer));
+//     // setIsViewingOtherPlayer(true);
+//     dispatch(toggleViewingOtherPlayerModal(true));
+//   } else {
+//     // This is hit when a player whos turn it is clicks a stable.
+//     dispatch(viewStable(currentPlayer, selectedPlayer));
+//   }
+// }
+
+export function useViewingPlayer() {
+  const players = useSelector(state => state.players);
+  const me = useMyPlayer();
+  return {
+    ...players[me.viewingStableId]
+  };
+}
+
 export function useMyPlayer() {
   // TODO: make this render less times
   const [myPlayer, setMyPlayer] = useState({

@@ -20,6 +20,7 @@ let testPlayers = [
       "url": "/images/8.jpg"
     }],
     viewingStableId: 1,
+    isViewingOtherPlayerModalOpen: false,
     unicorn: {
       "id": 8,
       "name": "CANNIBAL BABY UNICORN",
@@ -51,6 +52,7 @@ let testPlayers = [
       "url": "/images/4.jpg",
     }],
     viewingStableId: 2,
+    isViewingOtherPlayerModalOpen: false,
     unicorn: {
       "id": 4,
       "name": "FUCKING CUTE BABY UNICORN",
@@ -79,6 +81,7 @@ let testPlayers = [
       "url": "/images/13.jpg",
     }],
     viewingStableId: 3,
+    isViewingOtherPlayerModalOpen: false,
     unicorn: {
       "id": 13,
       "name": "PAGEANT BABY UNICORN",
@@ -107,6 +110,7 @@ let testPlayers = [
       "url": "/images/7.jpg",
     }],
     viewingStableId: 4,
+    isViewingOtherPlayerModalOpen: false,
     unicorn: {
       "id": 7,
       "name": "BABY UNICORN OF INCEST",
@@ -177,7 +181,7 @@ io.on('connection', (socket) => {
 
 
 
-  // LOBBY EVENTS
+  // HOMEPAGE EVENTS
   socket.on('getLobbies', () => {
     socket.emit('returnLobbies', getLobbies(socket.adapter.rooms));
   })
@@ -197,19 +201,6 @@ io.on('connection', (socket) => {
       currentGame: {},
       currentDecks: {},
       currentPlayers: []
-    }
-    socket.broadcast.emit('returnLobbies', getLobbies(socket.adapter.rooms));
-  })
-
-  socket.on('leaveLobby', (lobbyName) => {
-    const room = `game:${lobbyName}`;
-    socket.leave([room]);
-    lobbies = getLobbies(socket.adapter.rooms);
-    currentLobby = lobbies.find(l => l.key === room);
-    if (currentLobby) {
-      io.to(room).emit('userConnected', currentLobby.players, games[lobbyName].currentPlayers.filter((testPlayer, index) => index < currentLobby.players))
-    } else {
-      delete games[lobbyName]
     }
     socket.broadcast.emit('returnLobbies', getLobbies(socket.adapter.rooms));
   })
@@ -239,13 +230,26 @@ io.on('connection', (socket) => {
   })
 
 
-  // INITIALIZING GAME EVENTS
-  socket.on('addPlayer', (lobbyName, players) => {
-    console.log('adding player')
-    console.log(`players in ${lobbyName}: ${players.length}`);
+  // LOBBY PAGE EVENTS
+  socket.on('leaveLobby', (lobbyName) => {
     const room = `game:${lobbyName}`;
-    games[lobbyName].currentPlayers = players
-    io.to(room).emit('playerAdded', players)
+    socket.leave([room]);
+    lobbies = getLobbies(socket.adapter.rooms);
+    currentLobby = lobbies.find(l => l.key === room);
+    if (currentLobby) {
+      io.to(room).emit('userConnected', currentLobby.players, games[lobbyName].currentPlayers.filter((testPlayer, index) => index < currentLobby.players))
+    } else {
+      delete games[lobbyName]
+    }
+    socket.broadcast.emit('returnLobbies', getLobbies(socket.adapter.rooms));
+  })
+
+  socket.on('addPlayer', (lobbyName, newPlayer) => {
+    console.log('adding player')
+    const room = `game:${lobbyName}`;
+    games[lobbyName].currentPlayers.push(newPlayer);
+    console.log(`players in ${lobbyName}: ${games[lobbyName].currentPlayers.length}`);
+    io.to(room).emit('playerAdded', games[lobbyName].currentPlayers)
   })
 
   socket.on('startGame', (lobbyName, game, decks, players) => {

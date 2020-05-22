@@ -36,6 +36,13 @@ export const viewStable = (currentPlayer, viewingPlayer) => (
     viewingPlayer
 });
 
+export const toggleViewingOtherPlayerModal = (currentPlayer, isViewingModal) => (
+    {
+    type: 'VIEW_OTHER_PLAYER_MODAL',
+    currentPlayer,
+    isViewingModal
+});
+
 export const endActionPhase = () => ({
     type: 'END_ACTION_PHASE',
     newPhase: 3
