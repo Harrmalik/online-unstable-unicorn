@@ -272,8 +272,6 @@ io.on('connection', (socket) => {
   })
 
   socket.on('drawCard', (lobbyName, decks, players, phase) => {
-    console.log(lobbyName);
-    if ([1,2].includes(games[lobbyName].currentGame.phase))
     console.log('drawing card');
     games[lobbyName].currentDecks = decks;
     games[lobbyName].currentPlayers = players;

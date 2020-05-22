@@ -23,6 +23,7 @@ function PlayerView() {
   const [numberOfEffectsHandled, setNumberOfEffectsHandled] = useState(0);
   const [allowSkip, setAllowSkip] = useState(true);
 
+  const [numberOfDrawsLeft, setNumberOfDrawsLeft] = useState(1);
   const [numberOfActionsLeft, setNumberOfActionsLeft] = useState(1);
 
   const [numPlayersCheckedForInstants, setNumPlayersCheckedForInstants] = useState(0);
@@ -39,6 +40,8 @@ function PlayerView() {
   // buffs
   const [sacrificeAndDestroy, setSacrificeAndDestroy] = useState(false);
   //const [doubleActions, setDoubleActions] = useState(false);
+  const [drawFromOpponent, setDrawFromOpponent] = useState(false); 
+  const [borrowUnicorn, setBorrowUnicorn] = useState(false);
 
   // debuffs
   const [skipDrawPhase, setSkipDrawPhase] = useState(false);
@@ -121,19 +124,32 @@ function PlayerView() {
                 break;
               case 1:
                 // Play 2 actions
-                setNumberOfActionsLeft(numberOfActionsLeft + 1);
+                theEffects.push({
+                  name: 'Gain Additional Action',
+                  callback: () => setNumberOfActionsLeft(numberOfActionsLeft + 1)
+                });
                 break;
               case 2:
-                // return a unicorn to hand
-                // TODO: discard debuff when stable reaches 0 <----- v2
-                applyDebuff()
+                // You may choose any other player. Pull a card from that player\'s hand and add it to your hand. If you do, skip your Draw phase.
+                theEffects.push({
+                  name: 'Draw from Opponent',
+                  requiresAction: true,
+                  callback: () => setDrawFromOpponent(true)
+                });
                 break;
               case 3:
-                // skip either your draw or action phase
-                applyDebuff()
+                // borrowUnicorn
+                theEffects.push({
+                  name: 'Borrow Unicorn',
+                  requiresAction: true,
+                  callback: () => setBorrowUnicorn(true)
+                });
                 break;
               case 4:
-                dispatch(isDiscardingCard(true));
+                theEffects.push({
+                  name: 'Draw Additional Card',
+                  callback: () => setNumberOfDrawsLeft(numberOfDrawsLeft + 1)
+                });
                 break;
               case 5:
                 // return a unicorn to hand
@@ -195,7 +211,8 @@ function PlayerView() {
           }
         })
 
-        setEffects(theEffects)
+        setEffects(theEffects);
+        setNumberOfEffectsHandled(0);
       } else {
           setNumberOfEffectsTotal(0);
           setNumberOfEffectsHandled(0);
@@ -204,6 +221,7 @@ function PlayerView() {
 
     if (game.phase === 1) {
       if (skipDrawPhase) {
+        console.log('skipping')
         dispatch(nextPhase(2))
       }
     }
@@ -226,6 +244,24 @@ function PlayerView() {
       }
     }
   }, [game.phase, isDiscardingCard, myPlayer.stable])
+
+  useEffect(() => {
+    if (drawFromOpponent) {
+      console.log('Handle draw from opponent');
+      // Select Opponent
+      // Take card
+      setSkipDrawPhase(true);
+      setNumberOfEffectsHandled(numberOfEffectsHandled + 1);
+    }
+  }, [drawFromOpponent])
+
+  useEffect(() => {
+    if (borrowUnicorn) {
+      console.log('Handle borrow unicorn');
+      // Select unicorn from opponent stable
+      setNumberOfEffectsHandled(numberOfEffectsHandled + 1);
+    }
+  }, [borrowUnicorn])
 
   useEffect(() => {
     if (typeof numberOfEffectsTotal === 'number' && numberOfEffectsTotal === numberOfEffectsHandled) {
@@ -344,6 +380,7 @@ function PlayerView() {
 
   useEffect(() => {
     if (numberOfActionsLeft === 0) {
+      console.log('skipping?????')
       socketServer.emit('endActionPhase', lobbyName);
     }
   }, [numberOfActionsLeft])
@@ -389,8 +426,8 @@ function EffectsView(props) {
   return (
     <div>
       {
-        effects.map(effect => {
-          return <Button key={effect.id} onClick={() => { handleEffects(effect.callback, effect.requiresAction) }}>{effect.name}</Button>
+        effects.map((effect, index) => {
+          return <Button key={index} onClick={() => { handleEffects(effect.callback, effect.requiresAction) }}>{effect.name}</Button>
         })
       }
       { allowSkip ? <Button onClick={() => { skipPhase(2) }}>Skip</Button> : null }
