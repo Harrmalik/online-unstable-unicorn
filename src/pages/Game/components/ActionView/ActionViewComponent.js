@@ -34,6 +34,10 @@ function ActionViewComponent () {
       dispatchUpdates(updatedDecks, updatedPlayers)
     })
 
+    socketServer.on('cardDrewFromOpponent', (card, updatedDecks, updatedPlayers) => {
+      dispatchUpdates(updatedDecks, updatedPlayers)
+    })
+
     socketServer.on('updateFromAction', (updatedDecks, updatedPlayers) => {
       dispatchUpdates(updatedDecks, updatedPlayers)
     })
@@ -48,6 +52,7 @@ function ActionViewComponent () {
       socketServer.removeListener('cardDestroyed');
       socketServer.removeListener('cardSacrificed');
       socketServer.removeListener('cardReturned');
+      socketServer.removeListener('cardDrewFromOpponent');
       socketServer.removeListener('updateFromAction');
       socketServer.removeListener('endingActionPhase');
     }
@@ -75,6 +80,7 @@ const MemoPhase = React.memo(() => {
   return (
     <Step.Group attached='top' fluid>
       { phases.map(phase => <Step
+          key={phase.name}
           active={phases[currentPhase].name === phase.name}
           disabled={false}
         >

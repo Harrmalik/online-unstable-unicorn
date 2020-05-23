@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux';
-import { setCurrentPlayer, setPlayers, startGame, nextPhase, endTurn, playingCard, discardingCard, returningCard } from 'actions';
+import { setCurrentPlayer, setPlayers, startGame, nextPhase, endTurn, playingCard, discardingCard, returningCard, sacrificingCard, destroyingCard, drawingFromOpponent } from 'actions';
 import { useMyPlayer, useCheckForInstants } from 'utils/hooks.js';
 import groupBy from 'lodash/groupBy';
-import { Dropdown, Image, Item, Segment, Button } from 'semantic-ui-react';
+import { Dropdown, Image, Item, Segment, Button, Header, Card } from 'semantic-ui-react';
 
+
+// Components
+import CardComponent from 'components/Card/CardComponent'
 
 function PlayerView() {
   const myPlayer = useMyPlayer();
@@ -111,7 +114,7 @@ function PlayerView() {
   }, [numPlayersCheckedForInstants])
 
   useEffect(() => {
-    if (game.phase === 0 && myPlayer.id) {
+    if (game.phase === 0 && myPlayer.id && numberOfEffectsTotal === null) {
       console.log('STARTING EFFECT PHASE')
       const cardTypes = groupBy(myPlayer.stable, 'activateAtBeginning');
       if (cardTypes['true']) {
@@ -124,14 +127,16 @@ function PlayerView() {
             console.log(game.upgrades[card.upgrade])
             switch (card.upgrade) {
               case 0:
-                // skip either your draw or action phase
-                //TODO add when adding destroy
+                // sacrifice then destroy card
                 theEffects.push({
-                  name: 'sacrifice and destory',
+                  name: 'Sacrifice then Destory',
                   requiresAction: true,
-                  callback: () => dispatch(returningCard({
+                  callback: () => dispatch(sacrificingCard({
                     isTrue: true,
-                    //callback: () => handleEffects(null, false) TODO: make callback
+                    callback: () => dispatch(destroyingCard({
+                      isTrue: true,
+                      callback: () => handleEffects(null, false)
+                    }))
                   }))
                 });
                 break;
@@ -147,7 +152,10 @@ function PlayerView() {
                 theEffects.push({
                   name: 'Draw from Opponent',
                   requiresAction: true,
-                  callback: () => setDrawFromOpponent(true)
+                  callback: () => dispatch(drawingFromOpponent({
+                    isTrue: true,
+                    callback: () => handleEffects(() => { setNumberOfDrawsLeft(numberOfDrawsLeft -1) }, false)
+                  }))
                 });
                 break;
               case 3:
@@ -267,7 +275,6 @@ function PlayerView() {
     if (game.phase === 3 && !isDiscardingCard.isTrue) {
       console.log('STARTING END TURN PHASE')
       if (myPlayer.hand.length > 7) {
-        setNumberOfEndingEffectsLeft(numberOfEndingEffectsLeft - 1);
         dispatch(discardingCard({
           isTrue: true,
           callback: null
@@ -327,6 +334,7 @@ function PlayerView() {
   }, [numberOfActionsLeft])
 
   useEffect(() => {
+    console.log('numberOfEndingEffectsLeft: ', numberOfEndingEffectsLeft)
     if (game.phase === 3 && numberOfEndingEffectsLeft === 0) {
       let nextTurn = game.turn + 1;
       let nextPlayerIndex = nextTurn % players.length;
@@ -467,6 +475,17 @@ function PlayerView() {
 
 function EffectsView(props) {
   const { handleEffects, allowSkip, skipPhase, effects } = props;
+  const isDestroyingCard = useSelector(state => state.isDestroyingCard);
+  const isDrawingFromOpponent = useSelector(state => state.isDrawingFromOpponent);
+
+  function renderPlayersToAttack() {
+    if (isDestroyingCard.isTrue || isDrawingFromOpponent.isTrue) {
+      return <PlayersToAttackComponent
+
+      />
+    }
+  }
+
   return (
     <div>
       {
@@ -475,6 +494,7 @@ function EffectsView(props) {
         })
       }
       { allowSkip ? <Button onClick={skipPhase}>Skip</Button> : null }
+      { renderPlayersToAttack() }
     </div>
   )
 }
@@ -491,7 +511,8 @@ function DrawView(props) {
 // TODO: make shared component with spectatorview
 function ActionView(props) {
   const { handleActions, checkForInstant, handleInstant } = props;
-  const instantActions = useCheckForInstants
+  const instantActions = useCheckForInstants;
+  const isDestroyingCard = useSelector(state => state.isDestroyingCard);
   console.log('Should be showing instants: ', checkForInstant)
 
   function renderInstants() {
@@ -511,12 +532,126 @@ function ActionView(props) {
     }
   }
 
+  function renderPlayersToAttack() {
+    if (isDestroyingCard.isTrue) {
+      console.log('render component')
+      return <PlayersToAttackComponent
+
+      />
+    }
+  }
+
   return (
     <div>
       <Button onClick={() => { handleActions('drawCard') }}>Draw Card</Button>
       <Button onClick={() => { handleActions('playCard') }}>Play Card</Button>
 
       { renderInstants() }
+      { renderPlayersToAttack() }
+    </div>
+  )
+}
+
+function PlayersToAttackComponent(props) {
+  const {} = props;
+  const myPlayerIndex = useSelector(state => state.currentPlayerIndex);
+  const lobbyName = useSelector(state =>  state.game.uri);
+  const socketServer = useSelector(state => state.socket);
+  const players = useSelector(state =>  state.players);
+  const decks = useSelector(state =>  state.decks);
+  const isDestroyingCard = useSelector(state => state.isDestroyingCard);
+  const isDrawingFromOpponent = useSelector(state => state.isDrawingFromOpponent);
+  const dispatch = useDispatch();
+
+  const [selectedPlayer, setSelectedPlayer] = useState(null);
+
+  function renderPlayers() {
+    if (!selectedPlayer) {
+      return (
+        <div>
+        {
+          players.map((player, index) => {
+            if (index !== parseInt(myPlayerIndex)) {
+              return (
+                <Card
+                  raised
+                  key={player.id}
+                  onClick={() => { setSelectedPlayer({...player, index}) }}>
+                  <Image
+                  label={{
+                      color: player.color,
+                      content: `${player.name}: H: ${player.hand.length} S: ${player.stable.length}`,
+                      ribbon: true
+                    }}
+                   src={player.unicorn.url}/>
+                </Card>
+              )
+            }
+          })
+        }
+        </div>
+      )
+    }
+  }
+  function renderPlayerCards() {
+    if (selectedPlayer) {
+
+      return <Card.Group>
+          {
+            selectedPlayer[isDestroyingCard.isTrue ? 'stable' : 'hand'].map((card, index) => {
+              return <CardComponent
+                index={index}
+                key={card.id}
+                card={card}
+                callback={isDestroyingCard.isTrue ? handleDestroyCard : handleDrawFromOpponent}
+              />
+            })
+          }
+        </Card.Group>
+    }
+  }
+
+  function handleDestroyCard(card, index) {
+    const updatedDecks = decks;
+    const updatedPlayers = players;
+
+    if (card.type === 'Baby Unicorn') {
+      updatedDecks['nursery'].push(card);
+    } else {
+      updatedDecks['discardPile'].push(card);
+    }
+
+    updatedPlayers[selectedPlayer.index].stable.splice(index,1);
+
+    socketServer.emit('destroyCard', lobbyName, card, updatedDecks, updatedPlayers);
+    if (isDestroyingCard.callback) {
+      isDestroyingCard.callback();
+    }
+
+    dispatch(destroyingCard({isTrue: false, callback: null}))
+  }
+
+  function handleDrawFromOpponent(card, index) {
+    const updatedDecks = decks;
+    const updatedPlayers = players;
+
+    updatedPlayers[myPlayerIndex].hand.push(card);
+    updatedPlayers[selectedPlayer.index].hand.splice(index,1);
+
+    socketServer.emit('drawFromOpponent', lobbyName, card, updatedDecks, updatedPlayers);
+    if (isDrawingFromOpponent.callback) {
+      isDrawingFromOpponent.callback();
+    }
+
+    dispatch(drawingFromOpponent({isTrue: false, callback: null}))
+  }
+
+  return (
+    <div>
+      <Header>{selectedPlayer ? "Destroy a Card" : "Choose A Player"}</Header>
+
+      { renderPlayers() }
+      { renderPlayerCards() }
     </div>
   )
 }

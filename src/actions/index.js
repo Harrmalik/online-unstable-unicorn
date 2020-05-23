@@ -111,6 +111,11 @@ export const returningCard = (isReturningCard) => ({
     isReturningCard
 })
 
+export const drawingFromOpponent = (isDrawingFromOpponent) => ({
+    type: 'DRAWING_FROM_OPPONENT',
+    isDrawingFromOpponent
+})
+
 export const attemptToPlay = (card) => ({
     type: 'ATTEMPT_ADD_TO_STABLE',
     card

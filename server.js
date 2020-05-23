@@ -17,8 +17,7 @@ let testPlayers = [
       "description": "If this card would be sacrificed, destroyed, or returned to your hand, return it to the Nursery instead.",
       "Quantity": 1,
       "Color": "Magenta",
-      "url": "/images/8.jpg",
-      activateAtBeginning: true
+      "url": "/images/8.jpg"
     }],
     viewingStableId: 1,
     isViewingOtherPlayerModalOpen: false,
@@ -311,6 +310,11 @@ io.on('connection', (socket) => {
   socket.on('returnCard', (lobbyName, card, updatedDecks, updatedPlayers) => {
     console.log('Returning Card')
     io.to(`game:${lobbyName}`).emit('cardReturned', card, updatedDecks, updatedPlayers);
+  });
+
+  socket.on('drawFromOpponent', (lobbyName, card, updatedDecks, updatedPlayers) => {
+    console.log('Drawing Card From Opponent')
+    io.to(`game:${lobbyName}`).emit('cardDrewFromOpponent', card, updatedDecks, updatedPlayers);
   });
 
   socket.on('skippingInstant', (lobbyName, playerIndex) => {

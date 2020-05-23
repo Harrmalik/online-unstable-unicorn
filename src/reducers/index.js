@@ -183,6 +183,16 @@ function isReturningCard (state = {isTrue: false, callback: null}, action) {
     }
 }
 
+function isDrawingFromOpponent (state = {isTrue: false, callback: null}, action) {
+    switch (action.type) {
+        case 'DRAWING_FROM_OPPONENT':
+          return action.isDrawingFromOpponent;
+
+        default:
+            return state
+    }
+}
+
 function cardBeingPlayed (state = {}, action) {
     switch (action.type) {
         case 'ATTEMPT_ADD_TO_STABLE':
@@ -241,6 +251,7 @@ const rootReducer = combineReducers({
     isSacrificingCard,
     isDestroyingCard,
     isReturningCard,
+    isDrawingFromOpponent,
     players,
     decks,
     cardBeingPlayed
