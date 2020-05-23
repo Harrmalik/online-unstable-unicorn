@@ -17,7 +17,8 @@ let testPlayers = [
       "description": "If this card would be sacrificed, destroyed, or returned to your hand, return it to the Nursery instead.",
       "Quantity": 1,
       "Color": "Magenta",
-      "url": "/images/8.jpg"
+      "url": "/images/8.jpg",
+      activateAtBeginning: true
     }],
     viewingStableId: 1,
     isViewingOtherPlayerModalOpen: false,

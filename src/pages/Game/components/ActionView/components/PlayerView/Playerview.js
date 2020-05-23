@@ -40,7 +40,7 @@ function PlayerView() {
   // buffs
   const [sacrificeAndDestroy, setSacrificeAndDestroy] = useState(false);
   //const [doubleActions, setDoubleActions] = useState(false);
-  const [drawFromOpponent, setDrawFromOpponent] = useState(false); 
+  const [drawFromOpponent, setDrawFromOpponent] = useState(false);
   const [borrowUnicorn, setBorrowUnicorn] = useState(false);
 
   // debuffs
@@ -115,6 +115,7 @@ function PlayerView() {
         setNumberOfEffectsTotal(cardTypes['true'].length);
 
         cardTypes['true'].forEach(card => {
+          console.log(card.name)
           if (card.hasOwnProperty('upgrade')) {
             console.log(game.upgrades[card.upgrade])
             switch (card.upgrade) {
