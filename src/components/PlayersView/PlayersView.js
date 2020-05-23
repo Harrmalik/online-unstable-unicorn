@@ -54,7 +54,6 @@ import ModalComponent from 'components/Modal/ModalComponent';
 function PlayersView() {
   const currentPlayer = useMyPlayer();
   const [selectedPlayer, setSelectedPlayer] = useState(false);
-  const [showQuickView, setShowQuickView] = useState(false);
   const [playerHovered, setPlayerHover] = useState({});
   const game = useSelector(state => state.game);
   const players = useSelector(state => state.players);
@@ -90,11 +89,10 @@ function PlayersView() {
       ...player,
       index
     });
-    setShowQuickView(!showQuickView);
   }
 
   function renderQuickView() {
-    if (showQuickView && playerHovered.id) {
+    if (playerHovered.id) {
       return <QuickViewComponent
         stable={playerHovered.stable}
         index={playerHovered.index}
@@ -143,7 +141,7 @@ function QuickViewComponent(props) {
       <Card
         raised
         key={card.id}>
-        <Image src={card.url}/>
+        <Image style={{height: `${cardPosition.height}px`}} src={card.url}/>
       </Card>
     )
   })}
