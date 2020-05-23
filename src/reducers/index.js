@@ -222,7 +222,7 @@ function players (state = [], action) {
           if (currIndex < 0)
             return state;
           
-          action.currentPlayer.isViewingOtherPlayerModalOpen = action.isViewingModal;
+          action.currentPlayer.viewingOtherPlayerModalId = action.viewingOtherPlayerModalId;
           newState[currIndex] = action.currentPlayer;
           return newState;
 

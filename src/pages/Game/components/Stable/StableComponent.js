@@ -10,7 +10,7 @@ import CardComponent from 'components/Card/CardComponent';
 // I need to update this comp to check whos stable it should display
 const MemoStableComponent = React.memo(() => {
   const currentPlayer = useMyPlayer();
-  const { currentPlayerIndex, stable, viewingStableId, isViewingOtherPlayerModalOpen } = currentPlayer;
+  const { currentPlayerIndex, stable, viewingStableId } = currentPlayer;
   const socketServer = useSelector(state => state.socket);
   const lobbyName = useSelector(state => state.game.uri);
   const isReturningCard = useSelector(state => state.isReturningCard);
@@ -24,7 +24,7 @@ const MemoStableComponent = React.memo(() => {
   useEffect(() => {
     const viewingPlayer = players.find(player => player.id == viewingStableId);
     setViewStablePlayer(viewingPlayer);
-  }, [viewingStableId, isViewingOtherPlayerModalOpen]);
+  }, [viewingStableId]);
 
   useEffect(() => {
     if (stable && stable.length === 7) {
