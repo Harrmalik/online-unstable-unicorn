@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Button, Modal } from 'semantic-ui-react';
 import { viewStable, toggleViewingOtherPlayerModal } from 'actions';
 import { useViewingPlayer, useMyPlayer } from 'utils/hooks.js';
@@ -8,25 +8,19 @@ function ViewOtherPlayer(props) {
   const dispatch = useDispatch();
   const currentPlayer = useMyPlayer();
   const playerToView = useViewingPlayer();
-  // const name = playerToView ? props.playerToView.name : '';
   const [isViewingHand, setisViewingHand] = useState(false);
   function viewHand() {
     setisViewingHand(true);
   }
 
   function viewStableModal(selectedPlayer) {
-    // props.viewStable(currentPlayer, selectedPlayer);
     dispatch(viewStable(currentPlayer, selectedPlayer));
-    // setPlayerToView(null);
-    // setIsViewingOtherPlayer(false);
+    dispatch(toggleViewingOtherPlayerModal(currentPlayer, currentPlayer.id));
   }
 
   function close() {
     setisViewingHand(false);
-    // props.close();
-    // useViewPlayerModal(currentPlayer);
-    dispatch(toggleViewingOtherPlayerModal(false));
-    dispatch(viewStable(currentPlayer, null));
+    dispatch(toggleViewingOtherPlayerModal(currentPlayer, currentPlayer.id));
   }
 
   return (
@@ -39,13 +33,13 @@ function ViewOtherPlayer(props) {
         <Modal.Content>
           {playerToView.hand.map(card => {
             return(
-              <p>{card.name}</p>
+              <p key={card.id}>{card.name}</p>
             )
           })}
         </Modal.Content>
       }
         {!isViewingHand &&
-        <Modal.Actions center>
+        <Modal.Actions center="true">
           <Button onClick={() => { viewStableModal(playerToView) }}>
             Stable
           </Button>
@@ -56,7 +50,7 @@ function ViewOtherPlayer(props) {
         </Modal.Actions>
         }
         {isViewingHand &&
-        <Modal.Actions center>
+        <Modal.Actions center="true">
           <Button onClick={close}>
             Close
           </Button>

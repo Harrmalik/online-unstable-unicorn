@@ -20,7 +20,7 @@ let testPlayers = [
       "url": "/images/8.jpg"
     }],
     viewingStableId: 1,
-    isViewingOtherPlayerModalOpen: false,
+    viewingOtherPlayerModalId: 1,
     unicorn: {
       "id": 8,
       "name": "CANNIBAL BABY UNICORN",
@@ -52,7 +52,7 @@ let testPlayers = [
       "url": "/images/4.jpg",
     }],
     viewingStableId: 2,
-    isViewingOtherPlayerModalOpen: false,
+    viewingOtherPlayerModalId: 2,
     unicorn: {
       "id": 4,
       "name": "FUCKING CUTE BABY UNICORN",
@@ -81,7 +81,7 @@ let testPlayers = [
       "url": "/images/13.jpg",
     }],
     viewingStableId: 3,
-    isViewingOtherPlayerModalOpen: false,
+    viewingOtherPlayerModalId: 3,
     unicorn: {
       "id": 13,
       "name": "PAGEANT BABY UNICORN",
@@ -110,7 +110,7 @@ let testPlayers = [
       "url": "/images/7.jpg",
     }],
     viewingStableId: 4,
-    isViewingOtherPlayerModalOpen: false,
+    viewingOtherPlayerModalId: 4,
     unicorn: {
       "id": 7,
       "name": "BABY UNICORN OF INCEST",
