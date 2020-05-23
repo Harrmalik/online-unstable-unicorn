@@ -59,7 +59,7 @@ function GamePage() {
       <ActionViewComponent/>
 
       {/* Allows current player to view another players hand */}
-      <ViewOtherPlayer isOpen={myPlayer.isViewingOtherPlayerModalOpen}/>
+      <ViewOtherPlayer isOpen={myPlayer.isViewingOtherPlayerModalOpen != myPlayer.id}/>
 
       { /* Shows player's current hand  */ }
       <HandComponent/>

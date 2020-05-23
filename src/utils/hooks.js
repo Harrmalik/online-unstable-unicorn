@@ -41,7 +41,7 @@ export function useViewingPlayer() {
   const players = useSelector(state => state.players);
   const me = useMyPlayer();
   return {
-    ...players[me.viewingStableId]
+    ...players.find(player => player.id == me.isViewingOtherPlayerModalOpen)
   };
 }
 

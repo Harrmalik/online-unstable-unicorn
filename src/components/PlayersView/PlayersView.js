@@ -59,14 +59,15 @@ function PlayersView() {
       return;
 
     if (currentPlayer.id == selectedPlayer.id) {
-      dispatch(toggleViewingOtherPlayerModal(false));
+      // This happens when you click yourself
+      // dispatch(toggleViewingOtherPlayerModal(currentPlayer, selectedPlayer.id));
       dispatch(viewStable(currentPlayer, null));
     } else if (game.whosTurn.id == currentPlayer.id) {
       // Only the player whos turn it is should be able to view a hand/stable
-      dispatch(viewStable(currentPlayer, selectedPlayer));
-      dispatch(toggleViewingOtherPlayerModal(true));
+      // dispatch(viewStable(currentPlayer, selectedPlayer));
+      dispatch(toggleViewingOtherPlayerModal(currentPlayer, selectedPlayer.id));
     } else {
-      // This is hit when a player whos turn it is clicks a stable.
+      // This is hit when a player whos turn its not clicks a stable.
       dispatch(viewStable(currentPlayer, selectedPlayer));
     }
   }, [selectedPlayer]);
