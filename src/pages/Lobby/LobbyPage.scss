@@ -38,13 +38,18 @@ body {
   flex-wrap: wrap;
   padding: 5em;
   justify-content: space-evenly;
+  z-index: 1;
 
   .ui.header {
     width: 100%;
   }
 
-  .ui.icon {
-    float: right;
+  .icon {
+    cursor: pointer;
+  }
+
+  .ui.label {
+    cursor: pointer;
   }
 
   .unicorn-avatar {

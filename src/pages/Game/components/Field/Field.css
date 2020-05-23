@@ -1,6 +1,7 @@
 .field {
   display: flex;
   justify-content: center;
+  height: 20vh;
 }
 
 .field .ui.card {

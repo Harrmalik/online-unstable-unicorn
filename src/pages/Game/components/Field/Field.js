@@ -1,20 +1,49 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from 'react-redux';
 import { Card, Image } from 'semantic-ui-react';
 import './Field.css';
 
+// Components
+import ModalComponent from 'components/Modal/ModalComponent';
+
 const MemoField = React.memo(Field);
 
 function Field() {
+  const [isViewingDeck, setIsViewingDeck] = useState(false);
+  const [deckBeingViewed, setDeckBeingViewed] = useState('');
   const decks = useSelector(state => state.decks);
+
+  function toggleViewDeckModal(id) {
+    if (id !== 'drawPile') {
+      setIsViewingDeck(!isViewingDeck);
+      setDeckBeingViewed(id);
+    }
+  }
+
+  function renderViewDeckModal() {
+    if (isViewingDeck) {
+      return <ModalComponent
+        header="Cards left"
+        cards={decks[deckBeingViewed]}
+        close={toggleViewDeckModal}
+      />
+    }
+  }
 
   return (
     <div className="field">
       {
         Object.keys(decks).map(deckKey => {
-          return <MemoDeck id={deckKey} key={deckKey} numCards={decks[deckKey].length}/>
+          return <MemoDeck
+            id={deckKey}
+            key={deckKey}
+            numCards={decks[deckKey].length}
+            callback={toggleViewDeckModal}
+          />
         })
       }
+
+      { renderViewDeckModal() }
     </div>
   )
 }
@@ -22,10 +51,10 @@ function Field() {
 const MemoDeck = React.memo(Deck);
 
 function Deck(props) {
-  const {id, numCards} = props;
-  
+  const {id, numCards, callback} = props;
+
   return (
-    <Card raised>
+    <Card raised onClick={() => { callback(id) }}>
       <Image
         label={{
           color: 'black',

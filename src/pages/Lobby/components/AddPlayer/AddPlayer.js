@@ -40,7 +40,7 @@ function AddPlayer(props) {
 
     function renderModal() {
         if (shouldOpenModal) {
-            return <AvatarModal 
+            return <AvatarModal
                 unicorn={unicorn}
                 callback={handleSelectUnicorn}
                 toggleAvatarSelector={toggleAvatarSelector}
@@ -75,7 +75,7 @@ function AddPlayer(props) {
         localStorage.setItem('currentPlayerIndex', numPlayers);
         socketServer.emit('addPlayer', urlParams, newPlayer);
     }
-    
+
     return (
         <div>
             {renderForm()}
@@ -89,8 +89,8 @@ const MemoAddPlayerForm = React.memo((props) => {
 
     return (
         <div>
-            <Button 
-            content="Select Unicorn" 
+            <Button
+            content="Select Unicorn"
             onClick={toggleAvatarSelector}
             className='icon'
             icon='plus'
@@ -114,6 +114,7 @@ function AvatarModal(props) {
     }, [socketServer])
 
     useEffect(() => {
+      //TODO: update to use filter instead
         const usedUnicorns = Reduce(players, (newArr, player) => {
             return [...newArr, player.unicorn.id];
         }, []);
@@ -121,13 +122,13 @@ function AvatarModal(props) {
         const babyUnicornsRemaining = []
 
         for (var i = 0; i < babyUnicorns.length; i++) {
-        let unicornIndex = usedUnicorns.findIndex(usedUnicornId => {
-            return usedUnicornId === babyUnicorns[i].id
-        })
+          let unicornIndex = usedUnicorns.findIndex(usedUnicornId => {
+              return usedUnicornId === babyUnicorns[i].id
+          })
 
-        if (unicornIndex === -1) {
-            babyUnicornsRemaining.push(babyUnicorns[i])
-        }
+          if (unicornIndex === -1) {
+              babyUnicornsRemaining.push(babyUnicorns[i])
+          }
         }
 
         setBabyUnicorns(babyUnicornsRemaining);

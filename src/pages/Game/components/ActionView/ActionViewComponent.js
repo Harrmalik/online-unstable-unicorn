@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { updateDecks, setPlayers, endActionPhase } from 'actions';
-import './ActionViewComponent.css';
-import { Segment } from 'semantic-ui-react';
+import './ActionViewComponent.scss';
+import { Segment, Step } from 'semantic-ui-react';
 
 // Components
 import PlayerView from './components/PlayerView/Playerview.js';
@@ -59,19 +59,35 @@ function ActionViewComponent () {
   }
 
   return (
-    <Segment raised id="actionView">
+    <div id="actionView">
       <MemoPhase/>
-      { isMyTurn ? <PlayerView/> : <SpectatorView/> }
-    </Segment>
+      <Segment raised attached>
+        { isMyTurn ? <PlayerView/> : <SpectatorView/> }
+      </Segment>
+    </div>
   );
 }
 
 const MemoPhase = React.memo(() => {
   const phases = useSelector(state => state.game.phases);
-  const phase = useSelector(state => state.game.phase);
+  const currentPhase = useSelector(state => state.game.phase);
 
   return (
-    <div>{ phases[phase].name} Phase</div>
+    <Step.Group attached='top' fluid>
+      { phases.map(phase => <Step
+          active={phases[currentPhase].name === phase.name}
+          disabled={false}
+        >
+          <Step.Content>
+            <Step.Title>{phase.name}</Step.Title>
+            {/*
+              TODO: show number of actions per phase
+              <Step.Description>Choose your shipping options</Step.Description>
+            */}
+          </Step.Content>
+        </Step>
+      )}
+    </Step.Group>
   )
 })
 

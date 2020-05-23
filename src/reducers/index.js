@@ -14,7 +14,7 @@ let defaultOptions = {
   gameOver: false,
   phase: 0,
   phases: [{
-    name: 'Effect',
+    name: 'Pre Effects',
     actions: ['checkForEffects']
   }, {
     name: 'Draw',
@@ -23,7 +23,7 @@ let defaultOptions = {
     name: 'Action',
     actions: ['playCard', 'drawCard']
   }, {
-    name: 'EndTurn',
+    name: 'Post Effects',
     actions:['endTurn']
   }],
   cards,
@@ -221,7 +221,7 @@ function players (state = [], action) {
           currIndex = newState.findIndex(player => player.id == action.currentPlayer.id);
           if (currIndex < 0)
             return state;
-          
+
           action.currentPlayer.isViewingOtherPlayerModalOpen = action.isViewingModal;
           newState[currIndex] = action.currentPlayer;
           return newState;

@@ -89,7 +89,7 @@ const MemoCounterActionView = React.memo((props) => {
   return (
     <div>
       { renderInstants() }
-      <CardComponent card={card}/>
+      <CardComponent card={card} callback={() => {}}/>
     </div>
   )
 })

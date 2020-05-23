@@ -18,14 +18,19 @@ function PlayerView() {
   const isDiscardingCard = useSelector(state =>  state.isDiscardingCard);
   const dispatch = useDispatch();
 
+  // Effect Phase variables
   const [effects, setEffects] = useState([]);
   const [numberOfEffectsTotal, setNumberOfEffectsTotal] = useState(null);
   const [numberOfEffectsHandled, setNumberOfEffectsHandled] = useState(0);
   const [allowSkip, setAllowSkip] = useState(true);
 
+  // Number of turns in phases
+  // const [numberOfEffectsLeft, setNumberOfEffectsLeft] = useState(null);
   const [numberOfDrawsLeft, setNumberOfDrawsLeft] = useState(1);
   const [numberOfActionsLeft, setNumberOfActionsLeft] = useState(1);
+  const [numberOfEndingEffectsLeft, setNumberOfEndingEffectsLeft] = useState(0);
 
+  // Handling Intent variables
   const [numPlayersCheckedForInstants, setNumPlayersCheckedForInstants] = useState(0);
   const [opponentInteractions, setOpponentInteractions] = useState({
     numPlayersCheckedForInstants: 0,
@@ -34,16 +39,15 @@ function PlayerView() {
     instant: null
   });
   const [checkForInstant, setCheckForInstant] = useState(false);
-  const [readyToEndTurn, setReadyToEndTurn] = useState(false);
 
 
-  // buffs
+  // upgrade variables
   const [sacrificeAndDestroy, setSacrificeAndDestroy] = useState(false);
   //const [doubleActions, setDoubleActions] = useState(false);
   const [drawFromOpponent, setDrawFromOpponent] = useState(false);
   const [borrowUnicorn, setBorrowUnicorn] = useState(false);
 
-  // debuffs
+  // downgrade variables
   const [skipDrawPhase, setSkipDrawPhase] = useState(false);
   const [skipActionPhase, setSkipActionPhase] = useState(false);
 
@@ -122,6 +126,14 @@ function PlayerView() {
               case 0:
                 // skip either your draw or action phase
                 //TODO add when adding destroy
+                theEffects.push({
+                  name: 'sacrifice and destory',
+                  requiresAction: true,
+                  callback: () => dispatch(returningCard({
+                    isTrue: true,
+                    //callback: () => handleEffects(null, false) TODO: make callback
+                  }))
+                });
                 break;
               case 1:
                 // Play 2 actions
@@ -147,22 +159,41 @@ function PlayerView() {
                 });
                 break;
               case 4:
+                // drawExtraCard
                 theEffects.push({
                   name: 'Draw Additional Card',
                   callback: () => setNumberOfDrawsLeft(numberOfDrawsLeft + 1)
                 });
                 break;
               case 5:
-                // return a unicorn to hand
-                // TODO: discard debuff when stable reaches 0 <----- v2
-                applyDebuff()
+                // swapUnicorns
                 break;
               case 6:
-                // skip either your draw or action phase
-                applyDebuff()
+                // basicBitch
                 break;
               case 9:
-                dispatch(isDiscardingCard(true));
+                // drawBeforeEnding
+                break;
+              case 10:
+                // sacrificeBaby
+                break;
+              case 11:
+                // getBabyUnicornInStable
+                break;
+              case 15:
+                // sacrificeHand
+                break;
+              case 17:
+                // holdMyUnicorn
+                break;
+              case 19:
+                // drawBeforeEnding
+                break;
+              case 20:
+                // stealUnicorn
+                break;
+              case 28:
+                // drawThenDiscard
                 break;
             }
           }
@@ -236,16 +267,19 @@ function PlayerView() {
     if (game.phase === 3 && !isDiscardingCard.isTrue) {
       console.log('STARTING END TURN PHASE')
       if (myPlayer.hand.length > 7) {
+        setNumberOfEndingEffectsLeft(numberOfEndingEffectsLeft - 1);
         dispatch(discardingCard({
           isTrue: true,
           callback: null
         }));
       } else {
-        setReadyToEndTurn(true);
+        setNumberOfEndingEffectsLeft(numberOfEndingEffectsLeft - 1);
       }
     }
   }, [game.phase, isDiscardingCard, myPlayer.stable])
 
+
+  // Effects for Effects =)
   useEffect(() => {
     if (drawFromOpponent) {
       console.log('Handle draw from opponent');
@@ -264,15 +298,36 @@ function PlayerView() {
     }
   }, [borrowUnicorn])
 
+
+
+  // Effects for phases
   useEffect(() => {
     if (typeof numberOfEffectsTotal === 'number' && numberOfEffectsTotal === numberOfEffectsHandled) {
+      console.log('ending pre effects phase')
       dispatch(nextPhase(1))
       socketServer.emit('endEffectPhase', lobbyName, 1);
     }
   }, [numberOfEffectsTotal, numberOfEffectsHandled])
 
   useEffect(() => {
-    if (readyToEndTurn) {
+    if (numberOfDrawsLeft === 0) {
+      console.log('ending draw phase')
+      dispatch(nextPhase(2));
+    }
+  }, [numberOfDrawsLeft])
+
+  useEffect(() => {
+    if (numberOfActionsLeft === 0) {
+      console.log('ending action phase');
+      if (myPlayer.hand.length > 7) {
+        setNumberOfEndingEffectsLeft(numberOfEndingEffectsLeft + (myPlayer.hand.length - 7))
+      }
+      socketServer.emit('endActionPhase', lobbyName);
+    }
+  }, [numberOfActionsLeft])
+
+  useEffect(() => {
+    if (game.phase === 3 && numberOfEndingEffectsLeft === 0) {
       let nextTurn = game.turn + 1;
       let nextPlayerIndex = nextTurn % players.length;
       let whosTurn = players[nextPlayerIndex];
@@ -286,9 +341,9 @@ function PlayerView() {
       dispatch(endTurn(gameUpdates, nextPlayerIndex === myPlayer.currentPlayerIndex));
       socketServer.emit('endTurn', lobbyName, gameUpdates, nextPlayerIndex);
     }
-  }, [readyToEndTurn])
+  }, [numberOfEndingEffectsLeft, game.phase])
 
-  function applyDebuff() {}
+
 
   function addToStable() {
     const updatedPlayers = players;
@@ -317,11 +372,6 @@ function PlayerView() {
     return [updatedDecks, updatedPlayers];
   }
 
-  function skipPhase() {
-    dispatch(nextPhase(1))
-    socketServer.emit('endEffectPhase', lobbyName, 1);
-  }
-
   function handleEffects(effectCallback, requiresAction) {
     if (effectCallback) {
       effectCallback();
@@ -346,7 +396,7 @@ function PlayerView() {
     if (phase === 3) {
       setNumberOfActionsLeft(numberOfActionsLeft - 1);
     } else {
-      dispatch(nextPhase(phase));
+      setNumberOfDrawsLeft(numberOfDrawsLeft - 1);
     }
   }
 
@@ -379,21 +429,14 @@ function PlayerView() {
     }
   }
 
-  useEffect(() => {
-    if (numberOfActionsLeft === 0) {
-      console.log('skipping?????')
-      socketServer.emit('endActionPhase', lobbyName);
-    }
-  }, [numberOfActionsLeft])
-
   function renderView() {
     switch (game.phases[game.phase].name) {
-      case 'Effect':
+      case 'Pre Effects':
         return <EffectsView
                   effects={effects}
                   handleEffects={handleEffects}
                   allowSkip={allowSkip}
-                  skipPhase={skipPhase}/>
+                  skipPhase={() => setNumberOfEffectsHandled(numberOfEffectsHandled + 1)}/>
         break;
       case 'Draw':
         return (
@@ -408,7 +451,7 @@ function PlayerView() {
                   checkForInstant={checkForInstant}
                   handleInstant={handleInstant}/>
         break;
-      case 'EndTurn':
+      case 'Post Effects':
         return <EndView />
         break;
     }
@@ -431,7 +474,7 @@ function EffectsView(props) {
           return <Button key={index} onClick={() => { handleEffects(effect.callback, effect.requiresAction) }}>{effect.name}</Button>
         })
       }
-      { allowSkip ? <Button onClick={() => { skipPhase(2) }}>Skip</Button> : null }
+      { allowSkip ? <Button onClick={skipPhase}>Skip</Button> : null }
     </div>
   )
 }

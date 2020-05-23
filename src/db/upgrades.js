@@ -197,9 +197,6 @@ const upgrades = [
   description: 'When this card enters your Stable, each other player must DISCARD a card.',
   optional: false
 },
-
-
-
 {
   id: 34,
   name: 'sacrificeAndDestroyHand',
