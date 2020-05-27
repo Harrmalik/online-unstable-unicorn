@@ -67,15 +67,15 @@ function PlayersView() {
               key={player.id}
             >
               <Image
-              onClick={() => {setSelectedPlayer(player)}}
-              onMouseEnter={() => { toggleQuickView(player, index) }}
-              onMouseLeave={() => { toggleQuickView({}) }}
-              label={{
-                  color: player.color,
-                  content: `${player.name}: H: ${player.hand.length} S: ${player.stable.length}`,
-                  ribbon: true
-                }}
-               src={player.unicorn.url}/>
+                onClick={() => {setSelectedPlayer(player)}}
+                onMouseEnter={() => { toggleQuickView(player, index) }}
+                onMouseLeave={() => { toggleQuickView({}) }}
+                label={{
+                    color: player.color,
+                    content: `${player.name}: H: ${player.hand.length} S: ${player.stable.length}`,
+                    ribbon: true
+                  }}
+                 src={player.unicorn.url}/>
             </Card>
           )
         })}

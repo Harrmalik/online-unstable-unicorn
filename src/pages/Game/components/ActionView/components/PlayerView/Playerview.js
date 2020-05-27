@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux';
-import { setCurrentPlayer, setPlayers, startGame, nextPhase, endTurn, playingCard, discardingCard, returningCard, sacrificingCard, destroyingCard, drawingFromOpponent } from 'actions';
+import { setCurrentPlayer, setPlayers, startGame, nextPhase, endTurn, playingCard, discardingCard, returningCard, sacrificingCard, destroyingCard, drawingFromOpponent, givingToOpponent, choosePlayer } from 'actions';
 import { useMyPlayer, useCheckForInstants } from 'utils/hooks.js';
 import groupBy from 'lodash/groupBy';
 import { Dropdown, Image, Item, Segment, Button, Header, Card } from 'semantic-ui-react';
@@ -49,6 +49,8 @@ function PlayerView() {
   //const [doubleActions, setDoubleActions] = useState(false);
   const [drawFromOpponent, setDrawFromOpponent] = useState(false);
   const [borrowUnicorn, setBorrowUnicorn] = useState(false);
+  const [returnCardAtEndOfTurn, setReturnCardAtEndOfTurn] = useState(null);
+  const [drawDuringPostEffectPhase, setDrawDuringPostEffectPhase] = useState(null)
 
   // downgrade variables
   const [skipDrawPhase, setSkipDrawPhase] = useState(false);
@@ -98,18 +100,28 @@ function PlayerView() {
       } else {
         console.log('discarding card and ending turn');
         const [updatedDecks, updatedPlayers] = addToDiscardPile();
-        if (numberOfActionsLeft === 1) {
+        if (game.phase === 2) {
+          if (numberOfActionsLeft === 1) {
+            socketServer.emit('actionHappened', game.uri, updatedDecks, updatedPlayers);
+          }
+          setNumberOfActionsLeft(numberOfActionsLeft - 1)
+        } else {
+          handleEffects(null, false);
           socketServer.emit('actionHappened', game.uri, updatedDecks, updatedPlayers);
         }
-        setNumberOfActionsLeft(numberOfActionsLeft - 1)
       }
     } else if (opponentInteractions.numPlayersCheckedForInstants === players.length - 1) {
       console.log('playing card and ending turn');
       const [updatedDecks, updatedPlayers] = addToStable();
-      if (numberOfActionsLeft === 1) {
+      if (game.phase === 2) {
+        if (numberOfActionsLeft === 1) {
+          socketServer.emit('actionHappened', game.uri, updatedDecks, updatedPlayers);
+        }
+        setNumberOfActionsLeft(numberOfActionsLeft - 1)
+      } else {
+        handleEffects(null, false);
         socketServer.emit('actionHappened', game.uri, updatedDecks, updatedPlayers);
       }
-      setNumberOfActionsLeft(numberOfActionsLeft - 1)
     }
   }, [numPlayersCheckedForInstants])
 
@@ -163,7 +175,18 @@ function PlayerView() {
                 theEffects.push({
                   name: 'Borrow Unicorn',
                   requiresAction: true,
-                  callback: () => setBorrowUnicorn(true)
+                  callback: () => dispatch(drawingFromOpponent({
+                    isTrue: true,
+                    callback: (card, playerIndex) => handleEffects(() => {
+                      setReturnCardAtEndOfTurn({
+                        ...card,
+                        previousPlayerIndex: playerIndex,
+                        currentPlayerIndex: myPlayer.currentPlayerIndex,
+                        location: 'hand'
+                      });
+                      setNumberOfEndingEffectsLeft(numberOfEndingEffectsLeft + 1);
+                    }, false)
+                  }))
                 });
                 break;
               case 4:
@@ -174,28 +197,88 @@ function PlayerView() {
                 });
                 break;
               case 5:
-                // swapUnicorns
+                // swapUnicorns -> requires 3 players
                 break;
               case 6:
                 // basicBitch
+                theEffects.push({
+                  name: 'Play Basic Unicorn',
+                  requiresAction: true,
+                  callback: () => dispatch(playingCard({
+                    isTrue: true,
+                    callback: () => handleEffects(() => {
+                      dispatch(playingCard({
+                        isTrue: false,
+                        callback: null,
+                        basicUnicornOnly: false
+                      }))
+                    }, false),
+                    basicUnicornOnly: true
+                  }))
+                });
                 break;
               case 9:
                 // drawBeforeEnding
+                theEffects.push({
+                  name: 'Draw during post effect phase',
+                  callback: () => handleEffects(() => {
+                    setDrawDuringPostEffectPhase(true);
+                    setNumberOfEndingEffectsLeft(numberOfEndingEffectsLeft + 1);
+                  }, false)
+                });
                 break;
               case 10:
                 // sacrificeBaby
+                // TODO: add once effects array is v2
+                theEffects.push({
+                  name: 'Sacrifice Baby Unicorn',
+                  callback: () => handleEffects(() => {
+                    // summonBabyUnicorn();
+                  }, false)
+                });
                 break;
               case 11:
                 // getBabyUnicornInStable
+                theEffects.push({
+                  name: 'Play Baby Unicorn from Nursery',
+                  callback: () => handleEffects(() => {
+                    summonBabyUnicorn();
+                  }, false)
+                });
                 break;
               case 15:
                 // sacrificeHand
+                theEffects.push({
+                  name: 'Sacrifice Hand and destory card',
+                  requiresAction: true,
+                  callback: () => dispatch(destroyingCard({
+                    isTrue: true,
+                    callback: () => handleEffects(sacrificeHand, false)
+                  }))
+                });
                 break;
               case 17:
                 // holdMyUnicorn
-                break;
-              case 19:
-                // drawBeforeEnding
+                theEffects.push({
+                  name: 'Give Opponent A stable unicorn',
+                  requiresAction: true,
+                  callback: () => dispatch(givingToOpponent({
+                    isTrue: true,
+                    callback: (card) => dispatch(choosePlayer({
+                      isTrue: true,
+                      card,
+                      callback: (playerIndex) => handleEffects(() => {
+                        setReturnCardAtEndOfTurn({
+                          ...card,
+                          previousPlayerIndex: myPlayer.currentPlayerIndex,
+                          currentPlayerIndex: playerIndex,
+                          location: 'stable'
+                        });
+                        setNumberOfEndingEffectsLeft(numberOfEndingEffectsLeft + 1);
+                      }, false)
+                    }))
+                  }))
+                });
                 break;
               case 20:
                 // stealUnicorn
@@ -281,6 +364,33 @@ function PlayerView() {
         }));
       } else {
         setNumberOfEndingEffectsLeft(numberOfEndingEffectsLeft - 1);
+      }
+
+      if (returnCardAtEndOfTurn) {
+        const playerHoldingCard = players[returnCardAtEndOfTurn.currentPlayerIndex];
+        let returnCardIndex = playerHoldingCard.hand.findIndex(card => card.id === returnCardAtEndOfTurn.id);
+        console.log('player holding card', playerHoldingCard)
+        console.log(returnCardIndex)
+        if (returnCardIndex >= 0) {
+          console.log('giving to hand');
+          returnCardToOpponent('hand', returnCardIndex, returnCardAtEndOfTurn);
+        } else {
+          returnCardIndex = playerHoldingCard.stable.findIndex(card => card.id === returnCardAtEndOfTurn.id);
+          if (returnCardIndex >= 0) {
+            console.log('giving to stable');
+            returnCardToOpponent('stable', returnCardIndex, returnCardAtEndOfTurn);
+          } else {
+            setReturnCardAtEndOfTurn(null);
+            setNumberOfEndingEffectsLeft(numberOfEndingEffectsLeft - 1);
+          }
+        }
+
+        console.log('return this card', returnCardAtEndOfTurn);
+      }
+
+      if (drawDuringPostEffectPhase) {
+        // TODO: ask to draw card or set activateAtEnd
+        drawCard(3);
       }
     }
   }, [game.phase, isDiscardingCard, myPlayer.stable])
@@ -400,9 +510,18 @@ function PlayerView() {
     player.hand = [...player.hand, ...nextCards];
     allPlayers[player.currentPlayerIndex] = player;
 
-    socketServer.emit('drawCard', lobbyName, updatedDecks, allPlayers, phase === 3 ? 2 : phase)
+    socketServer.emit('drawCard', lobbyName, updatedDecks, allPlayers, phase === 3 ? game.phase : phase)
     if (phase === 3) {
-      setNumberOfActionsLeft(numberOfActionsLeft - 1);
+      if (game.phase === 2) {
+        setNumberOfActionsLeft(numberOfActionsLeft - 1);
+      } else {
+        let endingEffectCountChange = 1;
+        if (myPlayer.hand.length > 7) {
+          endingEffectCountChange--;
+        }
+        setNumberOfEndingEffectsLeft(numberOfEndingEffectsLeft - endingEffectCountChange);
+      }
+
     } else {
       setNumberOfDrawsLeft(numberOfDrawsLeft - 1);
     }
@@ -435,6 +554,39 @@ function PlayerView() {
       default:
         callback()
     }
+  }
+
+  function returnCardToOpponent(cardLocation, index, card) {
+    let updatedPlayers = players;
+
+    updatedPlayers[card.currentPlayerIndex][cardLocation].splice(index, 1);
+    updatedPlayers[card.previousPlayerIndex][card.location].push(card);
+    console.log(`card prelocation: ${card.location}`);
+    console.log(`card current location: ${cardLocation}`);
+    console.log(updatedPlayers);
+
+    setReturnCardAtEndOfTurn(null);
+    setNumberOfEndingEffectsLeft(numberOfEndingEffectsLeft - 1);
+    socketServer.emit('returnCard', lobbyName, card, decks, updatedPlayers);
+  }
+
+  function summonBabyUnicorn() {
+    let updatedPlayers = players;
+    let updatedDecks = decks;
+    let babyUnicorn = updatedDecks.nursery.pop()
+    updatedPlayers[myPlayer.currentPlayerIndex].stable.push(babyUnicorn);
+
+    socketServer.emit('actionHappened', game.uri, updatedDecks, updatedPlayers);
+  }
+
+  function sacrificeHand() {
+    let updatedPlayers = players;
+    let updatedDecks = decks;
+
+    updatedDecks.discardPile = [...updatedDecks.discardPile, ...myPlayer.hand]
+    updatedPlayers[myPlayer.currentPlayerIndex].hand = [];
+
+    socketServer.emit('actionHappened', game.uri, updatedDecks, updatedPlayers);
   }
 
   function renderView() {
@@ -477,9 +629,10 @@ function EffectsView(props) {
   const { handleEffects, allowSkip, skipPhase, effects } = props;
   const isDestroyingCard = useSelector(state => state.isDestroyingCard);
   const isDrawingFromOpponent = useSelector(state => state.isDrawingFromOpponent);
+  const isChoosingPlayer = useSelector(state =>  state.isChoosingPlayer);
 
   function renderPlayersToAttack() {
-    if (isDestroyingCard.isTrue || isDrawingFromOpponent.isTrue) {
+    if (isDestroyingCard.isTrue || isDrawingFromOpponent.isTrue || isChoosingPlayer.isTrue) {
       return <PlayersToAttackComponent
 
       />
@@ -561,9 +714,18 @@ function PlayersToAttackComponent(props) {
   const decks = useSelector(state =>  state.decks);
   const isDestroyingCard = useSelector(state => state.isDestroyingCard);
   const isDrawingFromOpponent = useSelector(state => state.isDrawingFromOpponent);
+  const isGivingToOpponent = useSelector(state =>  state.isGivingToOpponent);
+  const isChoosingPlayer = useSelector(state =>  state.isChoosingPlayer);
   const dispatch = useDispatch();
 
   const [selectedPlayer, setSelectedPlayer] = useState(null);
+
+  useEffect(() => {
+    if (selectedPlayer && isChoosingPlayer.isTrue) {
+      setSelectedPlayer(null);
+      handleGiveToOpponent(selectedPlayer);
+    }
+  }, [selectedPlayer])
 
   function renderPlayers() {
     if (!selectedPlayer) {
@@ -593,9 +755,17 @@ function PlayersToAttackComponent(props) {
       )
     }
   }
-  function renderPlayerCards() {
-    if (selectedPlayer) {
 
+  function renderPlayerCards() {
+    let handleAction;
+    if(isDestroyingCard.isTrue) {
+      handleAction = handleDestroyCard;
+    }
+    if(isDrawingFromOpponent.isTrue) {
+      handleAction = handleDrawFromOpponent;
+    }
+
+    if (selectedPlayer) {
       return <Card.Group>
           {
             selectedPlayer[isDestroyingCard.isTrue ? 'stable' : 'hand'].map((card, index) => {
@@ -640,15 +810,33 @@ function PlayersToAttackComponent(props) {
 
     socketServer.emit('drawFromOpponent', lobbyName, card, updatedDecks, updatedPlayers);
     if (isDrawingFromOpponent.callback) {
-      isDrawingFromOpponent.callback();
+      isDrawingFromOpponent.callback(card, selectedPlayer.index);
     }
 
     dispatch(drawingFromOpponent({isTrue: false, callback: null}))
   }
 
+  function handleGiveToOpponent(selectedPlayer) {
+    const card = isChoosingPlayer.card;
+    const updatedDecks = decks;
+    const updatedPlayers = players;
+
+    console.log(card.cardIndex)
+    updatedPlayers[myPlayerIndex].stable.slice(card.cardIndex, 1);
+    console.log(updatedPlayers[myPlayerIndex].stable.splice(card.cardIndex, 1));
+    updatedPlayers[selectedPlayer.index].stable.push(card);
+
+    socketServer.emit('drawFromOpponent', lobbyName, card, updatedDecks, updatedPlayers);
+    if (isChoosingPlayer.callback) {
+      isChoosingPlayer.callback(selectedPlayer.index);
+    }
+
+    dispatch(choosePlayer({isTrue: false, card:null, callback: null}))
+  }
+
   return (
     <div>
-      <Header>{selectedPlayer ? "Destroy a Card" : "Choose A Player"}</Header>
+      <Header>{selectedPlayer ? "Select a Card" : "Choose A Player"}</Header>
 
       { renderPlayers() }
       { renderPlayerCards() }

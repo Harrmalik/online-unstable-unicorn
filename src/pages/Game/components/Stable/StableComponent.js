@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux';
-import { returningCard, sacrificingCard, endGame } from 'actions';
+import { returningCard, sacrificingCard, endGame, givingToOpponent } from 'actions';
 import { useMyPlayer } from 'utils/hooks.js';
 import './StableComponent.css';
 import { Card, Header } from 'semantic-ui-react';
@@ -16,6 +16,7 @@ const MemoStableComponent = React.memo(() => {
   const lobbyName = useSelector(state => state.game.uri);
   const isReturningCard = useSelector(state => state.isReturningCard);
   const isSacrificingCard = useSelector(state => state.isSacrificingCard);
+  const isGivingToOpponent = useSelector(state => state.isGivingToOpponent);
   const [viewStablePlayer, setViewStablePlayer] = useState(currentPlayer);
   const dispatch = useDispatch();
 
@@ -37,11 +38,15 @@ const MemoStableComponent = React.memo(() => {
 
   function handleCallback(card, index) {
     if (isReturningCard.isTrue) {
-      handleReturnCard(card, index)
+      handleReturnCard(card, index);
     }
 
     if (isSacrificingCard.isTrue) {
-      handleSacrificeCard(card, index)
+      handleSacrificeCard(card, index);
+    }
+
+    if (isGivingToOpponent.isTrue) {
+      handleGiveToOpponent(card, index);
     }
   }
 
@@ -78,7 +83,17 @@ const MemoStableComponent = React.memo(() => {
     if (isSacrificingCard.callback) {
       isSacrificingCard.callback();
     }
-    dispatch(sacrificingCard({isTrue: false, callback: null}));
+    dispatch(givingToOpponent({isTrue: false, callback: null}));
+  }
+
+  function handleGiveToOpponent(card, index) {
+    if (isGivingToOpponent.callback) {
+      isGivingToOpponent.callback({
+        card,
+        cardIndex: index
+      });
+    }
+    dispatch(givingToOpponent({isTrue: false, callback: null}));
   }
 
   return (
@@ -86,6 +101,7 @@ const MemoStableComponent = React.memo(() => {
       <Header>{viewStablePlayer ? viewStablePlayer.name : ''}'s Stable</Header>
       { isReturningCard.isTrue ? <Header>Choose Card to Return</Header> : null }
       { isSacrificingCard.isTrue ? <Header>Choose Card to Sacrifice</Header> : null }
+      { isGivingToOpponent.isTrue ? <Header>Choose Card to Give</Header> : null }
       <Card.Group>
         {
           (viewStablePlayer && viewStablePlayer.stable) && viewStablePlayer.stable.map((card, index) => {

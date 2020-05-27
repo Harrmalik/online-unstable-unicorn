@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { playingCard, attemptToPlay, discardCard, discardingCard } from 'actions';
 import { useMyPlayer } from 'utils/hooks.js';
+import groupBy from 'lodash/groupBy';
 import { Card, Header } from 'semantic-ui-react';
 import './HandComponent.css';
 
@@ -20,6 +21,14 @@ function HandComponent() {
   const players = useSelector(state => state.players);
   const decks = useSelector(state => state.decks);
 
+  useEffect(() => {
+    if (isPlayingCard.basicUnicornOnly) {
+      if (!groupBy(myPlayer.hand, 'type')['Basic Unicorn']) {
+        isPlayingCard.callback();
+      }
+    }
+  }, [isPlayingCard.basicUnicornOnly])
+
   function handleOnClick(card, index) {
     if (isPlayingCard.isTrue) {
       handlePlayCard(card, index);
@@ -31,22 +40,30 @@ function HandComponent() {
   }
 
   function handlePlayCard(card, index) {
-    switch (card.type) {
-      case 'Baby Unicorn':
-      case 'Basic Unicorn':
-      case 'Magical Unicorn':
-      case 'Upgrade':
-      case 'Downgrade':
+    if (isPlayingCard.basicUnicornOnly) {
+      if (card.type === 'Basic Unicorn') {
         dispatch(playingCard(false))
         dispatch(attemptToPlay(card))
         socketServer.emit('attemptToPlayCard', lobbyName, card)
-        break;
+      }
+    } else {
+      switch (card.type) {
+        case 'Baby Unicorn':
+        case 'Basic Unicorn':
+        case 'Magical Unicorn':
+        case 'Upgrade':
+        case 'Downgrade':
+          dispatch(playingCard(false))
+          dispatch(attemptToPlay(card))
+          socketServer.emit('attemptToPlayCard', lobbyName, card)
+          break;
 
-      case 'Magic':
-        console.log('PLAYING EFFECT')
-        break;
-      default:
+        case 'Magic':
+          console.log('PLAYING EFFECT')
+          break;
+        default:
 
+      }
     }
   }
 
@@ -74,6 +91,7 @@ function HandComponent() {
             index={index}
             key={card.id}
             card={card}
+            basicUnicornOnly={isPlayingCard.basicUnicornOnly}
             callback={handleOnClick}/>
         })}
       </Card.Group>

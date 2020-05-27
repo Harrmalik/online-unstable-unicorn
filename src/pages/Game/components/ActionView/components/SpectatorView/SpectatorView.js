@@ -45,6 +45,7 @@ const MemoSpectatorView = React.memo(() => {
     } else {
       socketServer.emit('playInstant', currentGame.uri, myPlayer.currentPlayerIndex, instant)
     }
+    setCard(null);
     setCheckForInstant(false);
   }
 

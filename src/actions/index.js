@@ -116,6 +116,16 @@ export const drawingFromOpponent = (isDrawingFromOpponent) => ({
     isDrawingFromOpponent
 })
 
+export const givingToOpponent = (isGivingToOpponent) => ({
+    type: 'GIVING_TO_OPPONENT',
+    isGivingToOpponent
+})
+
+export const choosePlayer = (isChoosingPlayer) => ({
+    type: 'CHOOSING_PLAYER',
+    isChoosingPlayer
+})
+
 export const attemptToPlay = (card) => ({
     type: 'ATTEMPT_ADD_TO_STABLE',
     card

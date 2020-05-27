@@ -38,6 +38,10 @@ function ActionViewComponent () {
       dispatchUpdates(updatedDecks, updatedPlayers)
     })
 
+    socketServer.on('cardGivenToPlayer', (card, updatedDecks, updatedPlayers) => {
+      dispatchUpdates(updatedDecks, updatedPlayers)
+    })
+
     socketServer.on('updateFromAction', (updatedDecks, updatedPlayers) => {
       dispatchUpdates(updatedDecks, updatedPlayers)
     })
@@ -53,6 +57,7 @@ function ActionViewComponent () {
       socketServer.removeListener('cardSacrificed');
       socketServer.removeListener('cardReturned');
       socketServer.removeListener('cardDrewFromOpponent');
+      socketServer.removeListener('cardGivenToPlayer');
       socketServer.removeListener('updateFromAction');
       socketServer.removeListener('endingActionPhase');
     }
