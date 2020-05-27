@@ -121,6 +121,11 @@ export const givingToOpponent = (isGivingToOpponent) => ({
     isGivingToOpponent
 })
 
+export const stealUnicorn = (isStealingUnicorn) => ({
+    type: 'STEALING_UNICORN',
+    isStealingUnicorn
+})
+
 export const choosePlayer = (isChoosingPlayer) => ({
     type: 'CHOOSING_PLAYER',
     isChoosingPlayer

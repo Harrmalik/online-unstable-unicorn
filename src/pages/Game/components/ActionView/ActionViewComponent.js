@@ -42,6 +42,10 @@ function ActionViewComponent () {
       dispatchUpdates(updatedDecks, updatedPlayers)
     })
 
+    socketServer.on('unicornStolen', (card, updatedDecks, updatedPlayers) => {
+      dispatchUpdates(updatedDecks, updatedPlayers)
+    })
+
     socketServer.on('updateFromAction', (updatedDecks, updatedPlayers) => {
       dispatchUpdates(updatedDecks, updatedPlayers)
     })
@@ -58,6 +62,7 @@ function ActionViewComponent () {
       socketServer.removeListener('cardReturned');
       socketServer.removeListener('cardDrewFromOpponent');
       socketServer.removeListener('cardGivenToPlayer');
+      socketServer.removeListener('unicornStolen');
       socketServer.removeListener('updateFromAction');
       socketServer.removeListener('endingActionPhase');
     }

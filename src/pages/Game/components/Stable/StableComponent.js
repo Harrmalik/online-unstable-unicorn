@@ -104,7 +104,7 @@ const MemoStableComponent = React.memo(() => {
       { isGivingToOpponent.isTrue ? <Header>Choose Card to Give</Header> : null }
       <Card.Group>
         {
-          (viewStablePlayer && viewStablePlayer.stable) && viewStablePlayer.stable.map((card, index) => {
+          (viewStablePlayer && viewStablePlayer.stable) && currentPlayer.stable.map((card, index) => {
             return <CardComponent index={index} key={card.id} card={card} callback={handleCallback}/>
           })
         }

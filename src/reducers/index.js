@@ -203,6 +203,16 @@ function isGivingToOpponent (state = {isTrue: false, callback: null}, action) {
     }
 }
 
+function isStealingUnicorn (state = {isTrue: false, callback: null}, action) {
+    switch (action.type) {
+        case 'STEALING_UNICORN':
+          return action.isStealingUnicorn;
+
+        default:
+            return state
+    }
+}
+
 function isChoosingPlayer (state = {isTrue: false, card: null, callback: null}, action) {
     switch (action.type) {
         case 'CHOOSING_PLAYER':
@@ -273,6 +283,7 @@ const rootReducer = combineReducers({
     isReturningCard,
     isDrawingFromOpponent,
     isGivingToOpponent,
+    isStealingUnicorn,
     isChoosingPlayer,
     players,
     decks,
