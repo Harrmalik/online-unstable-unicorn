@@ -5,7 +5,7 @@ const cards = [
     "type": "Baby Unicorn",
     "description": "If this card would be sacrificed, destroyed, or returned to your hand, return it to the Nursery instead.",
     "color": "Magenta",
-    "url": "/images/1.jpg",
+    "url": "/images/1.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": ""
@@ -16,7 +16,7 @@ const cards = [
     "type": "Baby Unicorn",
     "description": "If this card would be sacrificed, destroyed, or returned to your hand, return it to the Nursery instead.",
     "color": "Magenta",
-    "url": "/images/2.jpg",
+    "url": "/images/2.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": ""
@@ -27,7 +27,7 @@ const cards = [
     "type": "Baby Unicorn",
     "description": "If this card would be sacrificed, destroyed, or returned to your hand, return it to the Nursery instead.",
     "color": "Magenta",
-    "url": "/images/3.jpg",
+    "url": "/images/3.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": ""
@@ -38,7 +38,7 @@ const cards = [
     "type": "Baby Unicorn",
     "description": "If this card would be sacrificed, destroyed, or returned to your hand, return it to the Nursery instead.",
     "color": "Magenta",
-    "url": "/images/4.jpg",
+    "url": "/images/4.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": ""
@@ -49,7 +49,7 @@ const cards = [
     "type": "Baby Unicorn",
     "description": "If this card would be sacrificed, destroyed, or returned to your hand, return it to the Nursery instead.",
     "color": "Magenta",
-    "url": "/images/5.jpg",
+    "url": "/images/5.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": ""
@@ -60,7 +60,7 @@ const cards = [
     "type": "Baby Unicorn",
     "description": "If this card would be sacrificed, destroyed, or returned to your hand, return it to the Nursery instead.",
     "color": "Magenta",
-    "url": "/images/6.jpg",
+    "url": "/images/6.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": ""
@@ -71,7 +71,7 @@ const cards = [
     "type": "Baby Unicorn",
     "description": "If this card would be sacrificed, destroyed, or returned to your hand, return it to the Nursery instead.",
     "color": "Magenta",
-    "url": "/images/7.jpg",
+    "url": "/images/7.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": ""
@@ -82,7 +82,7 @@ const cards = [
     "type": "Baby Unicorn",
     "description": "If this card would be sacrificed, destroyed, or returned to your hand, return it to the Nursery instead.",
     "color": "Magenta",
-    "url": "/images/8.jpg",
+    "url": "/images/8.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": ""
@@ -93,7 +93,7 @@ const cards = [
     "type": "Baby Unicorn",
     "description": "If this card would be sacrificed, destroyed, or returned to your hand, return it to the Nursery instead.",
     "color": "Magenta",
-    "url": "/images/9.jpg",
+    "url": "/images/9.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": ""
@@ -104,7 +104,7 @@ const cards = [
     "type": "Baby Unicorn",
     "description": "If this card would be sacrificed, destroyed, or returned to your hand, return it to the Nursery instead.",
     "color": "Magenta",
-    "url": "/images/10.jpg",
+    "url": "/images/10.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": ""
@@ -115,7 +115,7 @@ const cards = [
     "type": "Baby Unicorn",
     "description": "If this card would be sacrificed, destroyed, or returned to your hand, return it to the Nursery instead.",
     "color": "Magenta",
-    "url": "/images/11.jpg",
+    "url": "/images/11.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": ""
@@ -126,7 +126,7 @@ const cards = [
     "type": "Baby Unicorn",
     "description": "If this card would be sacrificed, destroyed, or returned to your hand, return it to the Nursery instead.",
     "color": "Magenta",
-    "url": "/images/12.jpg",
+    "url": "/images/12.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": ""
@@ -137,7 +137,7 @@ const cards = [
     "type": "Baby Unicorn",
     "description": "If this card would be sacrificed, destroyed, or returned to your hand, return it to the Nursery instead.",
     "color": "Magenta",
-    "url": "/images/13.jpg",
+    "url": "/images/13.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": ""
@@ -148,7 +148,7 @@ const cards = [
     "type": "Downgrade",
     "description": "If this card is in your Stable at the beginning of your turn, skip either your Draw phase or your Action phase.",
     "color": "Yellow",
-    "url": "/images/14.jpg",
+    "url": "/images/14.png",
     "activateAtBeginning": true,
     "upgrade": "",
     "downgrade": 0
@@ -159,7 +159,7 @@ const cards = [
     "type": "Downgrade",
     "description": "Triggered effects of your Unicorn cards do not activate.",
     "color": "Yellow",
-    "url": "/images/15.jpg",
+    "url": "/images/15.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": 1
@@ -170,7 +170,7 @@ const cards = [
     "type": "Downgrade",
     "description": "You cannot play Upgrade cards.",
     "color": "Yellow",
-    "url": "/images/16.jpg",
+    "url": "/images/16.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": 2
@@ -181,7 +181,7 @@ const cards = [
     "type": "Downgrade",
     "description": "If this card is in your Stable at the beginning of your turn, DISCARD a card.",
     "color": "Yellow",
-    "url": "/images/17.jpg",
+    "url": "/images/17.png",
     "activateAtBeginning": true,
     "upgrade": "",
     "downgrade": 3
@@ -192,7 +192,7 @@ const cards = [
     "type": "Downgrade",
     "description": "If this card is in your Stable at the beginning of your turn, return a Unicorn card from your Stable to your hand. If at any time you have no Unicorn cards in your Stable, SACRIFICE this card.",
     "color": "Yellow",
-    "url": "/images/18.jpg",
+    "url": "/images/18.png",
     "activateAtBeginning": true,
     "upgrade": "",
     "downgrade": 4
@@ -203,7 +203,7 @@ const cards = [
     "type": "Downgrade",
     "description": "Your hand limit is 3 cards.",
     "color": "Yellow",
-    "url": "/images/19.jpg",
+    "url": "/images/19.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": 5
@@ -214,7 +214,7 @@ const cards = [
     "type": "Downgrade",
     "description": "All of your Unicorn cards are considered Shits. Cards that affect Unicorn cards do not affect Shits.",
     "color": "Yellow",
-    "url": "/images/20.jpg",
+    "url": "/images/20.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": 6
@@ -225,7 +225,7 @@ const cards = [
     "type": "Upgrade",
     "description": "If this card is in your Stable at the beginning of your turn, you may SACRIFICE a card. If you do, DESTROY a card.",
     "color": "Orange",
-    "url": "/images/21.jpg",
+    "url": "/images/21.png",
     "activateAtBeginning": true,
     "upgrade": 0,
     "downgrade": ""
@@ -236,7 +236,7 @@ const cards = [
     "type": "Upgrade",
     "description": "If this card is in your Stable at the beginning of your turn, you may SACRIFICE a card. If you do, DESTROY a card.",
     "color": "Orange",
-    "url": "/images/21.jpg",
+    "url": "/images/21.png",
     "activateAtBeginning": true,
     "upgrade": 0,
     "downgrade": ""
@@ -247,7 +247,7 @@ const cards = [
     "type": "Upgrade",
     "description": "If this card is in your Stable at the beginning of your turn, you may play 2 cards during your Action phase.",
     "color": "Orange",
-    "url": "/images/22.jpg",
+    "url": "/images/22.png",
     "activateAtBeginning": true,
     "upgrade": 1,
     "downgrade": ""
@@ -258,7 +258,7 @@ const cards = [
     "type": "Upgrade",
     "description": "If this card is in your Stable at the beginning of your turn, you may choose any other player. Pull a card from that player's hand and add it to your hand. If you do, skip your Draw phase.",
     "color": "Orange",
-    "url": "/images/23.jpg",
+    "url": "/images/23.png",
     "activateAtBeginning": true,
     "upgrade": 2,
     "downgrade": ""
@@ -269,7 +269,7 @@ const cards = [
     "type": "Upgrade",
     "description": "If this card is in your Stable at the beginning of your turn, you may choose any other player. Pull a card from that player's hand and add it to your hand. If you do, skip your Draw phase.",
     "color": "Orange",
-    "url": "/images/23.jpg",
+    "url": "/images/23.png",
     "activateAtBeginning": true,
     "upgrade": 2,
     "downgrade": ""
@@ -280,7 +280,7 @@ const cards = [
     "type": "Upgrade",
     "description": "If this card is in your Stable at the beginning of your turn, you may STEAL a Unicorn card. At the end of your turn, return that Unicorn card to the Stable from which you stole it.",
     "color": "Orange",
-    "url": "/images/24.jpg",
+    "url": "/images/24.png",
     "activateAtBeginning": true,
     "upgrade": 3,
     "downgrade": ""
@@ -291,7 +291,7 @@ const cards = [
     "type": "Upgrade",
     "description": "This card can only enter a Stable if there is a Basic Unicorn card in that Stable. If this card is in your Stable at the beginning of your turn, you may DRAW an extra card.",
     "color": "Orange",
-    "url": "/images/25.jpg",
+    "url": "/images/25.png",
     "activateAtBeginning": true,
     "upgrade": 4,
     "downgrade": ""
@@ -302,7 +302,7 @@ const cards = [
     "type": "Upgrade",
     "description": "This card can only enter a Stable if there is a Basic Unicorn card in that Stable. If this card is in your Stable at the beginning of your turn, you may DRAW an extra card.",
     "color": "Orange",
-    "url": "/images/25.jpg",
+    "url": "/images/25.png",
     "activateAtBeginning": true,
     "upgrade": 4,
     "downgrade": ""
@@ -313,7 +313,7 @@ const cards = [
     "type": "Upgrade",
     "description": "If this card is in your Stable at the beginning of your turn, you may move a Unicorn card from any player's Stable to any other player's Stable. You cannot move that card into your own Stable.",
     "color": "Orange",
-    "url": "/images/26.jpg",
+    "url": "/images/26.png",
     "activateAtBeginning": true,
     "upgrade": 5,
     "downgrade": ""
@@ -324,7 +324,7 @@ const cards = [
     "type": "Upgrade",
     "description": "This card can only enter a Stable if there is a Basic Unicorn card in that Stable. If this card is in your Stable at the beginning of your turn, you may bring a Basic Unicorn card from your hand directly into your Stable.",
     "color": "Orange",
-    "url": "/images/27.jpg",
+    "url": "/images/27.png",
     "activateAtBeginning": true,
     "upgrade": 6,
     "downgrade": ""
@@ -335,7 +335,7 @@ const cards = [
     "type": "Upgrade",
     "description": "If 1 of your Unicorns would be sacrificed or destroyed, you may SACRIFICE this card instead.",
     "color": "Orange",
-    "url": "/images/28.jpg",
+    "url": "/images/28.png",
     "activateAtBeginning": false,
     "upgrade": 7,
     "downgrade": ""
@@ -346,7 +346,7 @@ const cards = [
     "type": "Upgrade",
     "description": "If 1 of your Unicorns would be sacrificed or destroyed, you may SACRIFICE this card instead.",
     "color": "Orange",
-    "url": "/images/28.jpg",
+    "url": "/images/28.png",
     "activateAtBeginning": false,
     "upgrade": 7,
     "downgrade": ""
@@ -357,7 +357,7 @@ const cards = [
     "type": "Upgrade",
     "description": "Your Unicorn cards cannot be destroyed.",
     "color": "Orange",
-    "url": "/images/29.jpg",
+    "url": "/images/29.png",
     "activateAtBeginning": false,
     "upgrade": 8,
     "downgrade": ""
@@ -368,7 +368,7 @@ const cards = [
     "type": "Upgrade",
     "description": "If this card is in your Stable at the beginning of your turn, you may DRAW a card at the end of your turn.",
     "color": "Orange",
-    "url": "/images/30.jpg",
+    "url": "/images/30.png",
     "activateAtBeginning": true,
     "upgrade": 9,
     "downgrade": ""
@@ -379,7 +379,7 @@ const cards = [
     "type": "Upgrade",
     "description": "If this card is in your Stable at the beginning of your turn, you may DRAW a card at the end of your turn.",
     "color": "Orange",
-    "url": "/images/30.jpg",
+    "url": "/images/30.png",
     "activateAtBeginning": true,
     "upgrade": 9,
     "downgrade": ""
@@ -390,7 +390,7 @@ const cards = [
     "type": "Basic Unicorn",
     "description": "Sometimes a horse just needs to feel a little special.",
     "color": "Purple",
-    "url": "/images/31.jpg",
+    "url": "/images/31.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": ""
@@ -401,7 +401,7 @@ const cards = [
     "type": "Basic Unicorn",
     "description": "Sometimes a horse just needs to feel a little special.",
     "color": "Purple",
-    "url": "/images/31.jpg",
+    "url": "/images/31.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": ""
@@ -412,7 +412,7 @@ const cards = [
     "type": "Basic Unicorn",
     "description": "Sometimes a horse just needs to feel a little special.",
     "color": "Purple",
-    "url": "/images/31.jpg",
+    "url": "/images/31.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": ""
@@ -423,7 +423,7 @@ const cards = [
     "type": "Basic Unicorn",
     "description": "#livingfortheweekend",
     "color": "Purple",
-    "url": "/images/32.jpg",
+    "url": "/images/32.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": ""
@@ -434,7 +434,7 @@ const cards = [
     "type": "Basic Unicorn",
     "description": "#livingfortheweekend",
     "color": "Purple",
-    "url": "/images/32.jpg",
+    "url": "/images/32.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": ""
@@ -445,7 +445,7 @@ const cards = [
     "type": "Basic Unicorn",
     "description": "#livingfortheweekend",
     "color": "Purple",
-    "url": "/images/32.jpg",
+    "url": "/images/32.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": ""
@@ -456,7 +456,7 @@ const cards = [
     "type": "Basic Unicorn",
     "description": "I'm expensive, but I'm worth it.",
     "color": "Purple",
-    "url": "/images/33.jpg",
+    "url": "/images/33.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": ""
@@ -467,7 +467,7 @@ const cards = [
     "type": "Basic Unicorn",
     "description": "I'm expensive, but I'm worth it.",
     "color": "Purple",
-    "url": "/images/33.jpg",
+    "url": "/images/33.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": ""
@@ -478,7 +478,7 @@ const cards = [
     "type": "Basic Unicorn",
     "description": "I'm expensive, but I'm worth it.",
     "color": "Purple",
-    "url": "/images/33.jpg",
+    "url": "/images/33.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": ""
@@ -489,7 +489,7 @@ const cards = [
     "type": "Basic Unicorn",
     "description": "My body is ready!",
     "color": "Purple",
-    "url": "/images/34.jpg",
+    "url": "/images/34.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": ""
@@ -500,7 +500,7 @@ const cards = [
     "type": "Basic Unicorn",
     "description": "My body is ready!",
     "color": "Purple",
-    "url": "/images/34.jpg",
+    "url": "/images/34.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": ""
@@ -511,7 +511,7 @@ const cards = [
     "type": "Basic Unicorn",
     "description": "My body is ready!",
     "color": "Purple",
-    "url": "/images/34.jpg",
+    "url": "/images/34.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": ""
@@ -522,7 +522,7 @@ const cards = [
     "type": "Basic Unicorn",
     "description": "send pics 👊🏼🍆💦💦",
     "color": "Purple",
-    "url": "/images/35.jpg",
+    "url": "/images/35.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": ""
@@ -533,7 +533,7 @@ const cards = [
     "type": "Basic Unicorn",
     "description": "send pics 👊🏼🍆💦💦",
     "color": "Purple",
-    "url": "/images/35.jpg",
+    "url": "/images/35.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": ""
@@ -544,7 +544,7 @@ const cards = [
     "type": "Basic Unicorn",
     "description": "send pics 👊🏼🍆💦💦",
     "color": "Purple",
-    "url": "/images/35.jpg",
+    "url": "/images/35.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": ""
@@ -555,7 +555,7 @@ const cards = [
     "type": "Basic Unicorn",
     "description": "It's 4:20 somewhere.",
     "color": "Purple",
-    "url": "/images/36.jpg",
+    "url": "/images/36.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": ""
@@ -566,7 +566,7 @@ const cards = [
     "type": "Basic Unicorn",
     "description": "It's 4:20 somewhere.",
     "color": "Purple",
-    "url": "/images/36.jpg",
+    "url": "/images/36.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": ""
@@ -577,7 +577,7 @@ const cards = [
     "type": "Basic Unicorn",
     "description": "It's 4:20 somewhere.",
     "color": "Purple",
-    "url": "/images/36.jpg",
+    "url": "/images/36.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": ""
@@ -588,7 +588,7 @@ const cards = [
     "type": "Basic Unicorn",
     "description": "The single life.",
     "color": "Purple",
-    "url": "/images/37.jpg",
+    "url": "/images/37.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": ""
@@ -599,7 +599,7 @@ const cards = [
     "type": "Basic Unicorn",
     "description": "The single life.",
     "color": "Purple",
-    "url": "/images/37.jpg",
+    "url": "/images/37.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": ""
@@ -610,7 +610,7 @@ const cards = [
     "type": "Basic Unicorn",
     "description": "The single life.",
     "color": "Purple",
-    "url": "/images/37.jpg",
+    "url": "/images/37.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": ""
@@ -621,7 +621,7 @@ const cards = [
     "type": "Magical Unicorn",
     "description": "If this card is in your Stable at the beginning of your turn, you may SACRIFICE a Basic Unicorn card. If you do, pull a card from each other player's hand and add it to your hand.",
     "color": "Blue",
-    "url": "/images/38.jpg",
+    "url": "/images/38.png",
     "activateAtBeginning": true,
     "upgrade": 10,
     "downgrade": ""
@@ -632,7 +632,7 @@ const cards = [
     "type": "Magical Unicorn",
     "description": "If this card is in your Stable at the beginning of your turn, you may DISCARD a card. If you do, bring a Baby Unicorn card from the Nursery directly into your Stable.",
     "color": "Blue",
-    "url": "/images/39.jpg",
+    "url": "/images/39.png",
     "activateAtBeginning": true,
     "upgrade": 11,
     "downgrade": ""
@@ -643,7 +643,7 @@ const cards = [
     "type": "Magical Unicorn",
     "description": "If this card is in your Stable at the beginning of your turn, you may SACRIFICE a card. If you do, DESTROY a card.",
     "color": "Blue",
-    "url": "/images/40.jpg",
+    "url": "/images/40.png",
     "activateAtBeginning": true,
     "upgrade": "",
     "downgrade": 9
@@ -654,7 +654,7 @@ const cards = [
     "type": "Magical Unicorn",
     "description": "When this card enters your Stable, you may choose any player. That player must DISCARD 2 cards.",
     "color": "Blue",
-    "url": "/images/41.jpg",
+    "url": "/images/41.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": 10
@@ -665,7 +665,7 @@ const cards = [
     "type": "Magical Unicorn",
     "description": "This card counts for 2 Unicorns. You cannot play Magic cards.",
     "color": "Blue",
-    "url": "/images/42.jpg",
+    "url": "/images/42.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": 11
@@ -676,7 +676,7 @@ const cards = [
     "type": "Magical Unicorn",
     "description": "When this card enters your Stable, you may look at the top 3 cards of the deck, then return them in the same order.",
     "color": "Blue",
-    "url": "/images/43.jpg",
+    "url": "/images/43.png",
     "activateAtBeginning": false,
     "upgrade": 12,
     "downgrade": ""
@@ -687,7 +687,7 @@ const cards = [
     "type": "Magical Unicorn",
     "description": "When this card enters your Stable, you may search the deck for a \"Bear Daddy Unicorn\" card. Add it to your hand, then shuffle the deck.",
     "color": "Blue",
-    "url": "/images/44.jpg",
+    "url": "/images/44.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": ""
@@ -698,7 +698,7 @@ const cards = [
     "type": "Magical Unicorn",
     "description": "When this card enters your Stable, you may choose a card from the discard pile and add it to your hand.",
     "color": "Blue",
-    "url": "/images/45.jpg",
+    "url": "/images/45.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": ""
@@ -709,7 +709,7 @@ const cards = [
     "type": "Magical Unicorn",
     "description": "If 1 of your Unicorn cards would be destroyed, you may SACRIFICE this card instead.",
     "color": "Blue",
-    "url": "/images/46.jpg",
+    "url": "/images/46.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": ""
@@ -720,7 +720,7 @@ const cards = [
     "type": "Magical Unicorn",
     "description": "If this card is in your Stable at the beginning of your turn, you may DISCARD your hand. If you do, DESTROY a Unicorn card.",
     "color": "Blue",
-    "url": "/images/47.jpg",
+    "url": "/images/47.png",
     "activateAtBeginning": true,
     "upgrade": "",
     "downgrade": ""
@@ -731,7 +731,7 @@ const cards = [
     "type": "Magical Unicorn",
     "description": "Your hand limit increases by 1.",
     "color": "Blue",
-    "url": "/images/48.jpg",
+    "url": "/images/48.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": ""
@@ -742,7 +742,7 @@ const cards = [
     "type": "Magical Unicorn",
     "description": "If this card is in your Stable at the beginning of your turn, move a Unicorn card from your Stable into any other player's Stable. At the end of your turn, return that Unicorn card to your Stable.",
     "color": "Blue",
-    "url": "/images/49.jpg",
+    "url": "/images/49.png",
     "activateAtBeginning": true,
     "upgrade": "",
     "downgrade": ""
@@ -753,7 +753,7 @@ const cards = [
     "type": "Magical Unicorn",
     "description": "When this card enters your Stable, you may search the deck for a \"Twinkicorn\" card. Add it to your hand, then shuffle the deck.",
     "color": "Blue",
-    "url": "/images/50.jpg",
+    "url": "/images/50.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": ""
@@ -764,7 +764,7 @@ const cards = [
     "type": "Magical Unicorn",
     "description": "When this card enters your Stable, you may choose any player. That player must DISCARD a card. If this card would be sacrificed or destroyed, return it to your hand instead.",
     "color": "Blue",
-    "url": "/images/51.jpg",
+    "url": "/images/51.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": ""
@@ -775,7 +775,7 @@ const cards = [
     "type": "Magical Unicorn",
     "description": "If this card is in your Stable at the beginning of your turn, you may move this card to any other player's Stable. If you do, STEAL a Unicorn card from that player's Stable.",
     "color": "Blue",
-    "url": "/images/52.jpg",
+    "url": "/images/52.png",
     "activateAtBeginning": true,
     "upgrade": "",
     "downgrade": ""
@@ -786,7 +786,7 @@ const cards = [
     "type": "Magical Unicorn",
     "description": "When this card enters your Stable, you may DISCARD a card from the Nursery directly into your Stable.",
     "color": "Blue",
-    "url": "/images/53.jpg",
+    "url": "/images/53.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": ""
@@ -797,7 +797,7 @@ const cards = [
     "type": "Magical Unicorn",
     "description": "When this card enters your Stable, you may return a card in any player's Stable to that player's hand.",
     "color": "Blue",
-    "url": "/images/54.jpg",
+    "url": "/images/54.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": ""
@@ -808,7 +808,7 @@ const cards = [
     "type": "Magical Unicorn",
     "description": "When this card enters your Stable, you may choose any other player and look at that player's hand. Choose a Unicorn card from that player's hand and add it to your hand.",
     "color": "Blue",
-    "url": "/images/55.jpg",
+    "url": "/images/55.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": ""
@@ -819,7 +819,7 @@ const cards = [
     "type": "Magical Unicorn",
     "description": "When this card enters your Stable, STEAL a Basic Unicorn card. If this card leaves your Stable, return that Basic Unicorn card to the Stable from which you stole it.",
     "color": "Blue",
-    "url": "/images/56.jpg",
+    "url": "/images/56.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": ""
@@ -830,7 +830,7 @@ const cards = [
     "type": "Magical Unicorn",
     "description": "Baby Unicorn cards cannot enter any player's Stable.",
     "color": "Blue",
-    "url": "/images/57.jpg",
+    "url": "/images/57.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": ""
@@ -841,7 +841,7 @@ const cards = [
     "type": "Magical Unicorn",
     "description": "When this card enters your Stable, STEAL a Unicorn card. At the end of your turn, return that Unicorn card to the Stable from which you stole it. If this card would be sacrificed or destroyed, return it to your hand instead.",
     "color": "Blue",
-    "url": "/images/58.jpg",
+    "url": "/images/58.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": ""
@@ -852,7 +852,7 @@ const cards = [
     "type": "Magical Unicorn",
     "description": "When this card enters your Stable, choose a player and look at their hand. Choose a Unicorn card in that player's hand and move it to the discard pile.",
     "color": "Blue",
-    "url": "/images/59.jpg",
+    "url": "/images/59.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": ""
@@ -863,7 +863,7 @@ const cards = [
     "type": "Magical Unicorn",
     "description": "When this card enters your Stable, each player must SACRIFICE a Unicorn card.",
     "color": "Blue",
-    "url": "/images/60.jpg",
+    "url": "/images/60.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": ""
@@ -874,7 +874,7 @@ const cards = [
     "type": "Magical Unicorn",
     "description": "If this card is in your Stable at the beginning of your turn, you may STEAL a Unicorn card. At the end of your turn, return that Unicorn card to the Stable from which you stole it.",
     "color": "Blue",
-    "url": "/images/61.jpg",
+    "url": "/images/61.png",
     "activateAtBeginning": true,
     "upgrade": "",
     "downgrade": ""
@@ -885,7 +885,7 @@ const cards = [
     "type": "Magical Unicorn",
     "description": "When this card enters your Stable, you may search the deck for a Unicorn card and add it to your hand. Shuffle the deck.",
     "color": "Blue",
-    "url": "/images/62.jpg",
+    "url": "/images/62.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": ""
@@ -896,7 +896,7 @@ const cards = [
     "type": "Magical Unicorn",
     "description": "If this card is in your Stable at the beginning of your turn, you may DRAW an extra card, then DISCARD a card.",
     "color": "Blue",
-    "url": "/images/63.jpg",
+    "url": "/images/63.png",
     "activateAtBeginning": true,
     "upgrade": "",
     "downgrade": ""
@@ -907,7 +907,7 @@ const cards = [
     "type": "Magical Unicorn",
     "description": "When this card enters your Stable, SACRIFICE all Downgrade cards.",
     "color": "Blue",
-    "url": "/images/64.jpg",
+    "url": "/images/64.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": ""
@@ -918,7 +918,7 @@ const cards = [
     "type": "Magical Unicorn",
     "description": "This card counts for 2 Unicorns. You cannot play Basic Unicorn cards.",
     "color": "Blue",
-    "url": "/images/65.jpg",
+    "url": "/images/65.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": ""
@@ -929,7 +929,7 @@ const cards = [
     "type": "Magical Unicorn",
     "description": "When this card enters your Stable, STEAL a Baby Unicorn card. If this card leaves your Stable, return that Baby Unicorn card to the Stable from which you stole it.",
     "color": "Blue",
-    "url": "/images/66.jpg",
+    "url": "/images/66.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": ""
@@ -940,7 +940,7 @@ const cards = [
     "type": "Magical Unicorn",
     "description": "When this card enters your Stable, each other player must DISCARD a card.",
     "color": "Blue",
-    "url": "/images/67.jpg",
+    "url": "/images/67.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": ""
@@ -951,7 +951,7 @@ const cards = [
     "type": "Magical Unicorn",
     "description": "This card can only enter a Stable if there is a Basic Unicorn card in that Stable. If this card is in your Stable at the beginning of your turn, you may choose any player. That player must DISCARD a card.",
     "color": "Blue",
-    "url": "/images/68.jpg",
+    "url": "/images/68.png",
     "activateAtBeginning": true,
     "upgrade": "",
     "downgrade": ""
@@ -962,7 +962,7 @@ const cards = [
     "type": "Magic",
     "description": "Each player must SACRIFICE a card and DISCARD their hand. Shuffle the discard pile into the deck. Deal 5 cards to each player.",
     "color": "Green",
-    "url": "/images/69.jpg",
+    "url": "/images/69.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": ""
@@ -973,7 +973,7 @@ const cards = [
     "type": "Magic",
     "description": "Choose any player. That player must skip their next turn.",
     "color": "Green",
-    "url": "/images/70.jpg",
+    "url": "/images/70.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": ""
@@ -984,7 +984,7 @@ const cards = [
     "type": "Magic",
     "description": "Choose a player. That player must DISCARD 3 cards or SACRIFICE a Unicorn card.",
     "color": "Green",
-    "url": "/images/71.jpg",
+    "url": "/images/71.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": ""
@@ -995,7 +995,7 @@ const cards = [
     "type": "Magic",
     "description": "Choose any other player. Pull 2 cards from that player's hand and add them to your hand.",
     "color": "Green",
-    "url": "/images/72.jpg",
+    "url": "/images/72.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": ""
@@ -1006,7 +1006,7 @@ const cards = [
     "type": "Magic",
     "description": "Choose any other player. Pull 2 cards from that player's hand and add them to your hand.",
     "color": "Green",
-    "url": "/images/72.jpg",
+    "url": "/images/72.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": ""
@@ -1017,7 +1017,7 @@ const cards = [
     "type": "Magic",
     "description": "STEAL a Baby Unicorn card.",
     "color": "Green",
-    "url": "/images/73.jpg",
+    "url": "/images/73.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": ""
@@ -1028,7 +1028,7 @@ const cards = [
     "type": "Magic",
     "description": "STEAL a Baby Unicorn card.",
     "color": "Green",
-    "url": "/images/73.jpg",
+    "url": "/images/73.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": ""
@@ -1039,7 +1039,7 @@ const cards = [
     "type": "Magic",
     "description": "DISCARD 2 cards, then DRAW 2 cards. Take another turn.",
     "color": "Green",
-    "url": "/images/74.jpg",
+    "url": "/images/74.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": ""
@@ -1050,7 +1050,7 @@ const cards = [
     "type": "Magic",
     "description": "Choose any player. That player must DISCARD a card. Give any player a card from your hand, then DESTROY a Unicorn card.",
     "color": "Green",
-    "url": "/images/75.jpg",
+    "url": "/images/75.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": ""
@@ -1061,7 +1061,7 @@ const cards = [
     "type": "Magic",
     "description": "Choose any player. That player must DISCARD a card. Give any player a card from your hand, then DESTROY a Unicorn card.",
     "color": "Green",
-    "url": "/images/75.jpg",
+    "url": "/images/75.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": ""
@@ -1072,7 +1072,7 @@ const cards = [
     "type": "Magic",
     "description": "SACRIFICE or DESTROY all Downgrade cards in any player's Stable.",
     "color": "Green",
-    "url": "/images/76.jpg",
+    "url": "/images/76.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": ""
@@ -1083,7 +1083,7 @@ const cards = [
     "type": "Magic",
     "description": "SACRIFICE or DESTROY an Upgrade or Downgrade card.",
     "color": "Green",
-    "url": "/images/77.jpg",
+    "url": "/images/77.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": ""
@@ -1094,7 +1094,7 @@ const cards = [
     "type": "Magic",
     "description": "SACRIFICE or DESTROY an Upgrade or Downgrade card.",
     "color": "Green",
-    "url": "/images/77.jpg",
+    "url": "/images/77.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": ""
@@ -1105,7 +1105,7 @@ const cards = [
     "type": "Magic",
     "description": "SACRIFICE or DESTROY an Upgrade or Downgrade card.",
     "color": "Green",
-    "url": "/images/77.jpg",
+    "url": "/images/77.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": ""
@@ -1116,7 +1116,7 @@ const cards = [
     "type": "Magic",
     "description": "Reveal the top card in the deck. If it is a Unicorn card, bring it directly into your Stable and take another turn. If it is a Downgrade card, DISCARD it and SACRIFICE a Unicorn card. If it is anything else, add it to your hand.",
     "color": "Green",
-    "url": "/images/78.jpg",
+    "url": "/images/78.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": ""
@@ -1127,7 +1127,7 @@ const cards = [
     "type": "Magic",
     "description": "Each player must return a Baby Unicorn card from their Stable to the Nursery.",
     "color": "Green",
-    "url": "/images/79.jpg",
+    "url": "/images/79.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": ""
@@ -1138,7 +1138,7 @@ const cards = [
     "type": "Magic",
     "description": "Each player must DISCARD their hand and DRAW the same number of cards. DRAW 2 additional cards.",
     "color": "Green",
-    "url": "/images/80.jpg",
+    "url": "/images/80.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": ""
@@ -1149,7 +1149,7 @@ const cards = [
     "type": "Magic",
     "description": "DESTROY a Unicorn card. Each player must DISCARD a card.",
     "color": "Green",
-    "url": "/images/81.jpg",
+    "url": "/images/81.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": ""
@@ -1160,7 +1160,7 @@ const cards = [
     "type": "Magic",
     "description": "DESTROY a Unicorn card. Each player must DISCARD a card.",
     "color": "Green",
-    "url": "/images/81.jpg",
+    "url": "/images/81.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": ""
@@ -1171,7 +1171,7 @@ const cards = [
     "type": "Magic",
     "description": "DISCARD your hand, then DRAW 3 cards. Take another turn.",
     "color": "Green",
-    "url": "/images/82.jpg",
+    "url": "/images/82.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": ""
@@ -1182,7 +1182,7 @@ const cards = [
     "type": "Magic",
     "description": "If you have more than 3 Unicorns in your Stable, DRAW cards equal to the number of Unicorns in your Stable minus 3.",
     "color": "Green",
-    "url": "/images/83.jpg",
+    "url": "/images/83.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": ""
@@ -1193,7 +1193,7 @@ const cards = [
     "type": "Magic",
     "description": "If you have more than 3 Unicorns in your Stable, DRAW cards equal to the number of Unicorns in your Stable minus 3.",
     "color": "Green",
-    "url": "/images/83.jpg",
+    "url": "/images/83.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": ""
@@ -1204,7 +1204,7 @@ const cards = [
     "type": "Magic",
     "description": "Choose any player and look at that player's hand. Choose a card from that player's hand and add it to your hand.",
     "color": "Green",
-    "url": "/images/84.jpg",
+    "url": "/images/84.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": ""
@@ -1215,7 +1215,7 @@ const cards = [
     "type": "Magic",
     "description": "Choose any player and look at that player's hand. Choose a card from that player's hand and add it to your hand.",
     "color": "Green",
-    "url": "/images/84.jpg",
+    "url": "/images/84.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": ""
@@ -1226,7 +1226,7 @@ const cards = [
     "type": "Magic",
     "description": "SACRIFICE or DESTROY all Upgrade cards in any player's Stable.",
     "color": "Green",
-    "url": "/images/85.jpg",
+    "url": "/images/85.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": ""
@@ -1237,7 +1237,7 @@ const cards = [
     "type": "Instant",
     "description": "Play this card when any other player tries to play a card. Stop that player's card from being played and send it to the discard pile. That player must DISCARD a card.",
     "color": "Red",
-    "url": "/images/86.jpg",
+    "url": "/images/86.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": 8
@@ -1248,7 +1248,7 @@ const cards = [
     "type": "Instant",
     "description": "Play this card when any other player tries to play a card. Stop that player's card from being played and send it to the discard pile. That player must DISCARD a card.",
     "color": "Red",
-    "url": "/images/86.jpg",
+    "url": "/images/86.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": 8
@@ -1259,7 +1259,7 @@ const cards = [
     "type": "Instant",
     "description": "Play this card when any other player tries to play a card. Stop that player's card from being played and send it to the discard pile. That player must DISCARD a card.",
     "color": "Red",
-    "url": "/images/86.jpg",
+    "url": "/images/86.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": 8
@@ -1270,7 +1270,7 @@ const cards = [
     "type": "Instant",
     "description": "Play this card when any other player tries to play a card. Stop that player's card from being played and send it to the discard pile.",
     "color": "Red",
-    "url": "/images/87.jpg",
+    "url": "/images/87.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": 7
@@ -1281,7 +1281,7 @@ const cards = [
     "type": "Instant",
     "description": "Play this card when any other player tries to play a card. Stop that player's card from being played and send it to the discard pile.",
     "color": "Red",
-    "url": "/images/87.jpg",
+    "url": "/images/87.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": 7
@@ -1292,7 +1292,7 @@ const cards = [
     "type": "Instant",
     "description": "Play this card when any other player tries to play a card. Stop that player's card from being played and send it to the discard pile.",
     "color": "Red",
-    "url": "/images/87.jpg",
+    "url": "/images/87.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": 7
@@ -1303,7 +1303,7 @@ const cards = [
     "type": "Instant",
     "description": "Play this card when any other player tries to play a card. Stop that player's card from being played and send it to the discard pile.",
     "color": "Red",
-    "url": "/images/87.jpg",
+    "url": "/images/87.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": 7
@@ -1314,7 +1314,7 @@ const cards = [
     "type": "Instant",
     "description": "Play this card when any other player tries to play a card. Stop that player's card from being played and send it to the discard pile.",
     "color": "Red",
-    "url": "/images/87.jpg",
+    "url": "/images/87.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": 7
@@ -1325,7 +1325,7 @@ const cards = [
     "type": "Instant",
     "description": "Play this card when any other player tries to play a card. Stop that player's card from being played and send it to the discard pile.",
     "color": "Red",
-    "url": "/images/88.jpg",
+    "url": "/images/88.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": 7
@@ -1336,7 +1336,7 @@ const cards = [
     "type": "Instant",
     "description": "Play this card when any other player tries to play a card. Stop that player's card from being played and send it to the discard pile.",
     "color": "Red",
-    "url": "/images/88.jpg",
+    "url": "/images/88.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": 7
@@ -1347,7 +1347,7 @@ const cards = [
     "type": "Instant",
     "description": "Play this card when any other player tries to play a card. Stop that player's card from being played and send it to the discard pile.",
     "color": "Red",
-    "url": "/images/88.jpg",
+    "url": "/images/88.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": 7
@@ -1358,7 +1358,7 @@ const cards = [
     "type": "Instant",
     "description": "Play this card when any other player tries to play a card. Stop that player's card from being played and send it to the discard pile.",
     "color": "Red",
-    "url": "/images/89.jpg",
+    "url": "/images/89.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": 7
@@ -1369,7 +1369,7 @@ const cards = [
     "type": "Instant",
     "description": "Play this card when any other player tries to play a card. Stop that player's card from being played and send it to the discard pile.",
     "color": "Red",
-    "url": "/images/89.jpg",
+    "url": "/images/89.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": 7
@@ -1380,7 +1380,7 @@ const cards = [
     "type": "Instant",
     "description": "Play this card when any other player tries to play a card. Stop that player's card from being played and send it to the discard pile.",
     "color": "Red",
-    "url": "/images/89.jpg",
+    "url": "/images/89.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": 7
@@ -1391,7 +1391,7 @@ const cards = [
     "type": "Instant",
     "description": "Play this card when any other player tries to play a card. Stop that player's card from being played and send it to the discard pile. This card cannot be Neigh'd.",
     "color": "Red",
-    "url": "/images/90.jpg",
+    "url": "/images/90.png",
     "activateAtBeginning": false,
     "upgrade": "",
     "downgrade": 7

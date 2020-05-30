@@ -133,174 +133,211 @@ function PlayerView() {
         setNumberOfEffectsTotal(cardTypes['true'].length);
 
         cardTypes['true'].forEach(card => {
-          console.log(card.name)
+          console.log(card.name);
           if (card.hasOwnProperty('upgrade')) {
             console.log(game.upgrades[card.upgrade])
             switch (card.upgrade) {
               case 0:
                 // sacrifice then destroy card
                 theEffects.push({
-                  name: 'Sacrifice then Destory',
-                  requiresAction: true,
-                  callback: () => dispatch(sacrificingCard({
-                    isTrue: true,
-                    callback: () => dispatch(destroyingCard({
+                  name: card.name,
+                  actions: [{
+                    name: 'Sacrifice then Destory',
+                    requiresAction: true,
+                    callback: () => dispatch(sacrificingCard({
                       isTrue: true,
-                      callback: () => handleEffects(null, false)
+                      callback: () => dispatch(destroyingCard({
+                        isTrue: true,
+                        callback: () => handleEffects(null, false)
+                      }))
                     }))
-                  }))
+                  }]
                 });
                 break;
               case 1:
                 // Play 2 actions
                 theEffects.push({
-                  name: 'Gain Additional Action',
-                  callback: () => setNumberOfActionsLeft(numberOfActionsLeft + 1)
+                  name: card.name,
+                  actions: [{
+                    name: 'Gain Additional Action',
+                    callback: () => setNumberOfActionsLeft(numberOfActionsLeft + 1)
+                  }]
                 });
                 break;
               case 2:
                 // You may choose any other player. Pull a card from that player\'s hand and add it to your hand. If you do, skip your Draw phase.
                 theEffects.push({
-                  name: 'Draw from Opponent',
-                  requiresAction: true,
-                  callback: () => dispatch(drawingFromOpponent({
-                    isTrue: true,
-                    callback: () => handleEffects(() => { setNumberOfDrawsLeft(numberOfDrawsLeft -1) }, false)
-                  }))
+                  name: card.name,
+                  actions: [{
+                    name: 'Draw from Opponent',
+                    requiresAction: true,
+                    callback: () => dispatch(drawingFromOpponent({
+                      isTrue: true,
+                      callback: () => handleEffects(() => { setNumberOfDrawsLeft(numberOfDrawsLeft -1) }, false)
+                    }))
+                  }]
                 });
                 break;
               case 3:
                 // borrowUnicorn
                 theEffects.push({
-                  name: 'Borrow Unicorn',
-                  requiresAction: true,
-                  callback: () => dispatch(drawingFromOpponent({
-                    isTrue: true,
-                    callback: (card, playerIndex) => handleEffects(() => {
-                      setReturnCardAtEndOfTurn({
-                        ...card,
-                        previousPlayerIndex: playerIndex,
-                        currentPlayerIndex: myPlayer.currentPlayerIndex,
-                        location: 'hand'
-                      });
-                      setNumberOfEndingEffectsLeft(numberOfEndingEffectsLeft + 1);
-                    }, false)
-                  }))
+                  name: card.name,
+                  actions: [{
+                    name: 'Borrow Unicorn',
+                    requiresAction: true,
+                    callback: () => dispatch(drawingFromOpponent({
+                      isTrue: true,
+                      callback: (card, playerIndex) => handleEffects(() => {
+                        setReturnCardAtEndOfTurn({
+                          ...card,
+                          previousPlayerIndex: playerIndex,
+                          currentPlayerIndex: myPlayer.currentPlayerIndex,
+                          location: 'hand'
+                        });
+                        setNumberOfEndingEffectsLeft(numberOfEndingEffectsLeft + 1);
+                      }, false)
+                    }))
+                  }]
                 });
                 break;
               case 4:
                 // drawExtraCard
                 theEffects.push({
-                  name: 'Draw Additional Card',
-                  callback: () => setNumberOfDrawsLeft(numberOfDrawsLeft + 1)
+                  name: card.name,
+                  actions: [{
+                    name: 'Draw Additional Card',
+                    callback: () => setNumberOfDrawsLeft(numberOfDrawsLeft + 1)
+                  }]
                 });
                 break;
               case 5:
+                // TODO: add this later
                 // swapUnicorns -> requires 3 players
                 break;
               case 6:
                 // basicBitch
                 theEffects.push({
-                  name: 'Play Basic Unicorn',
-                  requiresAction: true,
-                  callback: () => dispatch(playingCard({
-                    isTrue: true,
-                    callback: () => handleEffects(() => {
-                      dispatch(playingCard({
-                        isTrue: false,
-                        callback: null,
-                        basicUnicornOnly: false
-                      }))
-                    }, false),
-                    basicUnicornOnly: true
-                  }))
+                  name: card.name,
+                  actions: [{
+                    name: 'Play Basic Unicorn',
+                    requiresAction: true,
+                    callback: () => dispatch(playingCard({
+                      isTrue: true,
+                      callback: () => handleEffects(() => {
+                        dispatch(playingCard({
+                          isTrue: false,
+                          callback: null,
+                          basicUnicornOnly: false
+                        }))
+                      }, false),
+                      basicUnicornOnly: true
+                    }))
+                  }]
                 });
                 break;
               case 9:
                 // drawBeforeEnding
                 theEffects.push({
-                  name: 'Draw during post effect phase',
-                  callback: () => handleEffects(() => {
-                    setDrawDuringPostEffectPhase(true);
-                    setNumberOfEndingEffectsLeft(numberOfEndingEffectsLeft + 1);
-                  }, false)
+                  name: card.name,
+                  actions: [{
+                    name: 'Draw during post effect phase',
+                    callback: () => handleEffects(() => {
+                      setDrawDuringPostEffectPhase(true);
+                      setNumberOfEndingEffectsLeft(numberOfEndingEffectsLeft + 1);
+                    }, false)
+                  }]
                 });
                 break;
               case 11:
                 // getBabyUnicornInStable
                 theEffects.push({
-                  name: 'Play Baby Unicorn from Nursery',
-                  callback: () => handleEffects(() => {
-                    summonBabyUnicorn();
-                  }, false)
+                  name: card.name,
+                  actions: [{
+                    name: 'Play Baby Unicorn from Nursery',
+                    callback: () => handleEffects(() => {
+                      summonBabyUnicorn();
+                    }, false)
+                  }]
                 });
                 break;
               case 15:
                 // sacrificeHand
                 theEffects.push({
-                  name: 'Sacrifice Hand and destory card',
-                  requiresAction: true,
-                  callback: () => dispatch(destroyingCard({
-                    isTrue: true,
-                    callback: () => handleEffects(sacrificeHand, false)
-                  }))
+                  name: card.name,
+                  actions: [{
+                    name: 'Sacrifice Hand and destory card',
+                    requiresAction: true,
+                    callback: () => dispatch(destroyingCard({
+                      isTrue: true,
+                      callback: () => handleEffects(sacrificeHand, false)
+                    }))
+                  }]
                 });
                 break;
               case 17:
                 // holdMyUnicorn
                 theEffects.push({
-                  name: 'Give Opponent A stable unicorn',
-                  requiresAction: true,
-                  callback: () => dispatch(givingToOpponent({
-                    isTrue: true,
-                    callback: (card) => dispatch(choosePlayer({
+                  name: card.name,
+                  actions: [{
+                    name: 'Give Opponent A stable unicorn',
+                    requiresAction: true,
+                    callback: () => dispatch(givingToOpponent({
                       isTrue: true,
-                      card,
-                      callback: (playerIndex) => handleEffects(() => {
-                        setReturnCardAtEndOfTurn({
-                          ...card,
-                          previousPlayerIndex: myPlayer.currentPlayerIndex,
-                          currentPlayerIndex: playerIndex,
-                          location: 'stable'
-                        });
-                        setNumberOfEndingEffectsLeft(numberOfEndingEffectsLeft + 1);
-                      }, false)
+                      callback: (card) => dispatch(choosePlayer({
+                        isTrue: true,
+                        card,
+                        callback: (playerIndex) => handleEffects(() => {
+                          setReturnCardAtEndOfTurn({
+                            ...card,
+                            previousPlayerIndex: myPlayer.currentPlayerIndex,
+                            currentPlayerIndex: playerIndex,
+                            location: 'stable'
+                          });
+                          setNumberOfEndingEffectsLeft(numberOfEndingEffectsLeft + 1);
+                        }, false)
+                      }))
                     }))
-                  }))
+                  }]
                 });
                 break;
               case 20:
                 // stealUnicorn
                 theEffects.push({
-                  name: 'Steal Unicorn',
-                  requiresAction: true,
-                  callback: () => {
-                    dispatch(choosePlayer({
-                      isTrue: false,
-                      card,
-                      callback: null
-                    }));
+                  name: card.name,
+                  actions: [{
+                    name: 'Steal Unicorn',
+                    requiresAction: true,
+                    callback: () => {
+                      dispatch(choosePlayer({
+                        isTrue: false,
+                        card,
+                        callback: null
+                      }));
 
-                    dispatch(stealUnicorn({
-                      isTrue: true,
-                      card: card,
-                      callback: () => handleEffects(null, false)
-                    }));
-                  }
+                      dispatch(stealUnicorn({
+                        isTrue: true,
+                        card: card,
+                        callback: () => handleEffects(null, false)
+                      }));
+                    }
+                  }]
                 });
                 break;
               case 28:
                 // drawThenDiscard
                 theEffects.push({
-                  name: 'Draw and Destory',
-                  requiresAction: true,
-                  callback: () => dispatch(destroyingCard({
-                    isTrue: true,
-                    callback: () => {
-                      drawCard(0);
-                      handleEffects(null, false);
-                    }
-                  }))
+                  name: card.name,
+                  actions: [{
+                    name: 'Draw and Destory',
+                    requiresAction: true,
+                    callback: () => dispatch(destroyingCard({
+                      isTrue: true,
+                      callback: () => {
+                        drawCard(0);
+                        handleEffects(null, false);
+                      }
+                    }))
+                  }]
                 });
                 break;
             }
@@ -312,26 +349,31 @@ function PlayerView() {
                 // skip either your draw or action phase
                 setAllowSkip(false);
                 theEffects.push({
-                  name: 'Skip Draw Phase',
-                  requiresAction: false,
-                  callback: () => setSkipDrawPhase(true)
-                });
-                theEffects.push({
-                  name: 'Skip Action Phase',
-                  requiresAction: false,
-                  callback: () => setSkipActionPhase(true)
+                  name: card.name,
+                  actions: [{
+                    name: 'Skip Draw Phase',
+                    requiresAction: false,
+                    callback: () => setSkipDrawPhase(true)
+                  },{
+                    name: 'Skip Action Phase',
+                    requiresAction: false,
+                    callback: () => setSkipActionPhase(true)
+                  }]
                 });
                 break;
               case 3:
                 // discard a card
                 setAllowSkip(false);
                 theEffects.push({
-                  name: 'Discard card',
-                  requiresAction: true,
-                  callback: () => dispatch(discardingCard({
-                    isTrue: true,
-                    callback: () => handleEffects(null, false)
-                  }))
+                  name: card.name,
+                  actions: [{
+                    name: 'Discard card',
+                    requiresAction: true,
+                    callback: () => dispatch(discardingCard({
+                      isTrue: true,
+                      callback: () => handleEffects(null, false)
+                    }))
+                  }]
                 });
                 break;
               case 4:
@@ -339,12 +381,15 @@ function PlayerView() {
                 // TODO: discard debuff when stable reaches 0 <----- v2
                 setAllowSkip(false);
                 theEffects.push({
-                  name: 'Return unicorn',
-                  requiresAction: true,
-                  callback: () => dispatch(returningCard({
-                    isTrue: true,
-                    callback: () => handleEffects(null, false)
-                  }))
+                  name: card.name,
+                  actions: [{
+                    name: 'Return unicorn',
+                    requiresAction: true,
+                    callback: () => dispatch(returningCard({
+                      isTrue: true,
+                      callback: () => handleEffects(null, false)
+                    }))
+                  }]
                 });
                 break;
             }
@@ -432,6 +477,7 @@ function PlayerView() {
 
   // Effects for phases
   useEffect(() => {
+    console.log(numberOfEffectsTotal, numberOfEffectsHandled)
     if (typeof numberOfEffectsTotal === 'number' && numberOfEffectsTotal === numberOfEffectsHandled) {
       console.log('ending pre effects phase')
       dispatch(nextPhase(1))
@@ -607,6 +653,7 @@ function PlayerView() {
         return <EffectsView
                   effects={effects}
                   handleEffects={handleEffects}
+                  numberOfEffectsHandled={numberOfEffectsHandled}
                   allowSkip={allowSkip}
                   skipPhase={() => setNumberOfEffectsHandled(numberOfEffectsHandled + 1)}/>
         break;
@@ -638,12 +685,22 @@ function PlayerView() {
 }
 
 function EffectsView(props) {
-  const { handleEffects, allowSkip, skipPhase, effects } = props;
+  const { handleEffects, allowSkip, skipPhase, effects, numberOfEffectsHandled } = props;
   const isDestroyingCard = useSelector(state => state.isDestroyingCard);
   const isDrawingFromOpponent = useSelector(state => state.isDrawingFromOpponent);
   const isChoosingPlayer = useSelector(state =>  state.isChoosingPlayer);
   const isStealingUnicorn = useSelector(state =>  state.isStealingUnicorn);
 
+
+  function renderEffects() {
+    if (effects[numberOfEffectsHandled]) {
+      return (<div>{
+        effects[numberOfEffectsHandled].actions.map((action, index) => {
+          return <Button key={index} onClick={() => { handleEffects(action.callback, action.requiresAction) }}>{action.name}</Button>
+        })
+      }</div>)
+    }
+  }
   function renderPlayersToAttack() {
     if (isDestroyingCard.isTrue || isDrawingFromOpponent.isTrue || isChoosingPlayer.isTrue || isStealingUnicorn.isTrue) {
       return <PlayersToAttackComponent
@@ -654,11 +711,7 @@ function EffectsView(props) {
 
   return (
     <div>
-      {
-        effects.map((effect, index) => {
-          return <Button key={index} onClick={() => { handleEffects(effect.callback, effect.requiresAction) }}>{effect.name}</Button>
-        })
-      }
+      { renderEffects() }
       { allowSkip ? <Button onClick={skipPhase}>Skip</Button> : null }
       { renderPlayersToAttack() }
     </div>

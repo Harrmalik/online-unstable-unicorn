@@ -17,7 +17,7 @@ let testPlayers = [
       "description": "If this card would be sacrificed, destroyed, or returned to your hand, return it to the Nursery instead.",
       "Quantity": 1,
       "Color": "Magenta",
-      "url": "/images/8.jpg"
+      "url": "/images/2.png"
     }],
     viewingStableId: 1,
     viewingOtherPlayerModalId: 1,
@@ -28,7 +28,7 @@ let testPlayers = [
       "description": "If this card would be sacrificed, destroyed, or returned to your hand, return it to the Nursery instead.",
       "Quantity": 1,
       "Color": "Magenta",
-      "url": "/images/8.jpg",
+      "url": "/images/8.png",
     },
     upgrades: [],
     downgrades: [{
@@ -49,7 +49,7 @@ let testPlayers = [
       "description": "If this card would be sacrificed, destroyed, or returned to your hand, return it to the Nursery instead.",
       "Quantity": 1,
       "Color": "Magenta",
-      "url": "/images/4.jpg",
+      "url": "/images/4.png",
     }],
     viewingStableId: 2,
     viewingOtherPlayerModalId: 2,
@@ -60,7 +60,7 @@ let testPlayers = [
       "description": "If this card would be sacrificed, destroyed, or returned to your hand, return it to the Nursery instead.",
       "Quantity": 1,
       "Color": "Magenta",
-      "url": "/images/4.jpg",
+      "url": "/images/4.png",
     },
     upgrades: [],
     downgrades: []
@@ -78,7 +78,7 @@ let testPlayers = [
       "description": "If this card would be sacrificed, destroyed, or returned to your hand, return it to the Nursery instead.",
       "Quantity": 1,
       "Color": "Magenta",
-      "url": "/images/13.jpg",
+      "url": "/images/13.png",
     }],
     viewingStableId: 3,
     viewingOtherPlayerModalId: 3,
@@ -89,7 +89,7 @@ let testPlayers = [
       "description": "If this card would be sacrificed, destroyed, or returned to your hand, return it to the Nursery instead.",
       "Quantity": 1,
       "Color": "Magenta",
-      "url": "/images/13.jpg",
+      "url": "/images/13.png",
     },
     upgrades: [],
     downgrades: []
@@ -107,7 +107,7 @@ let testPlayers = [
       "description": "If this card would be sacrificed, destroyed, or returned to your hand, return it to the Nursery instead.",
       "Quantity": 1,
       "Color": "Magenta",
-      "url": "/images/7.jpg",
+      "url": "/images/7.png",
     }],
     viewingStableId: 4,
     viewingOtherPlayerModalId: 4,
@@ -118,7 +118,7 @@ let testPlayers = [
       "description": "If this card would be sacrificed, destroyed, or returned to your hand, return it to the Nursery instead.",
       "Quantity": 1,
       "Color": "Magenta",
-      "url": "/images/7.jpg",
+      "url": "/images/7.png",
     },
     upgrades: [],
     downgrades: []
