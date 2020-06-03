@@ -5,10 +5,14 @@ const cards = [
     "type": "Baby Unicorn",
     "description": "If this card would be sacrificed, destroyed, or returned to your hand, return it to the Nursery instead.",
     "color": "Magenta",
-    "url": "/images/1.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/1.png",
     "activateAtBeginning": false,
     "upgrade": "",
-    "downgrade": ""
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 2,
@@ -16,10 +20,14 @@ const cards = [
     "type": "Baby Unicorn",
     "description": "If this card would be sacrificed, destroyed, or returned to your hand, return it to the Nursery instead.",
     "color": "Magenta",
-    "url": "/images/2.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/2.png",
     "activateAtBeginning": false,
     "upgrade": "",
-    "downgrade": ""
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 3,
@@ -27,10 +35,14 @@ const cards = [
     "type": "Baby Unicorn",
     "description": "If this card would be sacrificed, destroyed, or returned to your hand, return it to the Nursery instead.",
     "color": "Magenta",
-    "url": "/images/3.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/3.png",
     "activateAtBeginning": false,
     "upgrade": "",
-    "downgrade": ""
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 4,
@@ -38,10 +50,14 @@ const cards = [
     "type": "Baby Unicorn",
     "description": "If this card would be sacrificed, destroyed, or returned to your hand, return it to the Nursery instead.",
     "color": "Magenta",
-    "url": "/images/4.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/4.png",
     "activateAtBeginning": false,
     "upgrade": "",
-    "downgrade": ""
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 5,
@@ -49,10 +65,14 @@ const cards = [
     "type": "Baby Unicorn",
     "description": "If this card would be sacrificed, destroyed, or returned to your hand, return it to the Nursery instead.",
     "color": "Magenta",
-    "url": "/images/5.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/5.png",
     "activateAtBeginning": false,
     "upgrade": "",
-    "downgrade": ""
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 6,
@@ -60,10 +80,14 @@ const cards = [
     "type": "Baby Unicorn",
     "description": "If this card would be sacrificed, destroyed, or returned to your hand, return it to the Nursery instead.",
     "color": "Magenta",
-    "url": "/images/6.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/6.png",
     "activateAtBeginning": false,
     "upgrade": "",
-    "downgrade": ""
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 7,
@@ -71,10 +95,14 @@ const cards = [
     "type": "Baby Unicorn",
     "description": "If this card would be sacrificed, destroyed, or returned to your hand, return it to the Nursery instead.",
     "color": "Magenta",
-    "url": "/images/7.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/7.png",
     "activateAtBeginning": false,
     "upgrade": "",
-    "downgrade": ""
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 8,
@@ -82,10 +110,14 @@ const cards = [
     "type": "Baby Unicorn",
     "description": "If this card would be sacrificed, destroyed, or returned to your hand, return it to the Nursery instead.",
     "color": "Magenta",
-    "url": "/images/8.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/8.png",
     "activateAtBeginning": false,
     "upgrade": "",
-    "downgrade": ""
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 9,
@@ -93,10 +125,14 @@ const cards = [
     "type": "Baby Unicorn",
     "description": "If this card would be sacrificed, destroyed, or returned to your hand, return it to the Nursery instead.",
     "color": "Magenta",
-    "url": "/images/9.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/9.png",
     "activateAtBeginning": false,
     "upgrade": "",
-    "downgrade": ""
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 10,
@@ -104,10 +140,14 @@ const cards = [
     "type": "Baby Unicorn",
     "description": "If this card would be sacrificed, destroyed, or returned to your hand, return it to the Nursery instead.",
     "color": "Magenta",
-    "url": "/images/10.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/10.png",
     "activateAtBeginning": false,
     "upgrade": "",
-    "downgrade": ""
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 11,
@@ -115,10 +155,14 @@ const cards = [
     "type": "Baby Unicorn",
     "description": "If this card would be sacrificed, destroyed, or returned to your hand, return it to the Nursery instead.",
     "color": "Magenta",
-    "url": "/images/11.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/11.png",
     "activateAtBeginning": false,
     "upgrade": "",
-    "downgrade": ""
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 12,
@@ -126,10 +170,14 @@ const cards = [
     "type": "Baby Unicorn",
     "description": "If this card would be sacrificed, destroyed, or returned to your hand, return it to the Nursery instead.",
     "color": "Magenta",
-    "url": "/images/12.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/12.png",
     "activateAtBeginning": false,
     "upgrade": "",
-    "downgrade": ""
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 13,
@@ -137,10 +185,14 @@ const cards = [
     "type": "Baby Unicorn",
     "description": "If this card would be sacrificed, destroyed, or returned to your hand, return it to the Nursery instead.",
     "color": "Magenta",
-    "url": "/images/13.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/13.png",
     "activateAtBeginning": false,
     "upgrade": "",
-    "downgrade": ""
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 14,
@@ -148,10 +200,14 @@ const cards = [
     "type": "Downgrade",
     "description": "If this card is in your Stable at the beginning of your turn, skip either your Draw phase or your Action phase.",
     "color": "Yellow",
-    "url": "/images/14.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/14.png",
     "activateAtBeginning": true,
     "upgrade": "",
-    "downgrade": 0
+    "downgrade": 0,
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 15,
@@ -159,10 +215,14 @@ const cards = [
     "type": "Downgrade",
     "description": "Triggered effects of your Unicorn cards do not activate.",
     "color": "Yellow",
-    "url": "/images/15.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/15.png",
     "activateAtBeginning": false,
     "upgrade": "",
-    "downgrade": 1
+    "downgrade": 1,
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 16,
@@ -170,10 +230,14 @@ const cards = [
     "type": "Downgrade",
     "description": "You cannot play Upgrade cards.",
     "color": "Yellow",
-    "url": "/images/16.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/16.png",
     "activateAtBeginning": false,
     "upgrade": "",
-    "downgrade": 2
+    "downgrade": 2,
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 17,
@@ -181,10 +245,14 @@ const cards = [
     "type": "Downgrade",
     "description": "If this card is in your Stable at the beginning of your turn, DISCARD a card.",
     "color": "Yellow",
-    "url": "/images/17.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/17.png",
     "activateAtBeginning": true,
     "upgrade": "",
-    "downgrade": 3
+    "downgrade": 3,
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 18,
@@ -192,10 +260,14 @@ const cards = [
     "type": "Downgrade",
     "description": "If this card is in your Stable at the beginning of your turn, return a Unicorn card from your Stable to your hand. If at any time you have no Unicorn cards in your Stable, SACRIFICE this card.",
     "color": "Yellow",
-    "url": "/images/18.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/18.png",
     "activateAtBeginning": true,
     "upgrade": "",
-    "downgrade": 4
+    "downgrade": 4,
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 19,
@@ -203,10 +275,14 @@ const cards = [
     "type": "Downgrade",
     "description": "Your hand limit is 3 cards.",
     "color": "Yellow",
-    "url": "/images/19.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/19.png",
     "activateAtBeginning": false,
     "upgrade": "",
-    "downgrade": 5
+    "downgrade": 5,
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 20,
@@ -214,10 +290,14 @@ const cards = [
     "type": "Downgrade",
     "description": "All of your Unicorn cards are considered Shits. Cards that affect Unicorn cards do not affect Shits.",
     "color": "Yellow",
-    "url": "/images/20.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/20.png",
     "activateAtBeginning": false,
     "upgrade": "",
-    "downgrade": 6
+    "downgrade": 6,
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 21,
@@ -225,10 +305,14 @@ const cards = [
     "type": "Upgrade",
     "description": "If this card is in your Stable at the beginning of your turn, you may SACRIFICE a card. If you do, DESTROY a card.",
     "color": "Orange",
-    "url": "/images/21.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/21.png",
     "activateAtBeginning": true,
     "upgrade": 0,
-    "downgrade": ""
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 221,
@@ -236,10 +320,14 @@ const cards = [
     "type": "Upgrade",
     "description": "If this card is in your Stable at the beginning of your turn, you may SACRIFICE a card. If you do, DESTROY a card.",
     "color": "Orange",
-    "url": "/images/21.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/21.png",
     "activateAtBeginning": true,
     "upgrade": 0,
-    "downgrade": ""
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 22,
@@ -247,10 +335,14 @@ const cards = [
     "type": "Upgrade",
     "description": "If this card is in your Stable at the beginning of your turn, you may play 2 cards during your Action phase.",
     "color": "Orange",
-    "url": "/images/22.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/22.png",
     "activateAtBeginning": true,
     "upgrade": 1,
-    "downgrade": ""
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 23,
@@ -258,10 +350,14 @@ const cards = [
     "type": "Upgrade",
     "description": "If this card is in your Stable at the beginning of your turn, you may choose any other player. Pull a card from that player's hand and add it to your hand. If you do, skip your Draw phase.",
     "color": "Orange",
-    "url": "/images/23.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/23.png",
     "activateAtBeginning": true,
     "upgrade": 2,
-    "downgrade": ""
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 223,
@@ -269,10 +365,14 @@ const cards = [
     "type": "Upgrade",
     "description": "If this card is in your Stable at the beginning of your turn, you may choose any other player. Pull a card from that player's hand and add it to your hand. If you do, skip your Draw phase.",
     "color": "Orange",
-    "url": "/images/23.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/23.png",
     "activateAtBeginning": true,
     "upgrade": 2,
-    "downgrade": ""
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 24,
@@ -280,10 +380,14 @@ const cards = [
     "type": "Upgrade",
     "description": "If this card is in your Stable at the beginning of your turn, you may STEAL a Unicorn card. At the end of your turn, return that Unicorn card to the Stable from which you stole it.",
     "color": "Orange",
-    "url": "/images/24.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/24.png",
     "activateAtBeginning": true,
     "upgrade": 3,
-    "downgrade": ""
+    "downgrade": "",
+    "activateAtEnd": true,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 25,
@@ -291,10 +395,14 @@ const cards = [
     "type": "Upgrade",
     "description": "This card can only enter a Stable if there is a Basic Unicorn card in that Stable. If this card is in your Stable at the beginning of your turn, you may DRAW an extra card.",
     "color": "Orange",
-    "url": "/images/25.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/25.png",
     "activateAtBeginning": true,
     "upgrade": 4,
-    "downgrade": ""
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": "basicUnicorn",
+    "isGlobal": false
   },
   {
     "id": 225,
@@ -302,10 +410,14 @@ const cards = [
     "type": "Upgrade",
     "description": "This card can only enter a Stable if there is a Basic Unicorn card in that Stable. If this card is in your Stable at the beginning of your turn, you may DRAW an extra card.",
     "color": "Orange",
-    "url": "/images/25.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/25.png",
     "activateAtBeginning": true,
     "upgrade": 4,
-    "downgrade": ""
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": "basicUnicorn",
+    "isGlobal": false
   },
   {
     "id": 26,
@@ -313,10 +425,14 @@ const cards = [
     "type": "Upgrade",
     "description": "If this card is in your Stable at the beginning of your turn, you may move a Unicorn card from any player's Stable to any other player's Stable. You cannot move that card into your own Stable.",
     "color": "Orange",
-    "url": "/images/26.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/26.png",
     "activateAtBeginning": true,
     "upgrade": 5,
-    "downgrade": ""
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 27,
@@ -324,10 +440,14 @@ const cards = [
     "type": "Upgrade",
     "description": "This card can only enter a Stable if there is a Basic Unicorn card in that Stable. If this card is in your Stable at the beginning of your turn, you may bring a Basic Unicorn card from your hand directly into your Stable.",
     "color": "Orange",
-    "url": "/images/27.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/27.png",
     "activateAtBeginning": true,
     "upgrade": 6,
-    "downgrade": ""
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": "basicUnicorn",
+    "isGlobal": false
   },
   {
     "id": 28,
@@ -335,10 +455,14 @@ const cards = [
     "type": "Upgrade",
     "description": "If 1 of your Unicorns would be sacrificed or destroyed, you may SACRIFICE this card instead.",
     "color": "Orange",
-    "url": "/images/28.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/28.png",
     "activateAtBeginning": false,
     "upgrade": 7,
-    "downgrade": ""
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 228,
@@ -346,10 +470,14 @@ const cards = [
     "type": "Upgrade",
     "description": "If 1 of your Unicorns would be sacrificed or destroyed, you may SACRIFICE this card instead.",
     "color": "Orange",
-    "url": "/images/28.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/28.png",
     "activateAtBeginning": false,
     "upgrade": 7,
-    "downgrade": ""
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 29,
@@ -357,10 +485,14 @@ const cards = [
     "type": "Upgrade",
     "description": "Your Unicorn cards cannot be destroyed.",
     "color": "Orange",
-    "url": "/images/29.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/29.png",
     "activateAtBeginning": false,
     "upgrade": 8,
-    "downgrade": ""
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 30,
@@ -368,10 +500,14 @@ const cards = [
     "type": "Upgrade",
     "description": "If this card is in your Stable at the beginning of your turn, you may DRAW a card at the end of your turn.",
     "color": "Orange",
-    "url": "/images/30.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/30.png",
     "activateAtBeginning": true,
     "upgrade": 9,
-    "downgrade": ""
+    "downgrade": "",
+    "activateAtEnd": true,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 230,
@@ -379,10 +515,14 @@ const cards = [
     "type": "Upgrade",
     "description": "If this card is in your Stable at the beginning of your turn, you may DRAW a card at the end of your turn.",
     "color": "Orange",
-    "url": "/images/30.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/30.png",
     "activateAtBeginning": true,
     "upgrade": 9,
-    "downgrade": ""
+    "downgrade": "",
+    "activateAtEnd": true,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 31,
@@ -390,10 +530,14 @@ const cards = [
     "type": "Basic Unicorn",
     "description": "Sometimes a horse just needs to feel a little special.",
     "color": "Purple",
-    "url": "/images/31.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/31.png",
     "activateAtBeginning": false,
     "upgrade": "",
-    "downgrade": ""
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 231,
@@ -401,10 +545,14 @@ const cards = [
     "type": "Basic Unicorn",
     "description": "Sometimes a horse just needs to feel a little special.",
     "color": "Purple",
-    "url": "/images/31.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/31.png",
     "activateAtBeginning": false,
     "upgrade": "",
-    "downgrade": ""
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 331,
@@ -412,10 +560,14 @@ const cards = [
     "type": "Basic Unicorn",
     "description": "Sometimes a horse just needs to feel a little special.",
     "color": "Purple",
-    "url": "/images/31.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/31.png",
     "activateAtBeginning": false,
     "upgrade": "",
-    "downgrade": ""
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 32,
@@ -423,10 +575,14 @@ const cards = [
     "type": "Basic Unicorn",
     "description": "#livingfortheweekend",
     "color": "Purple",
-    "url": "/images/32.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/32.png",
     "activateAtBeginning": false,
     "upgrade": "",
-    "downgrade": ""
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 232,
@@ -434,10 +590,14 @@ const cards = [
     "type": "Basic Unicorn",
     "description": "#livingfortheweekend",
     "color": "Purple",
-    "url": "/images/32.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/32.png",
     "activateAtBeginning": false,
     "upgrade": "",
-    "downgrade": ""
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 332,
@@ -445,10 +605,14 @@ const cards = [
     "type": "Basic Unicorn",
     "description": "#livingfortheweekend",
     "color": "Purple",
-    "url": "/images/32.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/32.png",
     "activateAtBeginning": false,
     "upgrade": "",
-    "downgrade": ""
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 33,
@@ -456,10 +620,14 @@ const cards = [
     "type": "Basic Unicorn",
     "description": "I'm expensive, but I'm worth it.",
     "color": "Purple",
-    "url": "/images/33.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/33.png",
     "activateAtBeginning": false,
     "upgrade": "",
-    "downgrade": ""
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 233,
@@ -467,10 +635,14 @@ const cards = [
     "type": "Basic Unicorn",
     "description": "I'm expensive, but I'm worth it.",
     "color": "Purple",
-    "url": "/images/33.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/33.png",
     "activateAtBeginning": false,
     "upgrade": "",
-    "downgrade": ""
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 333,
@@ -478,10 +650,14 @@ const cards = [
     "type": "Basic Unicorn",
     "description": "I'm expensive, but I'm worth it.",
     "color": "Purple",
-    "url": "/images/33.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/33.png",
     "activateAtBeginning": false,
     "upgrade": "",
-    "downgrade": ""
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 34,
@@ -489,10 +665,14 @@ const cards = [
     "type": "Basic Unicorn",
     "description": "My body is ready!",
     "color": "Purple",
-    "url": "/images/34.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/34.png",
     "activateAtBeginning": false,
     "upgrade": "",
-    "downgrade": ""
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 234,
@@ -500,10 +680,14 @@ const cards = [
     "type": "Basic Unicorn",
     "description": "My body is ready!",
     "color": "Purple",
-    "url": "/images/34.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/34.png",
     "activateAtBeginning": false,
     "upgrade": "",
-    "downgrade": ""
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 334,
@@ -511,10 +695,14 @@ const cards = [
     "type": "Basic Unicorn",
     "description": "My body is ready!",
     "color": "Purple",
-    "url": "/images/34.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/34.png",
     "activateAtBeginning": false,
     "upgrade": "",
-    "downgrade": ""
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 35,
@@ -522,10 +710,14 @@ const cards = [
     "type": "Basic Unicorn",
     "description": "send pics 👊🏼🍆💦💦",
     "color": "Purple",
-    "url": "/images/35.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/35.png",
     "activateAtBeginning": false,
     "upgrade": "",
-    "downgrade": ""
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 235,
@@ -533,10 +725,14 @@ const cards = [
     "type": "Basic Unicorn",
     "description": "send pics 👊🏼🍆💦💦",
     "color": "Purple",
-    "url": "/images/35.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/35.png",
     "activateAtBeginning": false,
     "upgrade": "",
-    "downgrade": ""
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 335,
@@ -544,10 +740,14 @@ const cards = [
     "type": "Basic Unicorn",
     "description": "send pics 👊🏼🍆💦💦",
     "color": "Purple",
-    "url": "/images/35.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/35.png",
     "activateAtBeginning": false,
     "upgrade": "",
-    "downgrade": ""
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 36,
@@ -555,10 +755,14 @@ const cards = [
     "type": "Basic Unicorn",
     "description": "It's 4:20 somewhere.",
     "color": "Purple",
-    "url": "/images/36.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/36.png",
     "activateAtBeginning": false,
     "upgrade": "",
-    "downgrade": ""
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 236,
@@ -566,10 +770,14 @@ const cards = [
     "type": "Basic Unicorn",
     "description": "It's 4:20 somewhere.",
     "color": "Purple",
-    "url": "/images/36.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/36.png",
     "activateAtBeginning": false,
     "upgrade": "",
-    "downgrade": ""
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 336,
@@ -577,10 +785,14 @@ const cards = [
     "type": "Basic Unicorn",
     "description": "It's 4:20 somewhere.",
     "color": "Purple",
-    "url": "/images/36.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/36.png",
     "activateAtBeginning": false,
     "upgrade": "",
-    "downgrade": ""
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 37,
@@ -588,10 +800,14 @@ const cards = [
     "type": "Basic Unicorn",
     "description": "The single life.",
     "color": "Purple",
-    "url": "/images/37.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/37.png",
     "activateAtBeginning": false,
     "upgrade": "",
-    "downgrade": ""
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 237,
@@ -599,10 +815,14 @@ const cards = [
     "type": "Basic Unicorn",
     "description": "The single life.",
     "color": "Purple",
-    "url": "/images/37.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/37.png",
     "activateAtBeginning": false,
     "upgrade": "",
-    "downgrade": ""
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 337,
@@ -610,10 +830,14 @@ const cards = [
     "type": "Basic Unicorn",
     "description": "The single life.",
     "color": "Purple",
-    "url": "/images/37.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/37.png",
     "activateAtBeginning": false,
     "upgrade": "",
-    "downgrade": ""
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 38,
@@ -621,10 +845,14 @@ const cards = [
     "type": "Magical Unicorn",
     "description": "If this card is in your Stable at the beginning of your turn, you may SACRIFICE a Basic Unicorn card. If you do, pull a card from each other player's hand and add it to your hand.",
     "color": "Blue",
-    "url": "/images/38.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/38.png",
     "activateAtBeginning": true,
     "upgrade": 10,
-    "downgrade": ""
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 39,
@@ -632,10 +860,14 @@ const cards = [
     "type": "Magical Unicorn",
     "description": "If this card is in your Stable at the beginning of your turn, you may DISCARD a card. If you do, bring a Baby Unicorn card from the Nursery directly into your Stable.",
     "color": "Blue",
-    "url": "/images/39.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/39.png",
     "activateAtBeginning": true,
     "upgrade": 11,
-    "downgrade": ""
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 40,
@@ -643,10 +875,14 @@ const cards = [
     "type": "Magical Unicorn",
     "description": "If this card is in your Stable at the beginning of your turn, you may SACRIFICE a card. If you do, DESTROY a card.",
     "color": "Blue",
-    "url": "/images/40.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/40.png",
     "activateAtBeginning": true,
-    "upgrade": "",
-    "downgrade": 9
+    "upgrade": 0,
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 41,
@@ -654,10 +890,14 @@ const cards = [
     "type": "Magical Unicorn",
     "description": "When this card enters your Stable, you may choose any player. That player must DISCARD 2 cards.",
     "color": "Blue",
-    "url": "/images/41.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/41.png",
     "activateAtBeginning": false,
     "upgrade": "",
-    "downgrade": 10
+    "downgrade": 10,
+    "activateAtEnd": false,
+    "activateOnPlay": true,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 42,
@@ -665,10 +905,14 @@ const cards = [
     "type": "Magical Unicorn",
     "description": "This card counts for 2 Unicorns. You cannot play Magic cards.",
     "color": "Blue",
-    "url": "/images/42.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/42.png",
     "activateAtBeginning": false,
     "upgrade": "",
-    "downgrade": 11
+    "downgrade": 11,
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 43,
@@ -676,10 +920,14 @@ const cards = [
     "type": "Magical Unicorn",
     "description": "When this card enters your Stable, you may look at the top 3 cards of the deck, then return them in the same order.",
     "color": "Blue",
-    "url": "/images/43.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/43.png",
     "activateAtBeginning": false,
     "upgrade": 12,
-    "downgrade": ""
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": true,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 44,
@@ -687,10 +935,14 @@ const cards = [
     "type": "Magical Unicorn",
     "description": "When this card enters your Stable, you may search the deck for a \"Bear Daddy Unicorn\" card. Add it to your hand, then shuffle the deck.",
     "color": "Blue",
-    "url": "/images/44.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/44.png",
     "activateAtBeginning": false,
-    "upgrade": "",
-    "downgrade": ""
+    "upgrade": 13,
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": true,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 45,
@@ -698,10 +950,14 @@ const cards = [
     "type": "Magical Unicorn",
     "description": "When this card enters your Stable, you may choose a card from the discard pile and add it to your hand.",
     "color": "Blue",
-    "url": "/images/45.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/45.png",
     "activateAtBeginning": false,
-    "upgrade": "",
-    "downgrade": ""
+    "upgrade": 14,
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": true,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 46,
@@ -709,10 +965,14 @@ const cards = [
     "type": "Magical Unicorn",
     "description": "If 1 of your Unicorn cards would be destroyed, you may SACRIFICE this card instead.",
     "color": "Blue",
-    "url": "/images/46.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/46.png",
     "activateAtBeginning": false,
-    "upgrade": "",
-    "downgrade": ""
+    "upgrade": 7,
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 47,
@@ -720,10 +980,14 @@ const cards = [
     "type": "Magical Unicorn",
     "description": "If this card is in your Stable at the beginning of your turn, you may DISCARD your hand. If you do, DESTROY a Unicorn card.",
     "color": "Blue",
-    "url": "/images/47.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/47.png",
     "activateAtBeginning": true,
-    "upgrade": "",
-    "downgrade": ""
+    "upgrade": 15,
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 48,
@@ -731,10 +995,14 @@ const cards = [
     "type": "Magical Unicorn",
     "description": "Your hand limit increases by 1.",
     "color": "Blue",
-    "url": "/images/48.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/48.png",
     "activateAtBeginning": false,
-    "upgrade": "",
-    "downgrade": ""
+    "upgrade": 16,
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 49,
@@ -742,10 +1010,14 @@ const cards = [
     "type": "Magical Unicorn",
     "description": "If this card is in your Stable at the beginning of your turn, move a Unicorn card from your Stable into any other player's Stable. At the end of your turn, return that Unicorn card to your Stable.",
     "color": "Blue",
-    "url": "/images/49.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/49.png",
     "activateAtBeginning": true,
-    "upgrade": "",
-    "downgrade": ""
+    "upgrade": 17,
+    "downgrade": "",
+    "activateAtEnd": true,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 50,
@@ -753,10 +1025,14 @@ const cards = [
     "type": "Magical Unicorn",
     "description": "When this card enters your Stable, you may search the deck for a \"Twinkicorn\" card. Add it to your hand, then shuffle the deck.",
     "color": "Blue",
-    "url": "/images/50.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/50.png",
     "activateAtBeginning": false,
-    "upgrade": "",
-    "downgrade": ""
+    "upgrade": 18,
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": true,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 51,
@@ -764,10 +1040,14 @@ const cards = [
     "type": "Magical Unicorn",
     "description": "When this card enters your Stable, you may choose any player. That player must DISCARD a card. If this card would be sacrificed or destroyed, return it to your hand instead.",
     "color": "Blue",
-    "url": "/images/51.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/51.png",
     "activateAtBeginning": false,
-    "upgrade": "",
-    "downgrade": ""
+    "upgrade": 19,
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": true,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 52,
@@ -775,10 +1055,14 @@ const cards = [
     "type": "Magical Unicorn",
     "description": "If this card is in your Stable at the beginning of your turn, you may move this card to any other player's Stable. If you do, STEAL a Unicorn card from that player's Stable.",
     "color": "Blue",
-    "url": "/images/52.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/52.png",
     "activateAtBeginning": true,
-    "upgrade": "",
-    "downgrade": ""
+    "upgrade": 20,
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 53,
@@ -786,10 +1070,14 @@ const cards = [
     "type": "Magical Unicorn",
     "description": "When this card enters your Stable, you may DISCARD a card from the Nursery directly into your Stable.",
     "color": "Blue",
-    "url": "/images/53.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/53.png",
     "activateAtBeginning": false,
-    "upgrade": "",
-    "downgrade": ""
+    "upgrade": 21,
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": true,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 54,
@@ -797,10 +1085,14 @@ const cards = [
     "type": "Magical Unicorn",
     "description": "When this card enters your Stable, you may return a card in any player's Stable to that player's hand.",
     "color": "Blue",
-    "url": "/images/54.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/54.png",
     "activateAtBeginning": false,
-    "upgrade": "",
-    "downgrade": ""
+    "upgrade": 22,
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": true,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 55,
@@ -808,10 +1100,14 @@ const cards = [
     "type": "Magical Unicorn",
     "description": "When this card enters your Stable, you may choose any other player and look at that player's hand. Choose a Unicorn card from that player's hand and add it to your hand.",
     "color": "Blue",
-    "url": "/images/55.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/55.png",
     "activateAtBeginning": false,
-    "upgrade": "",
-    "downgrade": ""
+    "upgrade": 2,
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": true,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 56,
@@ -819,10 +1115,14 @@ const cards = [
     "type": "Magical Unicorn",
     "description": "When this card enters your Stable, STEAL a Basic Unicorn card. If this card leaves your Stable, return that Basic Unicorn card to the Stable from which you stole it.",
     "color": "Blue",
-    "url": "/images/56.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/56.png",
     "activateAtBeginning": false,
-    "upgrade": "",
-    "downgrade": ""
+    "upgrade": 23,
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": true,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 57,
@@ -830,10 +1130,14 @@ const cards = [
     "type": "Magical Unicorn",
     "description": "Baby Unicorn cards cannot enter any player's Stable.",
     "color": "Blue",
-    "url": "/images/57.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/57.png",
     "activateAtBeginning": false,
-    "upgrade": "",
-    "downgrade": ""
+    "upgrade": 24,
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 58,
@@ -841,10 +1145,14 @@ const cards = [
     "type": "Magical Unicorn",
     "description": "When this card enters your Stable, STEAL a Unicorn card. At the end of your turn, return that Unicorn card to the Stable from which you stole it. If this card would be sacrificed or destroyed, return it to your hand instead.",
     "color": "Blue",
-    "url": "/images/58.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/58.png",
     "activateAtBeginning": false,
-    "upgrade": "",
-    "downgrade": ""
+    "upgrade": 3,
+    "downgrade": "",
+    "activateAtEnd": true,
+    "activateOnPlay": true,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 59,
@@ -852,10 +1160,14 @@ const cards = [
     "type": "Magical Unicorn",
     "description": "When this card enters your Stable, choose a player and look at their hand. Choose a Unicorn card in that player's hand and move it to the discard pile.",
     "color": "Blue",
-    "url": "/images/59.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/59.png",
     "activateAtBeginning": false,
-    "upgrade": "",
-    "downgrade": ""
+    "upgrade": 25,
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": true,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 60,
@@ -863,10 +1175,14 @@ const cards = [
     "type": "Magical Unicorn",
     "description": "When this card enters your Stable, each player must SACRIFICE a Unicorn card.",
     "color": "Blue",
-    "url": "/images/60.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/60.png",
     "activateAtBeginning": false,
-    "upgrade": "",
-    "downgrade": ""
+    "upgrade": 26,
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": true,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 61,
@@ -874,10 +1190,14 @@ const cards = [
     "type": "Magical Unicorn",
     "description": "If this card is in your Stable at the beginning of your turn, you may STEAL a Unicorn card. At the end of your turn, return that Unicorn card to the Stable from which you stole it.",
     "color": "Blue",
-    "url": "/images/61.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/61.png",
     "activateAtBeginning": true,
-    "upgrade": "",
-    "downgrade": ""
+    "upgrade": 3,
+    "downgrade": "",
+    "activateAtEnd": true,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 62,
@@ -885,10 +1205,14 @@ const cards = [
     "type": "Magical Unicorn",
     "description": "When this card enters your Stable, you may search the deck for a Unicorn card and add it to your hand. Shuffle the deck.",
     "color": "Blue",
-    "url": "/images/62.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/62.png",
     "activateAtBeginning": false,
-    "upgrade": "",
-    "downgrade": ""
+    "upgrade": 27,
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": true,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 63,
@@ -896,10 +1220,14 @@ const cards = [
     "type": "Magical Unicorn",
     "description": "If this card is in your Stable at the beginning of your turn, you may DRAW an extra card, then DISCARD a card.",
     "color": "Blue",
-    "url": "/images/63.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/63.png",
     "activateAtBeginning": true,
-    "upgrade": "",
-    "downgrade": ""
+    "upgrade": 28,
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 64,
@@ -907,10 +1235,14 @@ const cards = [
     "type": "Magical Unicorn",
     "description": "When this card enters your Stable, SACRIFICE all Downgrade cards.",
     "color": "Blue",
-    "url": "/images/64.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/64.png",
     "activateAtBeginning": false,
-    "upgrade": "",
-    "downgrade": ""
+    "upgrade": 29,
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": true,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 65,
@@ -918,10 +1250,14 @@ const cards = [
     "type": "Magical Unicorn",
     "description": "This card counts for 2 Unicorns. You cannot play Basic Unicorn cards.",
     "color": "Blue",
-    "url": "/images/65.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/65.png",
     "activateAtBeginning": false,
-    "upgrade": "",
-    "downgrade": ""
+    "upgrade": 30,
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 66,
@@ -929,10 +1265,14 @@ const cards = [
     "type": "Magical Unicorn",
     "description": "When this card enters your Stable, STEAL a Baby Unicorn card. If this card leaves your Stable, return that Baby Unicorn card to the Stable from which you stole it.",
     "color": "Blue",
-    "url": "/images/66.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/66.png",
     "activateAtBeginning": false,
-    "upgrade": "",
-    "downgrade": ""
+    "upgrade": 31,
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": true,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 67,
@@ -940,10 +1280,14 @@ const cards = [
     "type": "Magical Unicorn",
     "description": "When this card enters your Stable, each other player must DISCARD a card.",
     "color": "Blue",
-    "url": "/images/67.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/67.png",
     "activateAtBeginning": false,
-    "upgrade": "",
-    "downgrade": ""
+    "upgrade": 32,
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": true,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 68,
@@ -951,10 +1295,14 @@ const cards = [
     "type": "Magical Unicorn",
     "description": "This card can only enter a Stable if there is a Basic Unicorn card in that Stable. If this card is in your Stable at the beginning of your turn, you may choose any player. That player must DISCARD a card.",
     "color": "Blue",
-    "url": "/images/68.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/68.png",
     "activateAtBeginning": true,
-    "upgrade": "",
-    "downgrade": ""
+    "upgrade": 19,
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": "babyUnicorn",
+    "isGlobal": false
   },
   {
     "id": 69,
@@ -962,10 +1310,14 @@ const cards = [
     "type": "Magic",
     "description": "Each player must SACRIFICE a card and DISCARD their hand. Shuffle the discard pile into the deck. Deal 5 cards to each player.",
     "color": "Green",
-    "url": "/images/69.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/69.png",
     "activateAtBeginning": false,
-    "upgrade": "",
-    "downgrade": ""
+    "upgrade": 33,
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 70,
@@ -973,10 +1325,14 @@ const cards = [
     "type": "Magic",
     "description": "Choose any player. That player must skip their next turn.",
     "color": "Green",
-    "url": "/images/70.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/70.png",
     "activateAtBeginning": false,
-    "upgrade": "",
-    "downgrade": ""
+    "upgrade": 34,
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 71,
@@ -984,10 +1340,14 @@ const cards = [
     "type": "Magic",
     "description": "Choose a player. That player must DISCARD 3 cards or SACRIFICE a Unicorn card.",
     "color": "Green",
-    "url": "/images/71.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/71.png",
     "activateAtBeginning": false,
-    "upgrade": "",
-    "downgrade": ""
+    "upgrade": 35,
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 72,
@@ -995,10 +1355,14 @@ const cards = [
     "type": "Magic",
     "description": "Choose any other player. Pull 2 cards from that player's hand and add them to your hand.",
     "color": "Green",
-    "url": "/images/72.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/72.png",
     "activateAtBeginning": false,
-    "upgrade": "",
-    "downgrade": ""
+    "upgrade": 36,
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 272,
@@ -1006,10 +1370,14 @@ const cards = [
     "type": "Magic",
     "description": "Choose any other player. Pull 2 cards from that player's hand and add them to your hand.",
     "color": "Green",
-    "url": "/images/72.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/72.png",
     "activateAtBeginning": false,
-    "upgrade": "",
-    "downgrade": ""
+    "upgrade": 36,
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 73,
@@ -1017,10 +1385,14 @@ const cards = [
     "type": "Magic",
     "description": "STEAL a Baby Unicorn card.",
     "color": "Green",
-    "url": "/images/73.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/73.png",
     "activateAtBeginning": false,
-    "upgrade": "",
-    "downgrade": ""
+    "upgrade": 37,
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 273,
@@ -1028,10 +1400,14 @@ const cards = [
     "type": "Magic",
     "description": "STEAL a Baby Unicorn card.",
     "color": "Green",
-    "url": "/images/73.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/73.png",
     "activateAtBeginning": false,
-    "upgrade": "",
-    "downgrade": ""
+    "upgrade": 37,
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 74,
@@ -1039,10 +1415,14 @@ const cards = [
     "type": "Magic",
     "description": "DISCARD 2 cards, then DRAW 2 cards. Take another turn.",
     "color": "Green",
-    "url": "/images/74.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/74.png",
     "activateAtBeginning": false,
-    "upgrade": "",
-    "downgrade": ""
+    "upgrade": 38,
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 75,
@@ -1050,10 +1430,14 @@ const cards = [
     "type": "Magic",
     "description": "Choose any player. That player must DISCARD a card. Give any player a card from your hand, then DESTROY a Unicorn card.",
     "color": "Green",
-    "url": "/images/75.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/75.png",
     "activateAtBeginning": false,
-    "upgrade": "",
-    "downgrade": ""
+    "upgrade": 39,
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 275,
@@ -1061,10 +1445,14 @@ const cards = [
     "type": "Magic",
     "description": "Choose any player. That player must DISCARD a card. Give any player a card from your hand, then DESTROY a Unicorn card.",
     "color": "Green",
-    "url": "/images/75.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/75.png",
     "activateAtBeginning": false,
-    "upgrade": "",
-    "downgrade": ""
+    "upgrade": 39,
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 76,
@@ -1072,10 +1460,14 @@ const cards = [
     "type": "Magic",
     "description": "SACRIFICE or DESTROY all Downgrade cards in any player's Stable.",
     "color": "Green",
-    "url": "/images/76.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/76.png",
     "activateAtBeginning": false,
-    "upgrade": "",
-    "downgrade": ""
+    "upgrade": 40,
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 77,
@@ -1083,10 +1475,14 @@ const cards = [
     "type": "Magic",
     "description": "SACRIFICE or DESTROY an Upgrade or Downgrade card.",
     "color": "Green",
-    "url": "/images/77.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/77.png",
     "activateAtBeginning": false,
-    "upgrade": "",
-    "downgrade": ""
+    "upgrade": 41,
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 277,
@@ -1094,10 +1490,14 @@ const cards = [
     "type": "Magic",
     "description": "SACRIFICE or DESTROY an Upgrade or Downgrade card.",
     "color": "Green",
-    "url": "/images/77.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/77.png",
     "activateAtBeginning": false,
-    "upgrade": "",
-    "downgrade": ""
+    "upgrade": 41,
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 377,
@@ -1105,10 +1505,14 @@ const cards = [
     "type": "Magic",
     "description": "SACRIFICE or DESTROY an Upgrade or Downgrade card.",
     "color": "Green",
-    "url": "/images/77.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/77.png",
     "activateAtBeginning": false,
-    "upgrade": "",
-    "downgrade": ""
+    "upgrade": 41,
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 78,
@@ -1116,10 +1520,14 @@ const cards = [
     "type": "Magic",
     "description": "Reveal the top card in the deck. If it is a Unicorn card, bring it directly into your Stable and take another turn. If it is a Downgrade card, DISCARD it and SACRIFICE a Unicorn card. If it is anything else, add it to your hand.",
     "color": "Green",
-    "url": "/images/78.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/78.png",
     "activateAtBeginning": false,
-    "upgrade": "",
-    "downgrade": ""
+    "upgrade": 42,
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 79,
@@ -1127,10 +1535,14 @@ const cards = [
     "type": "Magic",
     "description": "Each player must return a Baby Unicorn card from their Stable to the Nursery.",
     "color": "Green",
-    "url": "/images/79.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/79.png",
     "activateAtBeginning": false,
-    "upgrade": "",
-    "downgrade": ""
+    "upgrade": 43,
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 80,
@@ -1138,10 +1550,14 @@ const cards = [
     "type": "Magic",
     "description": "Each player must DISCARD their hand and DRAW the same number of cards. DRAW 2 additional cards.",
     "color": "Green",
-    "url": "/images/80.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/80.png",
     "activateAtBeginning": false,
-    "upgrade": "",
-    "downgrade": ""
+    "upgrade": 44,
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 81,
@@ -1149,10 +1565,14 @@ const cards = [
     "type": "Magic",
     "description": "DESTROY a Unicorn card. Each player must DISCARD a card.",
     "color": "Green",
-    "url": "/images/81.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/81.png",
     "activateAtBeginning": false,
-    "upgrade": "",
-    "downgrade": ""
+    "upgrade": 45,
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 281,
@@ -1160,10 +1580,14 @@ const cards = [
     "type": "Magic",
     "description": "DESTROY a Unicorn card. Each player must DISCARD a card.",
     "color": "Green",
-    "url": "/images/81.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/81.png",
     "activateAtBeginning": false,
-    "upgrade": "",
-    "downgrade": ""
+    "upgrade": 45,
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 82,
@@ -1171,10 +1595,14 @@ const cards = [
     "type": "Magic",
     "description": "DISCARD your hand, then DRAW 3 cards. Take another turn.",
     "color": "Green",
-    "url": "/images/82.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/82.png",
     "activateAtBeginning": false,
-    "upgrade": "",
-    "downgrade": ""
+    "upgrade": 46,
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 83,
@@ -1182,10 +1610,14 @@ const cards = [
     "type": "Magic",
     "description": "If you have more than 3 Unicorns in your Stable, DRAW cards equal to the number of Unicorns in your Stable minus 3.",
     "color": "Green",
-    "url": "/images/83.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/83.png",
     "activateAtBeginning": false,
-    "upgrade": "",
-    "downgrade": ""
+    "upgrade": 47,
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 283,
@@ -1193,10 +1625,14 @@ const cards = [
     "type": "Magic",
     "description": "If you have more than 3 Unicorns in your Stable, DRAW cards equal to the number of Unicorns in your Stable minus 3.",
     "color": "Green",
-    "url": "/images/83.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/83.png",
     "activateAtBeginning": false,
-    "upgrade": "",
-    "downgrade": ""
+    "upgrade": 47,
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 84,
@@ -1204,10 +1640,14 @@ const cards = [
     "type": "Magic",
     "description": "Choose any player and look at that player's hand. Choose a card from that player's hand and add it to your hand.",
     "color": "Green",
-    "url": "/images/84.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/84.png",
     "activateAtBeginning": false,
-    "upgrade": "",
-    "downgrade": ""
+    "upgrade": 48,
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 284,
@@ -1215,10 +1655,14 @@ const cards = [
     "type": "Magic",
     "description": "Choose any player and look at that player's hand. Choose a card from that player's hand and add it to your hand.",
     "color": "Green",
-    "url": "/images/84.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/84.png",
     "activateAtBeginning": false,
-    "upgrade": "",
-    "downgrade": ""
+    "upgrade": 48,
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 85,
@@ -1226,10 +1670,14 @@ const cards = [
     "type": "Magic",
     "description": "SACRIFICE or DESTROY all Upgrade cards in any player's Stable.",
     "color": "Green",
-    "url": "/images/85.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/85.png",
     "activateAtBeginning": false,
-    "upgrade": "",
-    "downgrade": ""
+    "upgrade": 49,
+    "downgrade": "",
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 86,
@@ -1237,10 +1685,14 @@ const cards = [
     "type": "Instant",
     "description": "Play this card when any other player tries to play a card. Stop that player's card from being played and send it to the discard pile. That player must DISCARD a card.",
     "color": "Red",
-    "url": "/images/86.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/86.png",
     "activateAtBeginning": false,
     "upgrade": "",
-    "downgrade": 8
+    "downgrade": 8,
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 286,
@@ -1248,10 +1700,14 @@ const cards = [
     "type": "Instant",
     "description": "Play this card when any other player tries to play a card. Stop that player's card from being played and send it to the discard pile. That player must DISCARD a card.",
     "color": "Red",
-    "url": "/images/86.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/86.png",
     "activateAtBeginning": false,
     "upgrade": "",
-    "downgrade": 8
+    "downgrade": 8,
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 386,
@@ -1259,10 +1715,14 @@ const cards = [
     "type": "Instant",
     "description": "Play this card when any other player tries to play a card. Stop that player's card from being played and send it to the discard pile. That player must DISCARD a card.",
     "color": "Red",
-    "url": "/images/86.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/86.png",
     "activateAtBeginning": false,
     "upgrade": "",
-    "downgrade": 8
+    "downgrade": 8,
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 87,
@@ -1270,10 +1730,14 @@ const cards = [
     "type": "Instant",
     "description": "Play this card when any other player tries to play a card. Stop that player's card from being played and send it to the discard pile.",
     "color": "Red",
-    "url": "/images/87.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/87.png",
     "activateAtBeginning": false,
     "upgrade": "",
-    "downgrade": 7
+    "downgrade": 7,
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 287,
@@ -1281,10 +1745,14 @@ const cards = [
     "type": "Instant",
     "description": "Play this card when any other player tries to play a card. Stop that player's card from being played and send it to the discard pile.",
     "color": "Red",
-    "url": "/images/87.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/87.png",
     "activateAtBeginning": false,
     "upgrade": "",
-    "downgrade": 7
+    "downgrade": 7,
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 387,
@@ -1292,10 +1760,14 @@ const cards = [
     "type": "Instant",
     "description": "Play this card when any other player tries to play a card. Stop that player's card from being played and send it to the discard pile.",
     "color": "Red",
-    "url": "/images/87.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/87.png",
     "activateAtBeginning": false,
     "upgrade": "",
-    "downgrade": 7
+    "downgrade": 7,
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 487,
@@ -1303,10 +1775,14 @@ const cards = [
     "type": "Instant",
     "description": "Play this card when any other player tries to play a card. Stop that player's card from being played and send it to the discard pile.",
     "color": "Red",
-    "url": "/images/87.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/87.png",
     "activateAtBeginning": false,
     "upgrade": "",
-    "downgrade": 7
+    "downgrade": 7,
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 587,
@@ -1314,10 +1790,14 @@ const cards = [
     "type": "Instant",
     "description": "Play this card when any other player tries to play a card. Stop that player's card from being played and send it to the discard pile.",
     "color": "Red",
-    "url": "/images/87.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/87.png",
     "activateAtBeginning": false,
     "upgrade": "",
-    "downgrade": 7
+    "downgrade": 7,
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 687,
@@ -1325,10 +1805,14 @@ const cards = [
     "type": "Instant",
     "description": "Play this card when any other player tries to play a card. Stop that player's card from being played and send it to the discard pile.",
     "color": "Red",
-    "url": "/images/88.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/88.png",
     "activateAtBeginning": false,
     "upgrade": "",
-    "downgrade": 7
+    "downgrade": 7,
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 88,
@@ -1336,10 +1820,14 @@ const cards = [
     "type": "Instant",
     "description": "Play this card when any other player tries to play a card. Stop that player's card from being played and send it to the discard pile.",
     "color": "Red",
-    "url": "/images/88.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/88.png",
     "activateAtBeginning": false,
     "upgrade": "",
-    "downgrade": 7
+    "downgrade": 7,
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 288,
@@ -1347,10 +1835,14 @@ const cards = [
     "type": "Instant",
     "description": "Play this card when any other player tries to play a card. Stop that player's card from being played and send it to the discard pile.",
     "color": "Red",
-    "url": "/images/88.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/88.png",
     "activateAtBeginning": false,
     "upgrade": "",
-    "downgrade": 7
+    "downgrade": 7,
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 89,
@@ -1358,10 +1850,14 @@ const cards = [
     "type": "Instant",
     "description": "Play this card when any other player tries to play a card. Stop that player's card from being played and send it to the discard pile.",
     "color": "Red",
-    "url": "/images/89.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/89.png",
     "activateAtBeginning": false,
     "upgrade": "",
-    "downgrade": 7
+    "downgrade": 7,
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 289,
@@ -1369,10 +1865,14 @@ const cards = [
     "type": "Instant",
     "description": "Play this card when any other player tries to play a card. Stop that player's card from being played and send it to the discard pile.",
     "color": "Red",
-    "url": "/images/89.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/89.png",
     "activateAtBeginning": false,
     "upgrade": "",
-    "downgrade": 7
+    "downgrade": 7,
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 389,
@@ -1380,10 +1880,14 @@ const cards = [
     "type": "Instant",
     "description": "Play this card when any other player tries to play a card. Stop that player's card from being played and send it to the discard pile.",
     "color": "Red",
-    "url": "/images/89.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/89.png",
     "activateAtBeginning": false,
     "upgrade": "",
-    "downgrade": 7
+    "downgrade": 7,
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   },
   {
     "id": 90,
@@ -1391,10 +1895,14 @@ const cards = [
     "type": "Instant",
     "description": "Play this card when any other player tries to play a card. Stop that player's card from being played and send it to the discard pile. This card cannot be Neigh'd.",
     "color": "Red",
-    "url": "/images/90.png",
+    "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/90.png",
     "activateAtBeginning": false,
     "upgrade": "",
-    "downgrade": 7
+    "downgrade": 7,
+    "activateAtEnd": false,
+    "activateOnPlay": false,
+    "playRequirement": false,
+    "isGlobal": false
   }
 ];
 

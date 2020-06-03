@@ -1,5 +1,5 @@
 .hand .ui.cards>.card {
-  max-width: 20%;
+  max-width: 150px;
   flex: 1;
 }
 

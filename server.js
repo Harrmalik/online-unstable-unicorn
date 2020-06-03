@@ -9,7 +9,15 @@ let testPlayers = [
     connected: true,
     color: 'purple',
     name: "tyler",
-    hand: [],
+    hand: [{
+      "id": 8,
+      "name": "CANNIBAL BABY UNICORN",
+      "type": "Baby Unicorn",
+      "description": "If this card would be sacrificed, destroyed, or returned to your hand, return it to the Nursery instead.",
+      "Quantity": 1,
+      "Color": "Magenta",
+      "url": "/images/8.png",
+    }],
     stable: [{
       "id": 8,
       "name": "CANNIBAL BABY UNICORN",
@@ -149,7 +157,7 @@ function getLobbies(lobbies) {
 }
 
 function returnLobbies(updated) {
-  lobbies = getLobbies(socket.adapter.rooms)
+  lobbies = getLobbies(socket.adapter.rooms);
   socket.broadcast.emit('returnLobbies', getLobbies(socket.adapter.rooms));
 }
 

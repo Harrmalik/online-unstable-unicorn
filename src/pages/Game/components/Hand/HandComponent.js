@@ -10,16 +10,14 @@ import CardComponent from 'components/Card/CardComponent';
 
 function HandComponent() {
   const myPlayer = useMyPlayer();
+  const socketServer = useSelector(state => state.socket);
   const isMyTurn = useSelector(state => state.isMyTurn);
   const isPlayingCard = useSelector(state => state.isPlayingCard);
   const isDiscardingCard = useSelector(state => state.isDiscardingCard);
-  const socketServer = useSelector(state => state.socket);
-  const lobbyName = useSelector(state => state.game.uri);
-  const dispatch = useDispatch();
-
-  // Move to player view???
   const players = useSelector(state => state.players);
   const decks = useSelector(state => state.decks);
+  const lobbyName = useSelector(state => state.game.uri);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (isPlayingCard.basicUnicornOnly) {
@@ -44,7 +42,7 @@ function HandComponent() {
       if (card.type === 'Basic Unicorn') {
         dispatch(playingCard(false))
         dispatch(attemptToPlay(card))
-        socketServer.emit('attemptToPlayCard', lobbyName, card)
+        socketServer.emit('attemptToPlayCard', lobbyName, card);
       }
     } else {
       switch (card.type) {
@@ -53,16 +51,11 @@ function HandComponent() {
         case 'Magical Unicorn':
         case 'Upgrade':
         case 'Downgrade':
-          dispatch(playingCard(false))
-          dispatch(attemptToPlay(card))
-          socketServer.emit('attemptToPlayCard', lobbyName, card)
-          break;
-
         case 'Magic':
-          console.log('PLAYING EFFECT')
+          dispatch(playingCard(false));
+          dispatch(attemptToPlay(card));
+          socketServer.emit('attemptToPlayCard', lobbyName, card);
           break;
-        default:
-
       }
     }
   }
@@ -78,7 +71,7 @@ function HandComponent() {
       isDiscardingCard.callback();
     }
 
-    dispatch(discardingCard({isTrue: false, callback: null}))
+    dispatch(discardingCard({isTrue: false, callback: null}));
   }
 
   return (
