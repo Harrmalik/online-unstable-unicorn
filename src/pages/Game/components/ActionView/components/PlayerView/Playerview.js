@@ -3,11 +3,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setCurrentPlayer, setPlayers, startGame, nextPhase, endTurn, playingCard, discardingCard, returningCard, sacrificingCard, destroyingCard, drawingFromOpponent, givingToOpponent, choosePlayer, stealUnicorn } from 'actions';
 import { useMyPlayer, useCheckForInstants } from 'utils/hooks.js';
 import groupBy from 'lodash/groupBy';
+import Shuffle from 'lodash/shuffle';
 import { Dropdown, Image, Item, Segment, Button, Header, Card } from 'semantic-ui-react';
 
 
 // Components
 import CardComponent from 'components/Card/CardComponent'
+import ModalComponent from 'components/Modal/ModalComponent';
 
 function PlayerView() {
   const myPlayer = useMyPlayer();
@@ -19,6 +21,12 @@ function PlayerView() {
   const decks = useSelector(state =>  state.decks);
   const cardBeingPlayed = useSelector(state =>  state.cardBeingPlayed);
   const isDiscardingCard = useSelector(state =>  state.isDiscardingCard);
+
+  const isDestroyingCard = useSelector(state => state.isDestroyingCard);
+  const isDrawingFromOpponent = useSelector(state => state.isDrawingFromOpponent);
+  const isChoosingPlayer = useSelector(state =>  state.isChoosingPlayer);
+  const isStealingUnicorn = useSelector(state =>  state.isStealingUnicorn);
+
   const dispatch = useDispatch();
 
   // Effect Phase variables
@@ -33,6 +41,9 @@ function PlayerView() {
   const [numberOfActionsLeft, setNumberOfActionsLeft] = useState(1);
   const [numberOfEndingEffectsLeft, setNumberOfEndingEffectsLeft] = useState(0);
 
+  // Action phase variables
+  const [actionSideEffect, setActionSideEffect] = useState(null);
+
   // Handling Intent variables
   const [numPlayersCheckedForInstants, setNumPlayersCheckedForInstants] = useState(0);
   const [opponentInteractions, setOpponentInteractions] = useState({
@@ -42,7 +53,6 @@ function PlayerView() {
     instant: null
   });
   const [checkForInstant, setCheckForInstant] = useState(false);
-
 
   // upgrade variables
   const [sacrificeAndDestroy, setSacrificeAndDestroy] = useState(false);
@@ -112,15 +122,19 @@ function PlayerView() {
     } else if (opponentInteractions.numPlayersCheckedForInstants === players.length - 1) {
       console.log('playing card and ending turn');
       const [updatedDecks, updatedPlayers] = addToStable();
-      if (game.phase === 2) {
+      const callbackAction = game.phase === 2 ?
+      () => {
         if (numberOfActionsLeft === 1) {
           socketServer.emit('actionHappened', game.uri, updatedDecks, updatedPlayers);
         }
         setNumberOfActionsLeft(numberOfActionsLeft - 1)
-      } else {
+      } :
+      () => {
         handleEffects(null, false);
         socketServer.emit('actionHappened', game.uri, updatedDecks, updatedPlayers);
-      }
+      };
+
+      cardBeingPlayed.activateOnPlay ? handleSideEffect(callbackAction) : callbackAction();
     }
   }, [numPlayersCheckedForInstants])
 
@@ -559,11 +573,206 @@ function PlayerView() {
     }
   }
 
+  function handleSideEffect(callback) {
+    console.log(cardBeingPlayed.name, 'Has side effect');
+    switch (cardBeingPlayed.upgrade) {
+      case 12:
+        //'See the top 3 cards on deck',
+        setActionSideEffect({
+          name: cardBeingPlayed.name,
+          show: decks.drawPile.slice(0, 3),
+          callback
+        })
+        break;
+      case 13:
+        //you may search the deck for a "Bear Daddy Unicorn" card. Add it to your hand, then shuffle the deck.
+        setActionSideEffect({
+          name: cardBeingPlayed.name,
+          callback,
+          actions: [{
+            name: 'Search for bear daddy unicorn',
+            callback: () => {
+              const updatedPlayers = players;
+              const updatedDecks = decks;
+              const bearDaddyUnicornIndex = decks.drawPile.findIndex(card => card.name === 'BEAR DADDY UNICORN');
+
+              if (bearDaddyUnicornIndex >= 0) {
+                updatedPlayers[myPlayer.currentPlayerIndex].hand.push(updatedDecks.drawPile[bearDaddyUnicornIndex])
+                updatedDecks.drawPile.splice(bearDaddyUnicornIndex, 1);
+              }
+
+              socketServer.emit('actionHappened', game.uri, Shuffle(updatedDecks), updatedPlayers);
+              callback();
+            }
+          }]
+        });
+        break;
+      case 14:
+        //'When this card enters your Stable, you may choose a card from the discard pile and add it to your hand.',
+        if (decks.discardPile.length === 0) {
+          callback()
+        }
+
+        setActionSideEffect({
+          name: cardBeingPlayed.name,
+          modal: true,
+          modalShow: decks.discardPile,
+          modalAction: (card, index) => {
+            const updatedDecks = decks;
+            const updatedPlayers = players;
+
+            updatedDecks.discardPile.splice(index, 1);
+            updatedPlayers[myPlayer.currentPlayerIndex].hand.push(card);
+
+            socketServer.emit('actionHappened', game.uri, updatedDecks, updatedPlayers);
+            callback();
+          },
+          callback
+        });
+        break;
+      case 18:
+        //'When this card enters your Stable, you may search the deck for a "Twinkicorn" card. Add it to your hand, then shuffle the deck.',
+        setActionSideEffect({
+          name: cardBeingPlayed.name,
+          callback,
+          actions: [{
+            name: 'Search for Twinkicorn',
+            callback: () => {
+              const updatedPlayers = players;
+              const updatedDecks = decks;
+              const twinklecornIndex = decks.drawPile.findIndex(card => card.name === 'TWINKICORN');
+
+              if (twinklecornIndex >= 0) {
+                updatedPlayers[myPlayer.currentPlayerIndex].hand.push(updatedDecks.drawPile[twinklecornIndex])
+                updatedDecks.drawPile.splice(twinklecornIndex, 1);
+                updatedDecks.drawPile = Shuffle(updatedDecks.drawPile)
+              }
+
+              socketServer.emit('actionHappened', game.uri, updatedDecks, updatedPlayers);
+              callback();
+            }
+          }]
+        });
+        break;
+      case 19:
+        //'When this card enters your Stable, you may choose any player. That player must DISCARD a card. If this card would be sacrificed or destroyed, return it to your hand instead.',
+        break;
+      case 21:
+        //'When this card enters your Stable, you may DISCARD a card from the Nursery directly into your Stable.',
+        setActionSideEffect({
+          name: cardBeingPlayed.name,
+          callback,
+          actions: [{
+            name: 'Summon Baby Unicorn',
+            callback: () => {
+              summonBabyUnicorn();
+              callback();
+            }
+          }]
+        });
+        break;
+      case 22:
+        //'When this card enters your Stable, you may return a card in any player\'s Stable to that player\'s hand.',
+        break;
+      case 2:
+        //'You may choose any other player. Pull a card from that player\'s hand and add it to your hand. If you do, skip your Draw phase.',
+        setActionSideEffect({
+          name: cardBeingPlayed.name,
+          actions: [{
+            name: 'Draw from Opponent',
+            requiresAction: true,
+            callback: () => dispatch(drawingFromOpponent({
+              isTrue: true,
+              callback: () => handleEffects(callback, false)
+            }))
+          }]
+        });
+        break;
+      case 23:
+        //'When this card enters your Stable, STEAL a Basic Unicorn card. If this card leaves your Stable, return that Basic Unicorn card to the Stable from which you stole it.',
+        break;
+      case 3:
+        //'You may STEAL a Unicorn card. At the end of your turn, return that Unicorn card to the Stable from which you stole it.',
+        setActionSideEffect({
+          name: cardBeingPlayed.name,
+          actions: [{
+            name: 'Borrow Unicorn',
+            requiresAction: true,
+            callback: () => dispatch(drawingFromOpponent({
+              isTrue: true,
+              callback: (card, playerIndex) => handleEffects(() => {
+                setReturnCardAtEndOfTurn({
+                  ...card,
+                  previousPlayerIndex: playerIndex,
+                  currentPlayerIndex: myPlayer.currentPlayerIndex,
+                  location: 'hand'
+                });
+                setNumberOfEndingEffectsLeft(numberOfEndingEffectsLeft + 1);
+                callback();
+              }, false)
+            }))
+          }]
+        });
+        break;
+      case 25:
+        //'When this card enters your Stable, choose a player and look at their hand. Choose a Unicorn card in that player\'s hand and move it to the discard pile.',
+        break;
+      case 26:
+        //'When this card enters your Stable, each player must SACRIFICE a Unicorn card.',
+        break;
+      case 27:
+        // 'When this card enters your Stable, you may search the deck for a Unicorn card and add it to your hand. Shuffle the deck.',
+        setActionSideEffect({
+          name: cardBeingPlayed.name,
+          modal: true,
+          modalShow: decks.drawPile,
+          modalAction: (card, index) => {
+            if (card.type.match(/unicorn/ig)) {
+              const updatedDecks = decks;
+              const updatedPlayers = players;
+
+              updatedDecks.drawPile.splice(index, 1);
+              updatedPlayers[myPlayer.currentPlayerIndex].hand.push(card);
+              updatedDecks.drawPile = Shuffle(updatedDecks.drawPile)
+
+              socketServer.emit('actionHappened', game.uri, updatedDecks, updatedPlayers);
+              callback();
+            }
+          },
+          callback
+        });
+        break;
+      case 29:
+        //'When this card enters your Stable, SACRIFICE all Downgrade cards.',
+        const myDowngrades = groupBy(myPlayer.stable, 'type')['Downgrade']
+        setActionSideEffect({
+          name: 'Sacrifice Downgrades',
+          show: myDowngrades,
+          callback: () => {
+            const updatedDecks = decks;
+            const updatedPlayers = players;
+
+            updatedDecks.discardPile.push(...myDowngrades);
+            updatedPlayers[myPlayer.currentPlayerIndex].stable = myPlayer.stable.filter(card => card.type !== 'Downgrade');
+
+            socketServer.emit('actionHappened', game.uri, Shuffle(updatedDecks), updatedPlayers);
+            callback();
+          }
+        })
+        break;
+      case 31:
+        //'When this card enters your Stable, STEAL a Baby Unicorn card. If this card leaves your Stable, return that Baby Unicorn card to the Stable from which you stole it.',
+        break;
+      case 32:
+        //'When this card enters your Stable, each other player must DISCARD a card.',
+        break;
+    }
+  }
+
   function drawCard(phase) {
     let updatedDecks = decks;
     let player = myPlayer;
     let allPlayers = players;
-
 
     const nextCards = updatedDecks.drawPile.splice(0, 1);
     player.hand = [...player.hand, ...nextCards];
@@ -668,7 +877,8 @@ function PlayerView() {
         return <ActionView
                   handleActions={handleActions}
                   checkForInstant={checkForInstant}
-                  handleInstant={handleInstant}/>
+                  handleInstant={handleInstant}
+                  actionSideEffect={actionSideEffect}/>
         break;
       case 'Post Effects':
         return <EndView />
@@ -676,31 +886,6 @@ function PlayerView() {
     }
   }
 
-  return (
-    <div>
-      My Turn
-      {renderView()}
-    </div>
-  )
-}
-
-function EffectsView(props) {
-  const { handleEffects, allowSkip, skipPhase, effects, numberOfEffectsHandled } = props;
-  const isDestroyingCard = useSelector(state => state.isDestroyingCard);
-  const isDrawingFromOpponent = useSelector(state => state.isDrawingFromOpponent);
-  const isChoosingPlayer = useSelector(state =>  state.isChoosingPlayer);
-  const isStealingUnicorn = useSelector(state =>  state.isStealingUnicorn);
-
-
-  function renderEffects() {
-    if (effects[numberOfEffectsHandled]) {
-      return (<div>{
-        effects[numberOfEffectsHandled].actions.map((action, index) => {
-          return <Button key={index} onClick={() => { handleEffects(action.callback, action.requiresAction) }}>{action.name}</Button>
-        })
-      }</div>)
-    }
-  }
   function renderPlayersToAttack() {
     if (isDestroyingCard.isTrue || isDrawingFromOpponent.isTrue || isChoosingPlayer.isTrue || isStealingUnicorn.isTrue) {
       return <PlayersToAttackComponent
@@ -711,9 +896,32 @@ function EffectsView(props) {
 
   return (
     <div>
+      My Turn
+      {renderView()}
+
+      { renderPlayersToAttack() }
+    </div>
+  )
+}
+
+function EffectsView(props) {
+  const { handleEffects, allowSkip, skipPhase, effects, numberOfEffectsHandled } = props;
+
+  function renderEffects() {
+    if (effects[numberOfEffectsHandled]) {
+      return (<div>{
+        effects[numberOfEffectsHandled].actions.map((action, index) => {
+          return <Button key={index} onClick={() => { handleEffects(action.callback, action.requiresAction) }}>{action.name}</Button>
+        })
+      }</div>)
+    }
+  }
+
+
+  return (
+    <div>
       { renderEffects() }
       { allowSkip ? <Button onClick={skipPhase}>Skip</Button> : null }
-      { renderPlayersToAttack() }
     </div>
   )
 }
@@ -729,7 +937,7 @@ function DrawView(props) {
 
 // TODO: make shared component with spectatorview
 function ActionView(props) {
-  const { handleActions, checkForInstant, handleInstant } = props;
+  const { handleActions, checkForInstant, handleInstant, actionSideEffect } = props;
   const instantActions = useCheckForInstants;
   const isDestroyingCard = useSelector(state => state.isDestroyingCard);
   console.log('Should be showing instants: ', checkForInstant)
@@ -751,12 +959,48 @@ function ActionView(props) {
     }
   }
 
-  function renderPlayersToAttack() {
-    if (isDestroyingCard.isTrue) {
-      console.log('render component')
-      return <PlayersToAttackComponent
+  function renderActionSideEffects() {
+    if (actionSideEffect && actionSideEffect.show) {
+      return (
+        <div>
+          <Card.Group>
+            {
+              actionSideEffect.show.map((card, index) => {
+                return <CardComponent
+                  index={index}
+                  key={card.id}
+                  card={card}
+                  callback={() => {}}
+                />
+              })
+            }
+          </Card.Group>
 
-      />
+          <Button onClick={actionSideEffect.callback}>End Action Phase</Button>
+        </div>
+      )
+    }
+
+    if (actionSideEffect && actionSideEffect.actions) {
+      return (
+        <div>
+          {
+            actionSideEffect.actions.map((action, index) => {
+              return <Button onClick={action.callback}>{action.name}</Button>
+            })
+          }
+
+          <Button onClick={actionSideEffect.callback}>End Action Phase</Button>
+        </div>
+      )
+    }
+
+    if (actionSideEffect && actionSideEffect.modal) {
+      return <ModalComponent
+        header="Select card to draw"
+        cards={actionSideEffect.modalShow}
+        close={() => {}}
+        callback={actionSideEffect.modalAction}/>
     }
   }
 
@@ -764,9 +1008,8 @@ function ActionView(props) {
     <div>
       <Button onClick={() => { handleActions('drawCard') }}>Draw Card</Button>
       <Button onClick={() => { handleActions('playCard') }}>Play Card</Button>
-
+      { renderActionSideEffects() }
       { renderInstants() }
-      { renderPlayersToAttack() }
     </div>
   )
 }

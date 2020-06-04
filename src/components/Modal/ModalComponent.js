@@ -6,7 +6,7 @@ import './ModalComponent.scss';
 import CardComponent from 'components/Card/CardComponent';
 
 const ModalComponent = React.memo((props) => {
-  const { header, cards, close, callback } = props
+  const { header, cards, close, callback } = props;
 
   return (
     <Segment id="modal-component">

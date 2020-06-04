@@ -61,7 +61,7 @@ function Deck(props) {
           content: `${id}: ${numCards}`,
           ribbon: true
         }}
-        src={`/images/cardBack.jpg`}/>
+        src={`https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/cardBack.jpg`}/>
     </Card>
   )
 }

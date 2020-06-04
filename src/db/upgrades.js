@@ -80,7 +80,7 @@ const upgrades = [
 {
   id: 14,
   name: 'findBearDaddy',
-  description: 'You may SACRIFICE a card. If you do, DESTROY a card.',
+  description: 'you may search the deck for a "Bear Daddy Unicorn" card. Add it to your hand, then shuffle the deck.',
   optional: true
 },
 {

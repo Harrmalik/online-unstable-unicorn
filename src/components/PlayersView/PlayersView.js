@@ -108,7 +108,7 @@ function QuickViewComponent(props) {
         <Card
           raised
           key={index}>
-          <Image style={{height: `${cardPosition.height}px`}} src={`/images/cardBack.jpg`}/>
+          <Image style={{height: `${cardPosition.height}px`}} src={`https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/cardBack.jpg`}/>
         </Card>
       )
     }

@@ -1,6 +1,10 @@
-.hand .ui.cards>.card {
+.ui.cards .ui.card,.card.ui {
   max-width: 150px;
+}
+
+.hand .ui.cards>.card {
   flex: 1;
+  max-width: 150px;
 }
 
 .hand .ui.cards>.card:hover {
@@ -19,7 +23,7 @@
 }
 
 .stable .ui.cards>.card {
-  max-width: 10em;
+  max-width: 150px;
   flex: 1;
 }
 
