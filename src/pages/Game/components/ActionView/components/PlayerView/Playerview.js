@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux';
-import { setCurrentPlayer, setPlayers, startGame, nextPhase, endTurn, playingCard, discardingCard, returningCard, sacrificingCard, destroyingCard, drawingFromOpponent, givingToOpponent, choosePlayer, stealUnicorn } from 'actions';
+import { setCurrentPlayer, setPlayers, startGame, nextPhase, endTurn, playingCard,
+  discardingCard, discardingOpponentCard, returningCard, sacrificingCard, destroyingCard,
+  drawingFromOpponent, givingToOpponent, choosePlayer, stealUnicorn, returningOpponentCard } from 'actions';
 import { useMyPlayer, useCheckForInstants } from 'utils/hooks.js';
 import groupBy from 'lodash/groupBy';
 import Shuffle from 'lodash/shuffle';
@@ -26,6 +28,8 @@ function PlayerView() {
   const isDrawingFromOpponent = useSelector(state => state.isDrawingFromOpponent);
   const isChoosingPlayer = useSelector(state =>  state.isChoosingPlayer);
   const isStealingUnicorn = useSelector(state =>  state.isStealingUnicorn);
+  const isReturningOpponentCard = useSelector(state => state.isReturningOpponentCard);
+  const isDiscardingOpponentCard = useSelector(state => state.isDiscardingOpponentCard);
 
   const dispatch = useDispatch();
 
@@ -44,7 +48,7 @@ function PlayerView() {
   // Action phase variables
   const [actionSideEffect, setActionSideEffect] = useState(null);
 
-  // Handling Intent variables
+  // Handling Opponent Interaction variables
   const [numPlayersCheckedForInstants, setNumPlayersCheckedForInstants] = useState(0);
   const [opponentInteractions, setOpponentInteractions] = useState({
     numPlayersCheckedForInstants: 0,
@@ -53,6 +57,11 @@ function PlayerView() {
     instant: null
   });
   const [checkForInstant, setCheckForInstant] = useState(false);
+
+  const [numPlayersDiscarding, setNumPlayersDiscarding] = useState(null);
+  const [discardingAction, setDiscardingAction] = useState(null);
+  const [numPlayersSacrifcing, setNumPlayersSacrifcing] = useState(null);
+  const [sacrificingAction, setSacrficingAction] = useState(null);
 
   // upgrade variables
   const [sacrificeAndDestroy, setSacrificeAndDestroy] = useState(false);
@@ -137,6 +146,38 @@ function PlayerView() {
       cardBeingPlayed.activateOnPlay ? handleSideEffect(callbackAction) : callbackAction();
     }
   }, [numPlayersCheckedForInstants])
+
+  useEffect(() => {
+    if (discardingAction) {
+      socketServer.on('playerCheckedForDiscarding', (playerIndex, instant) => {
+        setNumPlayersDiscarding(numPlayersDiscarding - 1);
+      })
+    }
+
+    return () => socketServer.removeListener('playerCheckedForDiscarding');
+  })
+
+  useEffect(() => {
+    if (numPlayersDiscarding === 0) {
+      discardingAction.callback()
+    }
+  }, [numPlayersDiscarding])
+
+  useEffect(() => {
+    if (sacrificingAction) {
+      socketServer.on('playerCheckedForSacrifing', (playerIndex, instant) => {
+        setNumPlayersSacrifcing(numPlayersSacrifcing - 1);
+      })
+    }
+
+    return () => socketServer.removeListener('playerCheckedForSacrifing');
+  })
+
+  useEffect(() => {
+    if (numPlayersSacrifcing === 0) {
+      sacrificingAction.callback()()
+    }
+  }, [numPlayersSacrifcing])
 
   useEffect(() => {
     if (game.phase === 0 && myPlayer.id && numberOfEffectsTotal === null) {
@@ -488,7 +529,6 @@ function PlayerView() {
   }, [borrowUnicorn])
 
 
-
   // Effects for phases
   useEffect(() => {
     console.log(numberOfEffectsTotal, numberOfEffectsHandled)
@@ -534,8 +574,6 @@ function PlayerView() {
     }
   }, [numberOfEndingEffectsLeft, game.phase])
 
-
-
   function addToStable() {
     const updatedPlayers = players;
     const updatedDecks = decks;
@@ -574,7 +612,6 @@ function PlayerView() {
   }
 
   function handleSideEffect(callback) {
-    console.log(cardBeingPlayed.name, 'Has side effect');
     switch (cardBeingPlayed.upgrade) {
       case 12:
         //'See the top 3 cards on deck',
@@ -656,6 +693,31 @@ function PlayerView() {
         break;
       case 19:
         //'When this card enters your Stable, you may choose any player. That player must DISCARD a card. If this card would be sacrificed or destroyed, return it to your hand instead.',
+        //TODO: return if sacrified
+        setActionSideEffect({
+          name: cardBeingPlayed.name,
+          callback,
+          actions: [{
+            name: 'Make player discard card',
+            callback: () => {
+              dispatch(choosePlayer({
+                isTrue: true,
+                callback: (choosenPlayer) => {
+                  setNumPlayersDiscarding(1);
+                  setDiscardingAction({
+                    callback
+                  });
+
+                  dispatch(choosePlayer({
+                    isTrue: false,
+                    callback: null
+                  }))
+                  socketServer.emit('playersDiscarding', game.uri, choosenPlayer.index);
+                }
+              }))
+            }
+          }]
+        });
         break;
       case 21:
         //'When this card enters your Stable, you may DISCARD a card from the Nursery directly into your Stable.',
@@ -673,6 +735,19 @@ function PlayerView() {
         break;
       case 22:
         //'When this card enters your Stable, you may return a card in any player\'s Stable to that player\'s hand.',
+        setActionSideEffect({
+          name: cardBeingPlayed.name,
+          callback,
+          actions: [{
+            name: 'Return Someone\'s Unicorn',
+            callback: () => {
+              dispatch(returningOpponentCard({
+                isTrue: true,
+                callback
+              }))
+            }
+          }]
+        });
         break;
       case 2:
         //'You may choose any other player. Pull a card from that player\'s hand and add it to your hand. If you do, skip your Draw phase.',
@@ -683,7 +758,7 @@ function PlayerView() {
             requiresAction: true,
             callback: () => dispatch(drawingFromOpponent({
               isTrue: true,
-              callback: () => handleEffects(callback, false)
+              callback
             }))
           }]
         });
@@ -716,6 +791,20 @@ function PlayerView() {
         break;
       case 25:
         //'When this card enters your Stable, choose a player and look at their hand. Choose a Unicorn card in that player\'s hand and move it to the discard pile.',
+        setActionSideEffect({
+          name: cardBeingPlayed.name,
+          callback,
+          actions: [{
+            name: 'Discard Someone\'s Unicorn',
+            callback: () => {
+              dispatch(discardingOpponentCard({
+                isTrue: true,
+                type: 'Unicorn',
+                callback
+              }))
+            }
+          }]
+        });
         break;
       case 26:
         //'When this card enters your Stable, each player must SACRIFICE a Unicorn card.',
@@ -737,6 +826,8 @@ function PlayerView() {
 
               socketServer.emit('actionHappened', game.uri, updatedDecks, updatedPlayers);
               callback();
+            } else {
+              //TODO add messaging
             }
           },
           callback
@@ -887,7 +978,13 @@ function PlayerView() {
   }
 
   function renderPlayersToAttack() {
-    if (isDestroyingCard.isTrue || isDrawingFromOpponent.isTrue || isChoosingPlayer.isTrue || isStealingUnicorn.isTrue) {
+    if (isDestroyingCard.isTrue ||
+      isDrawingFromOpponent.isTrue ||
+      isChoosingPlayer.isTrue ||
+      isStealingUnicorn.isTrue ||
+      isReturningOpponentCard.isTrue ||
+      isDiscardingOpponentCard.isTrue
+    ) {
       return <PlayersToAttackComponent
 
       />
@@ -1026,6 +1123,8 @@ function PlayersToAttackComponent(props) {
   const isGivingToOpponent = useSelector(state =>  state.isGivingToOpponent);
   const isChoosingPlayer = useSelector(state =>  state.isChoosingPlayer);
   const isStealingUnicorn = useSelector(state =>  state.isStealingUnicorn);
+  const isReturningOpponentCard = useSelector(state =>  state.isReturningOpponentCard);
+  const isDiscardingOpponentCard = useSelector(state => state.isDiscardingOpponentCard);
   const dispatch = useDispatch();
 
   const [selectedPlayer, setSelectedPlayer] = useState(null);
@@ -1033,7 +1132,11 @@ function PlayersToAttackComponent(props) {
   useEffect(() => {
     if (selectedPlayer && isChoosingPlayer.isTrue) {
       setSelectedPlayer(null);
-      handleGiveToOpponent(selectedPlayer);
+      if (isChoosingPlayer.card) {
+        handleGiveToOpponent(selectedPlayer);
+      } else {
+        isChoosingPlayer.callback(selectedPlayer)
+      }
     }
   }, [selectedPlayer])
 
@@ -1068,23 +1171,34 @@ function PlayersToAttackComponent(props) {
 
   function renderPlayerCards() {
     let handleAction;
-    if(isDestroyingCard.isTrue) {
+
+    if (isDestroyingCard.isTrue) {
       handleAction = handleDestroyCard;
     }
-    if(isDrawingFromOpponent.isTrue) {
+
+    if (isDrawingFromOpponent.isTrue) {
       handleAction = handleDrawFromOpponent;
     }
-    if(isStealingUnicorn.isTrue) {
+
+    if (isStealingUnicorn.isTrue) {
       handleAction = (card, index) => {
         handleGiveToOpponent(selectedPlayer);
         handleStealUnicorn(card, index);
       }
     }
 
+    if (isReturningOpponentCard.isTrue) {
+      handleAction = handleReturnOpponentCard;
+    }
+
+    if (isDiscardingOpponentCard.isTrue) {
+      handleAction = handleDiscardingOpponentCard;
+    }
+
     if (selectedPlayer) {
       return <Card.Group>
           {
-            selectedPlayer[isDestroyingCard.isTrue || isStealingUnicorn.isTrue ? 'stable' : 'hand'].map((card, index) => {
+            selectedPlayer[isDestroyingCard.isTrue || isStealingUnicorn.isTrue || isReturningOpponentCard.isTrue ? 'stable' : 'hand'].map((card, index) => {
               return <CardComponent
                 index={index}
                 key={card.id}
@@ -1161,6 +1275,36 @@ function PlayersToAttackComponent(props) {
     }
 
     dispatch(choosePlayer({isTrue: false, card:null, callback: null}))
+  }
+
+  function handleReturnOpponentCard(card, index) {
+    const updatedDecks = decks;
+    const updatedPlayers = players;
+
+    updatedPlayers[selectedPlayer.index].stable.splice(index, 1);
+    updatedPlayers[selectedPlayer.index].hand.push(card);
+
+    socketServer.emit('returningOpponentCard', lobbyName, card, updatedDecks, updatedPlayers);
+    if (isReturningOpponentCard.callback) {
+      isReturningOpponentCard.callback();
+    }
+
+    dispatch(returningOpponentCard({isTrue: false, callback: null}))
+  }
+
+  function handleDiscardingOpponentCard(card, index) {
+    const updatedDecks = decks;
+    const updatedPlayers = players;
+
+    updatedPlayers[selectedPlayer.index].hand.splice(index, 1);
+    updatedDecks['discardPile'].push(card);
+
+    socketServer.emit('discardingOpponentCard', lobbyName, card, updatedDecks, updatedPlayers);
+    if (isDiscardingOpponentCard.callback) {
+      isDiscardingOpponentCard.callback();
+    }
+
+    dispatch(discardingOpponentCard({isTrue: false, type: null, callback: null}))
   }
 
   return (

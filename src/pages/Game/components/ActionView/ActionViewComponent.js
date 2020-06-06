@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux';
-import { updateDecks, setPlayers, endActionPhase } from 'actions';
+import { updateDecks, setPlayers, endActionPhase, discardingCard } from 'actions';
 import './ActionViewComponent.scss';
 import { Segment, Step } from 'semantic-ui-react';
 
@@ -11,6 +11,9 @@ import SpectatorView from './components/SpectatorView/SpectatorView.js';
 function ActionViewComponent () {
   const isMyTurn = useSelector(state => state.isMyTurn);
   const socketServer = useSelector(state => state.socket);
+  const lobbyName = useSelector(state => state.game.uri);
+  const currentPlayerIndex = useSelector(state => state.currentPlayerIndex);
+  const players = useSelector(state => state.players);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -46,6 +49,17 @@ function ActionViewComponent () {
       dispatchUpdates(updatedDecks, updatedPlayers)
     })
 
+    socketServer.on('setPlayersDiscarding', (playerIndex) => {
+      if (players[parseInt(currentPlayerIndex)].id === players[playerIndex].id) {
+        dispatch(discardingCard({
+          isTrue: true,
+          callback: () => {
+            socketServer.emit('discardCheck', lobbyName, playerIndex)
+          }
+        }))
+      }
+    })
+
     socketServer.on('updateFromAction', (updatedDecks, updatedPlayers) => {
       dispatchUpdates(updatedDecks, updatedPlayers)
     })
@@ -64,6 +78,7 @@ function ActionViewComponent () {
       socketServer.removeListener('cardGivenToPlayer');
       socketServer.removeListener('unicornStolen');
       socketServer.removeListener('updateFromAction');
+      socketServer.removeListener('setPlayersDiscarding');
       socketServer.removeListener('endingActionPhase');
     }
   }, [socketServer]);

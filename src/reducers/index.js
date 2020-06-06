@@ -153,6 +153,16 @@ function isDiscardingCard (state = {isTrue: false, callback: null}, action) {
     }
 }
 
+function isDiscardingOpponentCard (state = {isTrue: false, type: null, callback: null}, action) {
+    switch (action.type) {
+        case 'DISCARDING_OPPONENT_CARD':
+          return action.isDiscardingOpponentCard;
+
+        default:
+            return state
+    }
+}
+
 function isSacrificingCard (state = {isTrue: false, callback: null}, action) {
     switch (action.type) {
         case 'SACRIFICING_CARD':
@@ -177,6 +187,16 @@ function isReturningCard (state = {isTrue: false, callback: null}, action) {
     switch (action.type) {
         case 'RETURNING_CARD':
           return action.isReturningCard;
+
+        default:
+            return state
+    }
+}
+
+function isReturningOpponentCard (state = {isTrue: false, callback: null}, action) {
+    switch (action.type) {
+        case 'RETURNING_OPPONENT_CARD':
+          return action.isReturningOpponentCard;
 
         default:
             return state
@@ -278,9 +298,11 @@ const rootReducer = combineReducers({
     isMyTurn,
     isPlayingCard,
     isDiscardingCard,
+    isDiscardingOpponentCard,
     isSacrificingCard,
     isDestroyingCard,
     isReturningCard,
+    isReturningOpponentCard,
     isDrawingFromOpponent,
     isGivingToOpponent,
     isStealingUnicorn,

@@ -18,7 +18,7 @@ let testPlayers = [
       "Color": "Magenta",
       "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/46.png",
       activateOnPlay: 1,
-      upgrade: 27
+      upgrade: 19
     }],
     stable: [{
       "id": 8,
@@ -307,6 +307,11 @@ io.on('connection', (socket) => {
     io.to(`game:${lobbyName}`).emit('cardDiscarded', card, updatedDecks, updatedPlayers);
   });
 
+  socket.on('discardingOpponentCard', (lobbyName, card, updatedDecks, updatedPlayers) => {
+    console.log('Discarding Opponent Card')
+    io.to(`game:${lobbyName}`).emit('cardDiscarded', card, updatedDecks, updatedPlayers);
+  });
+
   socket.on('destroyCard', (lobbyName, card, updatedDecks, updatedPlayers) => {
     console.log('Destroying Card')
     io.to(`game:${lobbyName}`).emit('cardDestroyed', card, updatedDecks, updatedPlayers);
@@ -319,6 +324,11 @@ io.on('connection', (socket) => {
 
   socket.on('returnCard', (lobbyName, card, updatedDecks, updatedPlayers) => {
     console.log('Returning Card')
+    io.to(`game:${lobbyName}`).emit('cardReturned', card, updatedDecks, updatedPlayers);
+  });
+
+  socket.on('returningOpponentCard', (lobbyName, card, updatedDecks, updatedPlayers) => {
+    console.log('Returning Card from stable')
     io.to(`game:${lobbyName}`).emit('cardReturned', card, updatedDecks, updatedPlayers);
   });
 
@@ -345,6 +355,16 @@ io.on('connection', (socket) => {
   socket.on('playInstant', (lobbyName, playerIndex, instant) => {
     console.log('playingIntent: ', instant.name);
     io.to(`game:${lobbyName}`).emit('playerCheckedForInstant', playerIndex, instant);
+  })
+
+  socket.on('playersDiscarding', (lobbyName, playerIndex) => {
+    console.log('playersDiscarding: ', playerIndex);
+    io.to(`game:${lobbyName}`).emit('setPlayersDiscarding', playerIndex);
+  })
+
+  socket.on('discardCheck', (lobbyName, playerIndex) => {
+    console.log('discardCheck: ', playerIndex);
+    io.to(`game:${lobbyName}`).emit('playerCheckedForDiscarding', playerIndex);
   })
 
   socket.on('actionHappened', (lobbyName, updatedDecks, updatedPlayers) => {

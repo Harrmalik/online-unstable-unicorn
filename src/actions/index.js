@@ -96,6 +96,11 @@ export const discardingCard = (isDiscardingCard) => ({
     isDiscardingCard
 })
 
+export const discardingOpponentCard = (isDiscardingOpponentCard) => ({
+    type: 'DISCARDING_OPPONENT_CARD',
+    isDiscardingOpponentCard
+})
+
 export const sacrificingCard = (isSacrificingCard) => ({
     type: 'SACRIFICING_CARD',
     isSacrificingCard
@@ -109,6 +114,11 @@ export const destroyingCard = (isDestroyingCard) => ({
 export const returningCard = (isReturningCard) => ({
     type: 'RETURNING_CARD',
     isReturningCard
+})
+
+export const returningOpponentCard = (isReturningOpponentCard) => ({
+    type: 'RETURNING_OPPONENT_CARD',
+    isReturningOpponentCard
 })
 
 export const drawingFromOpponent = (isDrawingFromOpponent) => ({
