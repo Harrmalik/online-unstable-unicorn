@@ -75,7 +75,7 @@ const MemoStableComponent = React.memo(() => {
     if (card.type === 'Baby Unicorn') {
       updatedDecks['nursery'].push(card);
     } else {
-      updatedDecks['discardCard'].push(card);
+      updatedDecks['discardPile'].push(card);
     }
     updatedPlayers[currentPlayerIndex].stable.splice(index,1);
 

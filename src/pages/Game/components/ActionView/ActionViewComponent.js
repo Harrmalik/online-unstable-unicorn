@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux';
-import { updateDecks, setPlayers, endActionPhase, discardingCard } from 'actions';
+import { updateDecks, setPlayers, endActionPhase, discardingCard, sacrificingCard } from 'actions';
 import './ActionViewComponent.scss';
 import { Segment, Step } from 'semantic-ui-react';
 
@@ -49,14 +49,29 @@ function ActionViewComponent () {
       dispatchUpdates(updatedDecks, updatedPlayers)
     })
 
-    socketServer.on('setPlayersDiscarding', (playerIndex) => {
-      if (players[parseInt(currentPlayerIndex)].id === players[playerIndex].id) {
-        dispatch(discardingCard({
-          isTrue: true,
-          callback: () => {
-            socketServer.emit('discardCheck', lobbyName, playerIndex)
-          }
-        }))
+    socketServer.on('setPlayersDiscarding', (playerIndexes) => {
+      for (var i = 0; i < playerIndexes.length; i++) {
+        if (players[parseInt(currentPlayerIndex)].id === players[playerIndexes[i]].id) {
+          dispatch(discardingCard({
+            isTrue: true,
+            callback: () => {
+              socketServer.emit('discardCheck', lobbyName, currentPlayerIndex)
+            }
+          }))
+        }
+      }
+    })
+
+    socketServer.on('setPlayersSacrificing', (playerIndexes) => {
+      for (var i = 0; i < playerIndexes.length; i++) {
+        if (players[parseInt(currentPlayerIndex)].id === players[playerIndexes[i]].id) {
+          dispatch(sacrificingCard({
+            isTrue: true,
+            callback: () => {
+              socketServer.emit('sacrificeCheck', lobbyName, currentPlayerIndex)
+            }
+          }))
+        }
       }
     })
 
@@ -79,6 +94,7 @@ function ActionViewComponent () {
       socketServer.removeListener('unicornStolen');
       socketServer.removeListener('updateFromAction');
       socketServer.removeListener('setPlayersDiscarding');
+      socketServer.removeListener('setPlayersSacrificing');
       socketServer.removeListener('endingActionPhase');
     }
   }, [socketServer]);

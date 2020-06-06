@@ -18,16 +18,16 @@ let testPlayers = [
       "Color": "Magenta",
       "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/46.png",
       activateOnPlay: 1,
-      upgrade: 19
+      upgrade: 31
     }],
     stable: [{
       "id": 8,
       "name": "CANNIBAL BABY UNICORN",
-      "type": "Downgrade",
+      "type": "Baby Unicorn",
       "description": "If this card would be sacrificed, destroyed, or returned to your hand, return it to the Nursery instead.",
       "Quantity": 1,
       "Color": "Magenta",
-      "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/2.png"
+      "url": "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/8.png"
     }],
     viewingStableId: 1,
     viewingOtherPlayerModalId: 1,
@@ -357,14 +357,24 @@ io.on('connection', (socket) => {
     io.to(`game:${lobbyName}`).emit('playerCheckedForInstant', playerIndex, instant);
   })
 
-  socket.on('playersDiscarding', (lobbyName, playerIndex) => {
-    console.log('playersDiscarding: ', playerIndex);
-    io.to(`game:${lobbyName}`).emit('setPlayersDiscarding', playerIndex);
+  socket.on('playersDiscarding', (lobbyName, playerIndexes) => {
+    console.log('playersDiscarding: ', playerIndexes);
+    io.to(`game:${lobbyName}`).emit('setPlayersDiscarding', playerIndexes);
   })
 
   socket.on('discardCheck', (lobbyName, playerIndex) => {
     console.log('discardCheck: ', playerIndex);
     io.to(`game:${lobbyName}`).emit('playerCheckedForDiscarding', playerIndex);
+  })
+
+  socket.on('playersSacrificing', (lobbyName, playerIndexes) => {
+    console.log('playersSacrificing: ', playerIndexes);
+    io.to(`game:${lobbyName}`).emit('setPlayersSacrificing', playerIndexes);
+  })
+
+  socket.on('sacrificeCheck', (lobbyName, playerIndex) => {
+    console.log('sacrificeCheck: ', playerIndex);
+    io.to(`game:${lobbyName}`).emit('playerCheckedForSacrifing', playerIndex);
   })
 
   socket.on('actionHappened', (lobbyName, updatedDecks, updatedPlayers) => {

@@ -175,7 +175,7 @@ function PlayerView() {
 
   useEffect(() => {
     if (numPlayersSacrifcing === 0) {
-      sacrificingAction.callback()()
+      sacrificingAction.callback()
     }
   }, [numPlayersSacrifcing])
 
@@ -712,7 +712,7 @@ function PlayerView() {
                     isTrue: false,
                     callback: null
                   }))
-                  socketServer.emit('playersDiscarding', game.uri, choosenPlayer.index);
+                  socketServer.emit('playersDiscarding', game.uri, [choosenPlayer.index]);
                 }
               }))
             }
@@ -765,13 +765,25 @@ function PlayerView() {
         break;
       case 23:
         //'When this card enters your Stable, STEAL a Basic Unicorn card. If this card leaves your Stable, return that Basic Unicorn card to the Stable from which you stole it.',
+        setActionSideEffect({
+          name: cardBeingPlayed.name,
+          actions: [{
+            name: 'Borrow Unicorn',
+            requiresAction: true,
+            callback: () => dispatch(stealUnicorn({
+              isTrue: true,
+              type: 'Basic Unicorn',
+              callback: callback
+            }))
+          }]
+        });
         break;
       case 3:
         //'You may STEAL a Unicorn card. At the end of your turn, return that Unicorn card to the Stable from which you stole it.',
         setActionSideEffect({
           name: cardBeingPlayed.name,
           actions: [{
-            name: 'Borrow Unicorn',
+            name: 'Steal Basic Unicorn',
             requiresAction: true,
             callback: () => dispatch(drawingFromOpponent({
               isTrue: true,
@@ -808,6 +820,24 @@ function PlayerView() {
         break;
       case 26:
         //'When this card enters your Stable, each player must SACRIFICE a Unicorn card.',
+        setActionSideEffect({
+          name: cardBeingPlayed.name,
+          callback,
+          actions: [{
+            name: 'Make everyone sacrifice card',
+            callback: () => {
+              setNumPlayersSacrifcing(players.length);
+              setSacrficingAction({
+                callback
+              });
+              let playerIndexes = [];
+              for (var i = 0; i < players.length; i++) {
+                playerIndexes.push(i);
+              }
+              socketServer.emit('playersSacrificing', game.uri, playerIndexes);
+            }
+          }]
+        });
         break;
       case 27:
         // 'When this card enters your Stable, you may search the deck for a Unicorn card and add it to your hand. Shuffle the deck.',
@@ -853,9 +883,41 @@ function PlayerView() {
         break;
       case 31:
         //'When this card enters your Stable, STEAL a Baby Unicorn card. If this card leaves your Stable, return that Baby Unicorn card to the Stable from which you stole it.',
+        setActionSideEffect({
+          name: cardBeingPlayed.name,
+          actions: [{
+            name: 'Steal baby Unicorn',
+            requiresAction: true,
+            callback: () => dispatch(stealUnicorn({
+              isTrue: true,
+              type: 'Baby Unicorn',
+              callback: callback
+            }))
+          }]
+        });
         break;
       case 32:
         //'When this card enters your Stable, each other player must DISCARD a card.',
+        setActionSideEffect({
+          name: cardBeingPlayed.name,
+          callback,
+          actions: [{
+            name: 'Make everyone discard card',
+            callback: () => {
+              setNumPlayersDiscarding(players.length - 1);
+              setDiscardingAction({
+                callback
+              });
+              let playerIndexes = [];
+              for (var i = 0; i < players.length; i++) {
+                if (i !== parseInt(myPlayer.currentPlayerIndex)) {
+                  playerIndexes.push(i);
+                }
+              }
+              socketServer.emit('playersDiscarding', game.uri, playerIndexes);
+            }
+          }]
+        });
         break;
     }
   }
@@ -1182,7 +1244,9 @@ function PlayersToAttackComponent(props) {
 
     if (isStealingUnicorn.isTrue) {
       handleAction = (card, index) => {
-        handleGiveToOpponent(selectedPlayer);
+        if (isChoosingPlayer.isTrue) {
+          handleGiveToOpponent(selectedPlayer);
+        }
         handleStealUnicorn(card, index);
       }
     }
@@ -1250,15 +1314,17 @@ function PlayersToAttackComponent(props) {
     const updatedDecks = decks;
     const updatedPlayers = players;
 
-    updatedPlayers[selectedPlayer.index].stable.splice(index, 1);
-    updatedPlayers[myPlayerIndex].stable.push(card);
+    if (!isStealingUnicorn.type || isStealingUnicorn.type === card.type) {
+      updatedPlayers[selectedPlayer.index].stable.splice(index, 1);
+      updatedPlayers[myPlayerIndex].stable.push(card);
+    }
 
     socketServer.emit('stealUnicorn', lobbyName, card, updatedDecks, updatedPlayers);
     if (isStealingUnicorn.callback) {
       isStealingUnicorn.callback();
     }
 
-    dispatch(stealUnicorn({isTrue: false, callback: null}))
+    dispatch(stealUnicorn({isTrue: false, type: null, callback: null}))
   }
 
   function handleGiveToOpponent(selectedPlayer) {
