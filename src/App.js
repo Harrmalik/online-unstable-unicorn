@@ -1,33 +1,31 @@
-import React from 'react';
-import './App.css';
-import store from './store.js';
-import { Provider } from 'react-redux';
+import React from "react";
+import "./App.css";
+import store from "./store.js";
+import { Provider } from "react-redux";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import HomePage from './pages/Home/HomePage.js';
-import LobbyPage from './pages/Lobby/LobbyPage.js';
-import MemoGamePage from './pages/Game/GamePage.js';
+import HomePage from "./pages/Home/HomePage.js";
+import LobbyPage from "./pages/Lobby/LobbyPage.js";
+import MemoGamePage from "./pages/Game/GamePage.js";
 
-console.log(store.getState())
-store.subscribe(() =>
-  console.log(store.getState())
-)
+console.log(store.getState());
+store.subscribe(() => console.log(store.getState()));
 
 function App() {
   return (
     <Provider store={store}>
       <Router>
         <div className="App">
-           <Route exact path="/">
-              <HomePage/>
-           </Route>
+          <Route exact path="/">
+            <HomePage />
+          </Route>
 
-           <Route path="/:id/lobby">
-              <LobbyPage/>
-           </Route>
+          <Route path="/:id/lobby">
+            <LobbyPage />
+          </Route>
 
-           <Route path="/:id/game">
-             <MemoGamePage/>
-           </Route>
+          <Route path="/:id/game">
+            <MemoGamePage />
+          </Route>
         </div>
       </Router>
     </Provider>

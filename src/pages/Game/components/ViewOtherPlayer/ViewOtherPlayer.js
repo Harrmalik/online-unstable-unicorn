@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { Button, Modal } from 'semantic-ui-react';
-import { viewStable, toggleViewingOtherPlayerModal } from 'actions';
-import { useViewingPlayer, useMyPlayer } from 'utils/hooks.js';
+import { Button, Modal } from "semantic-ui-react";
+import { viewStable, toggleViewingOtherPlayerModal } from "actions";
+import { useViewingPlayer, useMyPlayer } from "utils/hooks.js";
 
 function ViewOtherPlayer(props) {
   const dispatch = useDispatch();
@@ -24,40 +24,34 @@ function ViewOtherPlayer(props) {
   }
 
   return (
-    <Modal
-      open={props.isOpen}
-      closeOnEscape={false}
-      closeOnDimmerClick = {false}>
+    <Modal open={props.isOpen} closeOnEscape={false} closeOnDimmerClick={false}>
       <Modal.Header>View {playerToView.name}'s </Modal.Header>
-      {isViewingHand &&
+      {isViewingHand && (
         <Modal.Content>
-          {playerToView.hand.map(card => {
-            return(
-              <p key={card.id}>{card.name}</p>
-            )
+          {playerToView.hand.map((card) => {
+            return <p key={card.id}>{card.name}</p>;
           })}
         </Modal.Content>
-      }
-        {!isViewingHand &&
+      )}
+      {!isViewingHand && (
         <Modal.Actions center="true">
-          <Button onClick={() => { viewStableModal(playerToView) }}>
+          <Button
+            onClick={() => {
+              viewStableModal(playerToView);
+            }}
+          >
             Stable
           </Button>
-          <Button
-            onClick={viewHand}
-            content='Hand'
-          />
+          <Button onClick={viewHand} content="Hand" />
         </Modal.Actions>
-        }
-        {isViewingHand &&
+      )}
+      {isViewingHand && (
         <Modal.Actions center="true">
-          <Button onClick={close}>
-            Close
-          </Button>
+          <Button onClick={close}>Close</Button>
         </Modal.Actions>
-        }
+      )}
     </Modal>
-  )
+  );
 }
 
-export default ViewOtherPlayer
+export default ViewOtherPlayer;
