@@ -1,16 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  setCurrentPlayer,
-  setPlayers,
-  startGame,
-  nextPhase,
-  endTurn,
-  playingCard,
-} from "actions";
-import groupBy from "lodash/groupBy";
+import { nextPhase, endTurn } from "actions";
 import { useMyPlayer, useCheckForInstants } from "utils/hooks.js";
-import { Dropdown, Image, Item, Segment, Button } from "semantic-ui-react";
+import { Button } from "semantic-ui-react";
 
 // Components
 import CardComponent from "components/Card/CardComponent";
@@ -20,7 +12,6 @@ const MemoSpectatorView = React.memo(() => {
   const [card, setCard] = useState(null);
   const socketServer = useSelector((state) => state.socket);
   const currentGame = useSelector((state) => state.game);
-  const decks = useSelector((state) => state.decks);
   const dispatch = useDispatch();
   const [checkForInstant, setCheckForInstant] = useState(false);
 

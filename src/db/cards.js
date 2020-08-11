@@ -1,6 +1,6 @@
 const cards = [
   {
-    id: 1,
+    _id: 1,
     name: "SHOTGUN BABY UNICORN",
     type: "Baby Unicorn",
     description:
@@ -8,15 +8,14 @@ const cards = [
     color: "Magenta",
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/1.png",
     activateAtBeginning: false,
-    upgrade: "",
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 2,
+    _id: 2,
     name: "BYE BYE BABY UNICORN",
     type: "Baby Unicorn",
     description:
@@ -24,15 +23,14 @@ const cards = [
     color: "Magenta",
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/2.png",
     activateAtBeginning: false,
-    upgrade: "",
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 3,
+    _id: 3,
     name: "DUMPSTER BABY UNICORN",
     type: "Baby Unicorn",
     description:
@@ -40,15 +38,14 @@ const cards = [
     color: "Magenta",
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/3.png",
     activateAtBeginning: false,
-    upgrade: "",
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 4,
+    _id: 4,
     name: "FUCKING CUTE BABY UNICORN",
     type: "Baby Unicorn",
     description:
@@ -56,15 +53,14 @@ const cards = [
     color: "Magenta",
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/4.png",
     activateAtBeginning: false,
-    upgrade: "",
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 5,
+    _id: 5,
     name: "SOMEONE ELSE'S BABY UNICORN",
     type: "Baby Unicorn",
     description:
@@ -72,15 +68,14 @@ const cards = [
     color: "Magenta",
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/5.png",
     activateAtBeginning: false,
-    upgrade: "",
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 6,
+    _id: 6,
     name: "TASTY BABY UNICORN",
     type: "Baby Unicorn",
     description:
@@ -88,15 +83,14 @@ const cards = [
     color: "Magenta",
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/6.png",
     activateAtBeginning: false,
-    upgrade: "",
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 7,
+    _id: 7,
     name: "BABY UNICORN OF INCEST",
     type: "Baby Unicorn",
     description:
@@ -104,15 +98,14 @@ const cards = [
     color: "Magenta",
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/7.png",
     activateAtBeginning: false,
-    upgrade: "",
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 8,
+    _id: 8,
     name: "CANNIBAL BABY UNICORN",
     type: "Baby Unicorn",
     description:
@@ -120,15 +113,14 @@ const cards = [
     color: "Magenta",
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/8.png",
     activateAtBeginning: false,
-    upgrade: "",
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 9,
+    _id: 9,
     name: "FACELESS BABY UNICORN",
     type: "Baby Unicorn",
     description:
@@ -136,15 +128,14 @@ const cards = [
     color: "Magenta",
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/9.png",
     activateAtBeginning: false,
-    upgrade: "",
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 10,
+    _id: 10,
     name: "FUCKING UGLY BABY UNICORN",
     type: "Baby Unicorn",
     description:
@@ -152,31 +143,29 @@ const cards = [
     color: "Magenta",
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/10.png",
     activateAtBeginning: false,
-    upgrade: "",
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 11,
-    name: "UPSIDE DOWN BABY UNICORN",
+    _id: 11,
+    name: "UPS_idE DOWN BABY UNICORN",
     type: "Baby Unicorn",
     description:
       "If this card would be sacrificed, destroyed, or returned to your hand, return it to the Nursery instead.",
     color: "Magenta",
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/11.png",
     activateAtBeginning: false,
-    upgrade: "",
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 12,
+    _id: 12,
     name: "CONJOINED BABY UNICORNS",
     type: "Baby Unicorn",
     description:
@@ -184,15 +173,14 @@ const cards = [
     color: "Magenta",
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/12.png",
     activateAtBeginning: false,
-    upgrade: "",
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 13,
+    _id: 13,
     name: "PAGEANT BABY UNICORN",
     type: "Baby Unicorn",
     description:
@@ -200,15 +188,14 @@ const cards = [
     color: "Magenta",
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/13.png",
     activateAtBeginning: false,
-    upgrade: "",
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 14,
+    _id: 14,
     name: "STICKY SITUATION",
     type: "Downgrade",
     description:
@@ -216,45 +203,45 @@ const cards = [
     color: "Yellow",
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/14.png",
     activateAtBeginning: true,
-    upgrade: "",
+
     downgrade: 0,
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 15,
-    name: "MID-SEX CHARLIE HORSE",
+    _id: 15,
+    name: "M_id-SEX CHARLIE HORSE",
     type: "Downgrade",
     description: "Triggered effects of your Unicorn cards do not activate.",
     color: "Yellow",
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/15.png",
     activateAtBeginning: false,
-    upgrade: "",
+
     downgrade: 1,
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 16,
+    _id: 16,
     name: "LIMP HORN",
     type: "Downgrade",
     description: "You cannot play Upgrade cards.",
     color: "Yellow",
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/16.png",
     activateAtBeginning: false,
-    upgrade: "",
+
     downgrade: 2,
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 17,
+    _id: 17,
     name: "AUTOEROTIC ASPHYXIATION",
     type: "Downgrade",
     description:
@@ -262,15 +249,15 @@ const cards = [
     color: "Yellow",
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/17.png",
     activateAtBeginning: true,
-    upgrade: "",
+
     downgrade: 3,
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 18,
+    _id: 18,
     name: "UNICORN FLATULENCE",
     type: "Downgrade",
     description:
@@ -278,46 +265,46 @@ const cards = [
     color: "Yellow",
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/18.png",
     activateAtBeginning: true,
-    upgrade: "",
+
     downgrade: 4,
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 19,
+    _id: 19,
     name: "UNICORN BUTT PLUG",
     type: "Downgrade",
     description: "Your hand limit is 3 cards.",
     color: "Yellow",
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/19.png",
     activateAtBeginning: false,
-    upgrade: "",
+
     downgrade: 5,
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 20,
+    _id: 20,
     name: "HORSE SHIT",
     type: "Downgrade",
     description:
-      "All of your Unicorn cards are considered Shits. Cards that affect Unicorn cards do not affect Shits.",
+      "All of your Unicorn cards are cons_idered Shits. Cards that affect Unicorn cards do not affect Shits.",
     color: "Yellow",
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/20.png",
     activateAtBeginning: false,
-    upgrade: "",
+
     downgrade: 6,
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 21,
+    _id: 21,
     name: "PUTTING ON A SHOW",
     type: "Upgrade",
     description:
@@ -326,14 +313,14 @@ const cards = [
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/21.png",
     activateAtBeginning: true,
     upgrade: 0,
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 221,
+    _id: 221,
     name: "PUTTING ON A SHOW",
     type: "Upgrade",
     description:
@@ -342,14 +329,14 @@ const cards = [
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/21.png",
     activateAtBeginning: true,
     upgrade: 0,
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 22,
+    _id: 22,
     name: "UNICORN DUNGEON",
     type: "Upgrade",
     description:
@@ -358,14 +345,14 @@ const cards = [
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/22.png",
     activateAtBeginning: true,
     upgrade: 1,
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 23,
+    _id: 23,
     name: "PONY PLAY",
     type: "Upgrade",
     description:
@@ -374,14 +361,14 @@ const cards = [
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/23.png",
     activateAtBeginning: true,
     upgrade: 2,
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 223,
+    _id: 223,
     name: "PONY PLAY",
     type: "Upgrade",
     description:
@@ -390,14 +377,14 @@ const cards = [
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/23.png",
     activateAtBeginning: true,
     upgrade: 2,
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 24,
+    _id: 24,
     name: "NO STRINGS ATTACHED",
     type: "Upgrade",
     description:
@@ -406,14 +393,14 @@ const cards = [
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/24.png",
     activateAtBeginning: true,
     upgrade: 3,
-    downgrade: "",
+
     activateAtEnd: true,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 25,
+    _id: 25,
     name: "UNICORN SPEED",
     type: "Upgrade",
     description:
@@ -422,14 +409,14 @@ const cards = [
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/25.png",
     activateAtBeginning: true,
     upgrade: 4,
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
     playRequirement: "basicUnicorn",
     isGlobal: false,
   },
   {
-    id: 225,
+    _id: 225,
     name: "UNICORN SPEED",
     type: "Upgrade",
     description:
@@ -438,14 +425,14 @@ const cards = [
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/25.png",
     activateAtBeginning: true,
     upgrade: 4,
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
     playRequirement: "basicUnicorn",
     isGlobal: false,
   },
   {
-    id: 26,
+    _id: 26,
     name: "DOMINATRIX WHIP",
     type: "Upgrade",
     description:
@@ -454,14 +441,14 @@ const cards = [
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/26.png",
     activateAtBeginning: true,
     upgrade: 5,
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 27,
+    _id: 27,
     name: "UNICORN WITH BENEFITS",
     type: "Upgrade",
     description:
@@ -470,14 +457,14 @@ const cards = [
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/27.png",
     activateAtBeginning: true,
     upgrade: 6,
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
     playRequirement: "basicUnicorn",
     isGlobal: false,
   },
   {
-    id: 28,
+    _id: 28,
     name: "BLOW UP UNICORN",
     type: "Upgrade",
     description:
@@ -486,14 +473,14 @@ const cards = [
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/28.png",
     activateAtBeginning: false,
     upgrade: 7,
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 228,
+    _id: 228,
     name: "BLOW UP UNICORN",
     type: "Upgrade",
     description:
@@ -502,14 +489,14 @@ const cards = [
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/28.png",
     activateAtBeginning: false,
     upgrade: 7,
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 29,
+    _id: 29,
     name: "UNICORN CHASTITY BELT",
     type: "Upgrade",
     description: "Your Unicorn cards cannot be destroyed.",
@@ -517,14 +504,14 @@ const cards = [
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/29.png",
     activateAtBeginning: false,
     upgrade: 8,
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 30,
+    _id: 30,
     name: "UNICORN VIBRATOR",
     type: "Upgrade",
     description:
@@ -533,14 +520,14 @@ const cards = [
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/30.png",
     activateAtBeginning: true,
     upgrade: 9,
-    downgrade: "",
+
     activateAtEnd: true,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 230,
+    _id: 230,
     name: "UNICORN VIBRATOR",
     type: "Upgrade",
     description:
@@ -549,329 +536,308 @@ const cards = [
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/30.png",
     activateAtBeginning: true,
     upgrade: 9,
-    downgrade: "",
+
     activateAtEnd: true,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 31,
+    _id: 31,
     name: "HORSE WITH A DILDO",
     type: "Basic Unicorn",
     description: "Sometimes a horse just needs to feel a little special.",
     color: "Purple",
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/31.png",
     activateAtBeginning: false,
-    upgrade: "",
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 231,
+    _id: 231,
     name: "HORSE WITH A DILDO",
     type: "Basic Unicorn",
     description: "Sometimes a horse just needs to feel a little special.",
     color: "Purple",
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/31.png",
     activateAtBeginning: false,
-    upgrade: "",
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 331,
+    _id: 331,
     name: "HORSE WITH A DILDO",
     type: "Basic Unicorn",
     description: "Sometimes a horse just needs to feel a little special.",
     color: "Purple",
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/31.png",
     activateAtBeginning: false,
-    upgrade: "",
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 32,
+    _id: 32,
     name: "WASTED WHITE UNICORN",
     type: "Basic Unicorn",
     description: "#livingfortheweekend",
     color: "Purple",
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/32.png",
     activateAtBeginning: false,
-    upgrade: "",
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 232,
+    _id: 232,
     name: "WASTED WHITE UNICORN",
     type: "Basic Unicorn",
     description: "#livingfortheweekend",
     color: "Purple",
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/32.png",
     activateAtBeginning: false,
-    upgrade: "",
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 332,
+    _id: 332,
     name: "WASTED WHITE UNICORN",
     type: "Basic Unicorn",
     description: "#livingfortheweekend",
     color: "Purple",
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/32.png",
     activateAtBeginning: false,
-    upgrade: "",
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 33,
+    _id: 33,
     name: "UNICORN ON THE STREET CORNER",
     type: "Basic Unicorn",
     description: "I'm expensive, but I'm worth it.",
     color: "Purple",
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/33.png",
     activateAtBeginning: false,
-    upgrade: "",
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 233,
+    _id: 233,
     name: "UNICORN ON THE STREET CORNER",
     type: "Basic Unicorn",
     description: "I'm expensive, but I'm worth it.",
     color: "Purple",
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/33.png",
     activateAtBeginning: false,
-    upgrade: "",
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 333,
+    _id: 333,
     name: "UNICORN ON THE STREET CORNER",
     type: "Basic Unicorn",
     description: "I'm expensive, but I'm worth it.",
     color: "Purple",
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/33.png",
     activateAtBeginning: false,
-    upgrade: "",
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 34,
+    _id: 34,
     name: "VANILLACORN",
     type: "Basic Unicorn",
     description: "My body is ready!",
     color: "Purple",
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/34.png",
     activateAtBeginning: false,
-    upgrade: "",
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 234,
+    _id: 234,
     name: "VANILLACORN",
     type: "Basic Unicorn",
     description: "My body is ready!",
     color: "Purple",
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/34.png",
     activateAtBeginning: false,
-    upgrade: "",
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 334,
+    _id: 334,
     name: "VANILLACORN",
     type: "Basic Unicorn",
     description: "My body is ready!",
     color: "Purple",
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/34.png",
     activateAtBeginning: false,
-    upgrade: "",
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 35,
+    _id: 35,
     name: "FUCKBOI UNICORN",
     type: "Basic Unicorn",
     description: "send pics 👊🏼🍆💦💦",
     color: "Purple",
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/35.png",
     activateAtBeginning: false,
-    upgrade: "",
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 235,
+    _id: 235,
     name: "FUCKBOI UNICORN",
     type: "Basic Unicorn",
     description: "send pics 👊🏼🍆💦💦",
     color: "Purple",
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/35.png",
     activateAtBeginning: false,
-    upgrade: "",
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 335,
+    _id: 335,
     name: "FUCKBOI UNICORN",
     type: "Basic Unicorn",
     description: "send pics 👊🏼🍆💦💦",
     color: "Purple",
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/35.png",
     activateAtBeginning: false,
-    upgrade: "",
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 36,
+    _id: 36,
     name: "STONER UNICORN",
     type: "Basic Unicorn",
     description: "It's 4:20 somewhere.",
     color: "Purple",
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/36.png",
     activateAtBeginning: false,
-    upgrade: "",
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 236,
+    _id: 236,
     name: "STONER UNICORN",
     type: "Basic Unicorn",
     description: "It's 4:20 somewhere.",
     color: "Purple",
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/36.png",
     activateAtBeginning: false,
-    upgrade: "",
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 336,
+    _id: 336,
     name: "STONER UNICORN",
     type: "Basic Unicorn",
     description: "It's 4:20 somewhere.",
     color: "Purple",
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/36.png",
     activateAtBeginning: false,
-    upgrade: "",
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 37,
+    _id: 37,
     name: "SINGLE UNICORN",
     type: "Basic Unicorn",
     description: "The single life.",
     color: "Purple",
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/37.png",
     activateAtBeginning: false,
-    upgrade: "",
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 237,
+    _id: 237,
     name: "SINGLE UNICORN",
     type: "Basic Unicorn",
     description: "The single life.",
     color: "Purple",
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/37.png",
     activateAtBeginning: false,
-    upgrade: "",
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 337,
+    _id: 337,
     name: "SINGLE UNICORN",
     type: "Basic Unicorn",
     description: "The single life.",
     color: "Purple",
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/37.png",
     activateAtBeginning: false,
-    upgrade: "",
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 38,
+    _id: 38,
     name: "DOUBLE AGENT UNICORN",
     type: "Magical Unicorn",
     description:
@@ -880,14 +846,14 @@ const cards = [
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/38.png",
     activateAtBeginning: true,
     upgrade: 10,
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 39,
+    _id: 39,
     name: "KITTENCORN IN HEAT",
     type: "Magical Unicorn",
     description:
@@ -896,14 +862,14 @@ const cards = [
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/39.png",
     activateAtBeginning: true,
     upgrade: 11,
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 40,
+    _id: 40,
     name: "SADOMASOCORN",
     type: "Magical Unicorn",
     description:
@@ -912,14 +878,14 @@ const cards = [
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/40.png",
     activateAtBeginning: true,
     upgrade: 0,
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 41,
+    _id: 41,
     name: "FLESH-EATING UNICORN",
     type: "Magical Unicorn",
     description:
@@ -927,15 +893,15 @@ const cards = [
     color: "Blue",
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/41.png",
     activateAtBeginning: false,
-    upgrade: "",
+
     downgrade: 10,
     activateAtEnd: false,
     activateOnPlay: true,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 42,
+    _id: 42,
     name: "GIANT HORNED COCK",
     type: "Magical Unicorn",
     description:
@@ -943,15 +909,15 @@ const cards = [
     color: "Blue",
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/42.png",
     activateAtBeginning: false,
-    upgrade: "",
+
     downgrade: 11,
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 43,
+    _id: 43,
     name: "STRAIGHT BUT CURIOUS UNICORN",
     type: "Magical Unicorn",
     description:
@@ -960,14 +926,14 @@ const cards = [
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/43.png",
     activateAtBeginning: false,
     upgrade: 12,
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: true,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 44,
+    _id: 44,
     name: "TWINKICORN",
     type: "Magical Unicorn",
     description:
@@ -976,14 +942,14 @@ const cards = [
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/44.png",
     activateAtBeginning: false,
     upgrade: 13,
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: true,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 45,
+    _id: 45,
     name: "DUMPSTER DIVING UNICORN",
     type: "Magical Unicorn",
     description:
@@ -992,14 +958,14 @@ const cards = [
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/45.png",
     activateAtBeginning: false,
     upgrade: 14,
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: true,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 46,
+    _id: 46,
     name: "HENTAICORN",
     type: "Magical Unicorn",
     description:
@@ -1008,15 +974,15 @@ const cards = [
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/46.png",
     activateAtBeginning: false,
     upgrade: 7,
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 47,
-    name: "HOMICIDAL PSYCHOCORN",
+    _id: 47,
+    name: "HOMIC_idAL PSYCHOCORN",
     type: "Magical Unicorn",
     description:
       "If this card is in your Stable at the beginning of your turn, you may DISCARD your hand. If you do, DESTROY a Unicorn card.",
@@ -1024,14 +990,14 @@ const cards = [
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/47.png",
     activateAtBeginning: true,
     upgrade: 15,
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 48,
+    _id: 48,
     name: "UNCUT UNICORN",
     type: "Magical Unicorn",
     description: "Your hand limit increases by 1.",
@@ -1039,14 +1005,14 @@ const cards = [
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/48.png",
     activateAtBeginning: false,
     upgrade: 16,
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 49,
+    _id: 49,
     name: "UNICORN CUCKOLD",
     type: "Magical Unicorn",
     description:
@@ -1055,14 +1021,14 @@ const cards = [
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/49.png",
     activateAtBeginning: true,
     upgrade: 17,
-    downgrade: "",
+
     activateAtEnd: true,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 50,
+    _id: 50,
     name: "BEAR DADDY UNICORN",
     type: "Magical Unicorn",
     description:
@@ -1071,14 +1037,14 @@ const cards = [
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/50.png",
     activateAtBeginning: false,
     upgrade: 18,
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: true,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 51,
+    _id: 51,
     name: "MOTHER FUCKIN' FLYING UNICORN",
     type: "Magical Unicorn",
     description:
@@ -1087,14 +1053,14 @@ const cards = [
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/51.png",
     activateAtBeginning: false,
     upgrade: 19,
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: true,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 52,
+    _id: 52,
     name: "POLYAMOROUS UNICORN",
     type: "Magical Unicorn",
     description:
@@ -1103,14 +1069,14 @@ const cards = [
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/52.png",
     activateAtBeginning: true,
     upgrade: 20,
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 53,
+    _id: 53,
     name: "UNEXPECTED MIRACLE UNICORN",
     type: "Magical Unicorn",
     description:
@@ -1119,14 +1085,14 @@ const cards = [
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/53.png",
     activateAtBeginning: false,
     upgrade: 21,
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: true,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 54,
+    _id: 54,
     name: "SEXTRA-TERRESTRIAL UNICORN",
     type: "Magical Unicorn",
     description:
@@ -1135,14 +1101,14 @@ const cards = [
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/54.png",
     activateAtBeginning: false,
     upgrade: 22,
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: true,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 55,
+    _id: 55,
     name: "ENTITLED UNICORN",
     type: "Magical Unicorn",
     description:
@@ -1151,14 +1117,14 @@ const cards = [
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/55.png",
     activateAtBeginning: false,
     upgrade: 2,
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: true,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 56,
+    _id: 56,
     name: "NAKED NARWHAL",
     type: "Magical Unicorn",
     description:
@@ -1167,14 +1133,14 @@ const cards = [
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/56.png",
     activateAtBeginning: false,
     upgrade: 23,
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: true,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 57,
+    _id: 57,
     name: "EUNUCHORN",
     type: "Magical Unicorn",
     description: "Baby Unicorn cards cannot enter any player's Stable.",
@@ -1182,14 +1148,14 @@ const cards = [
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/57.png",
     activateAtBeginning: false,
     upgrade: 24,
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 58,
+    _id: 58,
     name: "HORNY FLYING UNICORN",
     type: "Magical Unicorn",
     description:
@@ -1198,14 +1164,14 @@ const cards = [
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/58.png",
     activateAtBeginning: false,
     upgrade: 3,
-    downgrade: "",
+
     activateAtEnd: true,
     activateOnPlay: true,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 59,
+    _id: 59,
     name: "OFFICER HORNIE",
     type: "Magical Unicorn",
     description:
@@ -1214,14 +1180,14 @@ const cards = [
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/59.png",
     activateAtBeginning: false,
     upgrade: 25,
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: true,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 60,
+    _id: 60,
     name: "CULT LEADER UNICORN",
     type: "Magical Unicorn",
     description:
@@ -1230,14 +1196,14 @@ const cards = [
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/60.png",
     activateAtBeginning: false,
     upgrade: 26,
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: true,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 61,
+    _id: 61,
     name: "BUKKAKECORN",
     type: "Magical Unicorn",
     description:
@@ -1246,14 +1212,14 @@ const cards = [
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/61.png",
     activateAtBeginning: true,
     upgrade: 3,
-    downgrade: "",
+
     activateAtEnd: true,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 62,
+    _id: 62,
     name: "MOIST UNICORN",
     type: "Magical Unicorn",
     description:
@@ -1262,14 +1228,14 @@ const cards = [
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/62.png",
     activateAtBeginning: false,
     upgrade: 27,
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: true,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 63,
+    _id: 63,
     name: "UNICORN DANCER",
     type: "Magical Unicorn",
     description:
@@ -1278,14 +1244,14 @@ const cards = [
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/63.png",
     activateAtBeginning: true,
     upgrade: 28,
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 64,
+    _id: 64,
     name: "SEMENBISCUIT",
     type: "Magical Unicorn",
     description:
@@ -1294,14 +1260,14 @@ const cards = [
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/64.png",
     activateAtBeginning: false,
     upgrade: 29,
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: true,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 65,
+    _id: 65,
     name: "TOTAL STUD UNICORN",
     type: "Magical Unicorn",
     description:
@@ -1310,14 +1276,14 @@ const cards = [
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/65.png",
     activateAtBeginning: false,
     upgrade: 30,
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 66,
+    _id: 66,
     name: "FREE CANDY UNICORN",
     type: "Magical Unicorn",
     description:
@@ -1326,14 +1292,14 @@ const cards = [
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/66.png",
     activateAtBeginning: false,
     upgrade: 31,
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: true,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 67,
+    _id: 67,
     name: "MANSCAPED LLAMACORN",
     type: "Magical Unicorn",
     description:
@@ -1342,14 +1308,14 @@ const cards = [
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/67.png",
     activateAtBeginning: false,
     upgrade: 32,
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: true,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 68,
+    _id: 68,
     name: "THE BITCHIEST UNICORN",
     type: "Magical Unicorn",
     description:
@@ -1358,14 +1324,14 @@ const cards = [
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/68.png",
     activateAtBeginning: true,
     upgrade: 19,
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
     playRequirement: "babyUnicorn",
     isGlobal: false,
   },
   {
-    id: 69,
+    _id: 69,
     name: "RAINBOW SHITSTORM",
     type: "Magic",
     description:
@@ -1374,14 +1340,14 @@ const cards = [
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/69.png",
     activateAtBeginning: false,
     upgrade: 33,
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 70,
+    _id: 70,
     name: "UNICORN HANGOVER",
     type: "Magic",
     description: "Choose any player. That player must skip their next turn.",
@@ -1389,14 +1355,14 @@ const cards = [
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/70.png",
     activateAtBeginning: false,
     upgrade: 34,
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 71,
+    _id: 71,
     name: "SEX, DRUGS, AND UNICORNS",
     type: "Magic",
     description:
@@ -1405,14 +1371,14 @@ const cards = [
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/71.png",
     activateAtBeginning: false,
     upgrade: 35,
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 72,
+    _id: 72,
     name: "BREAKING AND ENTERING",
     type: "Magic",
     description:
@@ -1421,14 +1387,14 @@ const cards = [
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/72.png",
     activateAtBeginning: false,
     upgrade: 36,
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 272,
+    _id: 272,
     name: "BREAKING AND ENTERING",
     type: "Magic",
     description:
@@ -1437,14 +1403,14 @@ const cards = [
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/72.png",
     activateAtBeginning: false,
     upgrade: 36,
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 73,
+    _id: 73,
     name: "BABY TRAP",
     type: "Magic",
     description: "STEAL a Baby Unicorn card.",
@@ -1452,14 +1418,14 @@ const cards = [
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/73.png",
     activateAtBeginning: false,
     upgrade: 37,
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 273,
+    _id: 273,
     name: "BABY TRAP",
     type: "Magic",
     description: "STEAL a Baby Unicorn card.",
@@ -1467,14 +1433,14 @@ const cards = [
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/73.png",
     activateAtBeginning: false,
     upgrade: 37,
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 74,
+    _id: 74,
     name: "MAKE IT RAIN",
     type: "Magic",
     description: "DISCARD 2 cards, then DRAW 2 cards. Take another turn.",
@@ -1482,14 +1448,14 @@ const cards = [
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/74.png",
     activateAtBeginning: false,
     upgrade: 38,
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 75,
+    _id: 75,
     name: "FUCK, MARRY, KILL.",
     type: "Magic",
     description:
@@ -1498,14 +1464,14 @@ const cards = [
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/75.png",
     activateAtBeginning: false,
     upgrade: 39,
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 275,
+    _id: 275,
     name: "FUCK, MARRY, KILL.",
     type: "Magic",
     description:
@@ -1514,14 +1480,14 @@ const cards = [
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/75.png",
     activateAtBeginning: false,
     upgrade: 39,
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 76,
+    _id: 76,
     name: "UNICORN ENEMA",
     type: "Magic",
     description:
@@ -1530,14 +1496,14 @@ const cards = [
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/76.png",
     activateAtBeginning: false,
     upgrade: 40,
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 77,
+    _id: 77,
     name: "KINK SHAME",
     type: "Magic",
     description: "SACRIFICE or DESTROY an Upgrade or Downgrade card.",
@@ -1545,14 +1511,14 @@ const cards = [
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/77.png",
     activateAtBeginning: false,
     upgrade: 41,
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 277,
+    _id: 277,
     name: "KINK SHAME",
     type: "Magic",
     description: "SACRIFICE or DESTROY an Upgrade or Downgrade card.",
@@ -1560,14 +1526,14 @@ const cards = [
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/77.png",
     activateAtBeginning: false,
     upgrade: 41,
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 377,
+    _id: 377,
     name: "KINK SHAME",
     type: "Magic",
     description: "SACRIFICE or DESTROY an Upgrade or Downgrade card.",
@@ -1575,14 +1541,14 @@ const cards = [
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/77.png",
     activateAtBeginning: false,
     upgrade: 41,
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 78,
+    _id: 78,
     name: "BLAZE AND GRAZE",
     type: "Magic",
     description:
@@ -1591,14 +1557,14 @@ const cards = [
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/78.png",
     activateAtBeginning: false,
     upgrade: 42,
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 79,
+    _id: 79,
     name: "SAFE SEX",
     type: "Magic",
     description:
@@ -1607,15 +1573,15 @@ const cards = [
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/79.png",
     activateAtBeginning: false,
     upgrade: 43,
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 80,
-    name: "UNICORN ACID TRIP",
+    _id: 80,
+    name: "UNICORN AC_id TRIP",
     type: "Magic",
     description:
       "Each player must DISCARD their hand and DRAW the same number of cards. DRAW 2 additional cards.",
@@ -1623,14 +1589,14 @@ const cards = [
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/80.png",
     activateAtBeginning: false,
     upgrade: 44,
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 81,
+    _id: 81,
     name: "HORRIFYING IMPALING",
     type: "Magic",
     description: "DESTROY a Unicorn card. Each player must DISCARD a card.",
@@ -1638,14 +1604,14 @@ const cards = [
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/81.png",
     activateAtBeginning: false,
     upgrade: 45,
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 281,
+    _id: 281,
     name: "HORRIFYING IMPALING",
     type: "Magic",
     description: "DESTROY a Unicorn card. Each player must DISCARD a card.",
@@ -1653,14 +1619,14 @@ const cards = [
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/81.png",
     activateAtBeginning: false,
     upgrade: 45,
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 82,
+    _id: 82,
     name: "MAKE IT SNOW",
     type: "Magic",
     description: "DISCARD your hand, then DRAW 3 cards. Take another turn.",
@@ -1668,14 +1634,14 @@ const cards = [
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/82.png",
     activateAtBeginning: false,
     upgrade: 46,
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 83,
+    _id: 83,
     name: "UNICORGY",
     type: "Magic",
     description:
@@ -1684,14 +1650,14 @@ const cards = [
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/83.png",
     activateAtBeginning: false,
     upgrade: 47,
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 283,
+    _id: 283,
     name: "UNICORGY",
     type: "Magic",
     description:
@@ -1700,14 +1666,14 @@ const cards = [
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/83.png",
     activateAtBeginning: false,
     upgrade: 47,
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 84,
+    _id: 84,
     name: "HOOF JOB",
     type: "Magic",
     description:
@@ -1716,14 +1682,14 @@ const cards = [
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/84.png",
     activateAtBeginning: false,
     upgrade: 48,
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 284,
+    _id: 284,
     name: "HOOF JOB",
     type: "Magic",
     description:
@@ -1732,14 +1698,14 @@ const cards = [
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/84.png",
     activateAtBeginning: false,
     upgrade: 48,
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 85,
+    _id: 85,
     name: "BUCK NAKED",
     type: "Magic",
     description:
@@ -1748,14 +1714,14 @@ const cards = [
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/85.png",
     activateAtBeginning: false,
     upgrade: 49,
-    downgrade: "",
+
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 86,
+    _id: 86,
     name: "NEIGH, MOTHERFUCKER",
     type: "Instant",
     description:
@@ -1763,15 +1729,15 @@ const cards = [
     color: "Red",
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/86.png",
     activateAtBeginning: false,
-    upgrade: "",
+
     downgrade: 8,
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 286,
+    _id: 286,
     name: "NEIGH, MOTHERFUCKER",
     type: "Instant",
     description:
@@ -1779,15 +1745,15 @@ const cards = [
     color: "Red",
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/86.png",
     activateAtBeginning: false,
-    upgrade: "",
+
     downgrade: 8,
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 386,
+    _id: 386,
     name: "NEIGH, MOTHERFUCKER",
     type: "Instant",
     description:
@@ -1795,15 +1761,15 @@ const cards = [
     color: "Red",
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/86.png",
     activateAtBeginning: false,
-    upgrade: "",
+
     downgrade: 8,
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 87,
+    _id: 87,
     name: "THE SAFEWORD IS NEIGH",
     type: "Instant",
     description:
@@ -1811,15 +1777,15 @@ const cards = [
     color: "Red",
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/87.png",
     activateAtBeginning: false,
-    upgrade: "",
+
     downgrade: 7,
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 287,
+    _id: 287,
     name: "THE SAFEWORD IS NEIGH",
     type: "Instant",
     description:
@@ -1827,15 +1793,15 @@ const cards = [
     color: "Red",
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/87.png",
     activateAtBeginning: false,
-    upgrade: "",
+
     downgrade: 7,
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 387,
+    _id: 387,
     name: "THE SAFEWORD IS NEIGH",
     type: "Instant",
     description:
@@ -1843,15 +1809,15 @@ const cards = [
     color: "Red",
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/87.png",
     activateAtBeginning: false,
-    upgrade: "",
+
     downgrade: 7,
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 487,
+    _id: 487,
     name: "THE SAFEWORD IS NEIGH",
     type: "Instant",
     description:
@@ -1859,15 +1825,15 @@ const cards = [
     color: "Red",
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/87.png",
     activateAtBeginning: false,
-    upgrade: "",
+
     downgrade: 7,
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 587,
+    _id: 587,
     name: "THE SAFEWORD IS NEIGH",
     type: "Instant",
     description:
@@ -1875,15 +1841,15 @@ const cards = [
     color: "Red",
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/87.png",
     activateAtBeginning: false,
-    upgrade: "",
+
     downgrade: 7,
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 687,
+    _id: 687,
     name: "HELL NEIGH",
     type: "Instant",
     description:
@@ -1891,15 +1857,15 @@ const cards = [
     color: "Red",
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/88.png",
     activateAtBeginning: false,
-    upgrade: "",
+
     downgrade: 7,
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 88,
+    _id: 88,
     name: "HELL NEIGH",
     type: "Instant",
     description:
@@ -1907,15 +1873,15 @@ const cards = [
     color: "Red",
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/88.png",
     activateAtBeginning: false,
-    upgrade: "",
+
     downgrade: 7,
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 288,
+    _id: 288,
     name: "HELL NEIGH",
     type: "Instant",
     description:
@@ -1923,15 +1889,15 @@ const cards = [
     color: "Red",
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/88.png",
     activateAtBeginning: false,
-    upgrade: "",
+
     downgrade: 7,
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 89,
+    _id: 89,
     name: "NEIGH, BITCH",
     type: "Instant",
     description:
@@ -1939,15 +1905,15 @@ const cards = [
     color: "Red",
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/89.png",
     activateAtBeginning: false,
-    upgrade: "",
+
     downgrade: 7,
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 289,
+    _id: 289,
     name: "NEIGH, BITCH",
     type: "Instant",
     description:
@@ -1955,15 +1921,15 @@ const cards = [
     color: "Red",
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/89.png",
     activateAtBeginning: false,
-    upgrade: "",
+
     downgrade: 7,
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 389,
+    _id: 389,
     name: "NEIGH, BITCH",
     type: "Instant",
     description:
@@ -1971,15 +1937,15 @@ const cards = [
     color: "Red",
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/89.png",
     activateAtBeginning: false,
-    upgrade: "",
+
     downgrade: 7,
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
   {
-    id: 90,
+    _id: 90,
     name: "NEIGH MEANS NEIGH",
     type: "Instant",
     description:
@@ -1987,13 +1953,13 @@ const cards = [
     color: "Red",
     url: "https://unstableunicornsgame.s3.us-east-2.amazonaws.com/pngs/90.png",
     activateAtBeginning: false,
-    upgrade: "",
+
     downgrade: 7,
     activateAtEnd: false,
     activateOnPlay: false,
-    playRequirement: false,
+
     isGlobal: false,
   },
 ];
 
-export default cards;
+module.exports = cards;

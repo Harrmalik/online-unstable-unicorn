@@ -37,7 +37,7 @@ let defaultOptions = {
   whosTurn: {},
   turn: 0,
 };
-const socketServer = socketIOClient("http://127.0.0.1:3001");
+const socketServer = socketIOClient("http://127.0.0.1:4404");
 
 function socket(state = socketServer, action) {
   switch (action.type) {
@@ -121,7 +121,7 @@ function decks(
       return (decks.discardPile = action.deck);
 
     case "DRAW_CARD":
-
+      break;
     default:
       return state;
   }

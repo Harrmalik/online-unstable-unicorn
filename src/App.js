@@ -15,15 +15,15 @@ function App() {
     <Provider store={store}>
       <Router>
         <div className="App">
-          <Route exact path="/">
+          <Route exact path="/app">
             <HomePage />
           </Route>
 
-          <Route path="/:id/lobby">
+          <Route path="/app/:id/lobby">
             <LobbyPage />
           </Route>
 
-          <Route path="/:id/game">
+          <Route path="/app/:id/game">
             <MemoGamePage />
           </Route>
         </div>

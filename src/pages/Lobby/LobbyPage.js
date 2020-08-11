@@ -35,7 +35,7 @@ function LobbyPage(props) {
           setLobby(inLobby);
           dispatch(setPlayers(gameState.currentPlayers));
         } else {
-          history.push("/");
+          history.push("/app");
         }
 
         socketServer.removeListener("reconnect");
@@ -46,6 +46,8 @@ function LobbyPage(props) {
     socketServer.on("userConnected", (inLobby, inGame) => {
       setLobby(inLobby);
       dispatch(setPlayers(inGame));
+
+      console.log(inGame);
     });
 
     socketServer.on("playerAdded", (players) => {
@@ -61,7 +63,7 @@ function LobbyPage(props) {
           localStorage.getItem("currentPlayerIndex") === "0"
         )
       );
-      history.push(`/${urlParams}/game`);
+      history.push(`/app/${urlParams}/game`);
     });
 
     return () => {
@@ -116,7 +118,7 @@ function LobbyPage(props) {
   function handleLeaveLobby() {
     socketServer.emit("leaveLobby", urlParams);
     dispatch(leaveLobby());
-    history.push(`/`);
+    history.push(`/app`);
   }
 
   function deal(deck, currentPlayers = players) {

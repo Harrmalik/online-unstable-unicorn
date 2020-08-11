@@ -27,6 +27,7 @@ function HomePage() {
     inputEl.current.focus();
     socketServer.emit("getLobbies");
     socketServer.on("returnLobbies", (lobbies) => {
+      console.log(lobbies);
       setLobbies(lobbies);
     });
     socketServer.on("lobbyCreated", (lobbies) => {
@@ -44,7 +45,7 @@ function HomePage() {
             parseInt(localStorage.getItem("currentPlayerIndex"))
         )
       );
-      history.push(`/${game.uri}/game`);
+      history.push(`/app/${game.uri}/game`);
       socketServer.removeListener("startGame");
     });
 
@@ -58,7 +59,7 @@ function HomePage() {
   function joinPublicLobby(lobby) {
     setLobby(lobby);
     socketServer.emit("joinLobby", lobby.name);
-    history.push(`/${lobby.name}/lobby`);
+    history.push(`/app/${lobby.name}/lobby`);
   }
 
   function createLobby() {
@@ -68,7 +69,7 @@ function HomePage() {
       name: uri,
     });
     socketServer.emit("createLobby", newLobbyName);
-    history.push(`/${uri}/lobby`);
+    history.push(`/app/${uri}/lobby`);
   }
 
   return (

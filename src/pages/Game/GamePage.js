@@ -37,7 +37,7 @@ function GamePage() {
             )
           );
         } else {
-          history.push("/");
+          history.push("/app");
         }
 
         socketServer.removeListener("reconnect");
