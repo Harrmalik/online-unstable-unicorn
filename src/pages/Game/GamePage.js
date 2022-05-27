@@ -68,7 +68,7 @@ function GamePage() {
 
       {/* Allows current player to view another players hand */}
       <ViewOtherPlayer
-        isOpen={myPlayer.viewingOtherPlayerModalId != myPlayer.id}
+        isOpen={myPlayer.viewingOtherPlayerModalId !== myPlayer.id}
       />
 
       {/* Shows player's current hand  */}

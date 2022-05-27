@@ -7,7 +7,7 @@ const { Card } = require("../db/schemas/CardSchema.js");
 const { Player } = require("../db/schemas/PlayerSchema.js");
 const { Lobby } = require("../db/schemas/LobbySchema.js");
 
-mongoose.connect("mongodb://localhost/unstableunicorns", {
+mongoose.connect("mongodb://localhost:23456/unstableunicorns", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
@@ -15,13 +15,13 @@ mongoose.connect("mongodb://localhost/unstableunicorns", {
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", async function () {
-  // await cards.forEach((card) => {
-  //   const cardObject = new Card(card);
+  await cards.forEach((card) => {
+    const cardObject = new Card(card);
 
-  //   cardObject.save(function (err, aCard) {
-  //     if (err) return console.error(err);
-  //   });
-  // });
+    cardObject.save(function (err, aCard) {
+      if (err) return console.error(err);
+    });
+  });
 
   // await players.forEach(function (player) {
   //   const playerObject = new Player(player);
@@ -33,19 +33,19 @@ db.once("open", async function () {
   //   });
   // });
 
-  await lobbies.forEach(async function (lobby) {
-    const lobbyObject = new Lobby(lobby);
+  // await lobbies.forEach(async function (lobby) {
+  //   const lobbyObject = new Lobby(lobby);
 
-    let players = await Player.find({});
-    lobbyObject.currentPlayers = players.splice(0, lobby.currentPlayers.length);
-    console.log(lobbyObject);
+  //   let players = await Player.find({});
+  //   lobbyObject.currentPlayers = players.splice(0, lobby.currentPlayers.length);
+  //   console.log(lobbyObject);
 
-    lobbyObject.save(function (err, aLobby) {
-      if (err) return console.error(err);
+  //   lobbyObject.save(function (err, aLobby) {
+  //     if (err) return console.error(err);
 
-      return aLobby;
-    });
-  });
+  //     return aLobby;
+  //   });
+  // });
 
   // db.close();
 });
